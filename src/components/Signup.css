@@ -1,0 +1,22 @@
+body {
+    background-color: #ACC5FC;
+    aspect-ratio: 960/300;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.signup-form {
+    display:flex;
+    flex-direction: column;
+}
+
+
+.form-input {
+    border:none;
+    outline:none;
+    background: none;
+    border-bottom: 2px solid rgb(110, 110, 110);
+    width:22em;
+}
