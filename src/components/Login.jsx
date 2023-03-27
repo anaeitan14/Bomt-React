@@ -1,15 +1,13 @@
 import "./Login.css";
 import {useState, useEffect} from 'react';
 import emailLogo from "../resources/icons/envelope.png";
+import jwt_decode from "jwt-decode";
+
 
 const Login = () => {
 
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
-
-    console.log("This is the username" + email);
-    console.log("This is the password" + password);
-    
 
     const fetchData = () => {
         return fetch("http://172.20.26.41:5000/api")
@@ -17,9 +15,28 @@ const Login = () => {
             .then((data)=>console.log(JSON.stringify(data)));
     }
 
-    useEffect(() => {
-        fetchData();
-    },[])
+    
+  function handleCallbackResponse(response) {
+    var userObject = jwt_decode(response.credential);
+    console.log(userObject)
+  }
+
+
+  useEffect(()=>{
+    /* global google */
+    google.accounts.id.initialize({
+      client_id:"629491949981-6dlq72o30aiv6ba91mu9jgcvbh4tfd9h.apps.googleusercontent.com",
+      callback:handleCallbackResponse
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById("google-div"),
+      {theme:"outline",size:"large"}
+    );
+
+    google.accounts.id.prompt();
+  },[]);
+
 
     return(
         <div className="bubble">
@@ -48,6 +65,7 @@ const Login = () => {
                 <div className="forgot-password">
                     <button>Forgot password?</button>
                 </div>
+                <div id="google-div"></div>
             </form>
         </div>
     );

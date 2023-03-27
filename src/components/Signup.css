@@ -1,5 +1,5 @@
 body {
-    background-color: #ACC5FC;
+    background-color: #FFF;
     aspect-ratio: 960/300;
     width: 100%;
     background-repeat: no-repeat;
@@ -20,3 +20,27 @@ body {
     border-bottom: 2px solid rgb(110, 110, 110);
     width:22em;
 }
+
+.custom-shape-divider-bottom-1678793596 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    z-index: -1;
+}
+
+.custom-shape-divider-bottom-1678793596 svg {
+    position: relative;
+    display: block;
+    width: calc(119% + 1.3px);
+    height: 285px;  
+    z-index: -1;
+}
+
+.custom-shape-divider-bottom-1678793596 .shape-fill {
+    fill: #ACC5FC;
+}
+
+
