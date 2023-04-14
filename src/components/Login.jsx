@@ -66,7 +66,8 @@ const Login = () => {
                     <Outlet />
                 </div>
                 <div className="forgot-password">
-                    <button>Forgot password?</button>
+                    <Link to="/forgot"><button>Forgot password?</button></Link>
+                    <Outlet />
                 </div>
                 <div id="google-div"></div>
             </form>

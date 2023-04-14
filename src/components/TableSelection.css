@@ -1,0 +1,33 @@
+.table-select {
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:100vh;
+}
+
+
+#tables ul {
+    list-style-type: none;
+}
+
+#tables button {
+    border-radius: 15px;
+    height: 4.5em;
+    width:25em;
+    border:none;
+    outline: none;
+    margin:1em 0;
+    font-size: 1em;
+    box-shadow: 4px 3px 3px rgba(0, 0, 0, 0.23);
+    color:white;
+    background-color: #4078E5;
+    padding:1em;    
+    transition: box-shadow, background-color 0.5s;
+    font-weight: 700;
+}
+    
+#tables button:hover {
+    box-shadow: none;
+    background-color: #2e56a5;
+}

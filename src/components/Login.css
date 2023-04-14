@@ -39,6 +39,7 @@
     padding:1em;
     width:15em;    
     transition: box-shadow, background-color 0.5s;
+    font-weight: 500;
 }
 
 .login-form button:hover {
