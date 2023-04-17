@@ -41,6 +41,7 @@ const Login = () => {
       <form className="login-form">
         <h1>Welcome to BOMT</h1>
         <h2>Login</h2>
+        <img src={emailLogo}/>
         <input
           type="text"
           onChange={(e) => setEmail(e.target.value)}
