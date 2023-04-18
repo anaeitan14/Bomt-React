@@ -1,7 +1,5 @@
 import "./Login.css";
 import { useState, useEffect } from "react";
-import { Outlet, Link } from "react-router-dom";
-import emailLogo from "../resources/icons/envelope.png";
 import jwt_decode from "jwt-decode";
 
 const Login = () => {
@@ -33,40 +31,27 @@ const Login = () => {
     });
 
     google.accounts.id.prompt();
-    document.body.className = "body-login";
   }, []);
 
   return (
     <div>
       <form className="login-form">
-        <h1>Welcome to BOMT</h1>
-        <h2>Login</h2>
-        <img src={emailLogo}/>
+        <h1>Account login</h1>
+        <label htmlFor="email">Email</label>
         <input
+          id="email"
           type="text"
           onChange={(e) => setEmail(e.target.value)}
-          className="email-input"
-          placeholder="Email"
         />
+        <label htmlFor="password">Password</label>
         <input
+          id="password"
           type="password"
           onChange={(e) => setPassword(e.target.value)}
-          className="password-input"
-          placeholder="Password"
         />
-        <div className="login-buttons">
-          <button>Login</button>
-          <Link to="/signup">
-            <button>Sign up</button>
-          </Link>
-          <Outlet />
-        </div>
-        <div className="forgot-password">
-          <Link to="/forgot">
-            <button>Forgot password?</button>
-          </Link>
-          <Outlet />
-        </div>
+        <button>Login</button>
+        <a href="/signup">New user? click here to sign up</a>
+        <a href="/forgot">Forgot password?</a>
         <div id="google-div"></div>
       </form>
     </div>
