@@ -11,7 +11,6 @@ body {
     rgba(66, 183, 245, 0.8) 0%,
     rgba(66, 245, 189, 0.4) 100%
   );
-  color: gray;
 }
 
 .login-form {
@@ -27,20 +26,42 @@ body {
 .login-form input {
   outline: none;
   display: block;
-  background-color: var(--label-color);
+  background-color: var(--input-background);
   width: 100%;
   border: 0;
   border-radius: 4px;
   box-sizing: border-box;
   padding: 12px 20px;
-  color: gray;
+  color: var(--input-text);
   font-size: inherit;
+  margin:10px 0;
 }
 
 .login-form a {
   text-decoration: none;
+  color:var(--primary-heading);
+  margin:3px 0;
 }
 
 .login-form h1 {
-  color:var(--primary-heading);
+  color: var(--primary-heading);
+}
+
+.login-form label {
+  color:var(--label-color)
+}
+
+.login-form button {
+  background-color: var(--primary-heading);
+  border:none;
+  color:var(--button-text);
+  border-radius: 4px;
+  cursor: pointer;
+  padding:12px 20px;
+  font-weight: 700;
+  margin: 10px 0;
+}
+
+#google-div {
+  margin:5px 0;
 }

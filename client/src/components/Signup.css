@@ -1,86 +1,50 @@
-.body-signup {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  background-image: radial-gradient(
-    circle farthest-corner at 12.3% 19.3%,
-    rgba(85, 88, 218, 1) 0%,
-    rgba(95, 209, 249, 1) 100.2%
-  );
-}
+@import url(colors-variables.css);
 
 .signup-form {
+  margin: 0 auto;
+  width: 500px;
+  background-color: white;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  height: 500px;
-  width: 400px;
+  padding: 15px 30px;
 }
 
-.form-input {
-  border: none;
+.signup-form input {
   outline: none;
-  background: none;
-  border-bottom: 2px solid rgb(110, 110, 110);
-  width: inherit;
-  transition: border-color 0.5s;
-  font-size: 1.5em;
-}
-
-.form-input::placeholder {
-  transition: color 0.2s;
-  font-size: 0.7em;
-}
-
-.form-input:focus::placeholder {
-  color: transparent;
-}
-
-.form-input:focus {
-  border-color: #3260c2;
-}
-
-.custom-shape-divider-bottom-1678793596 {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-  z-index: -1;
-}
-
-.custom-shape-divider-bottom-1678793596 svg {
-  position: relative;
   display: block;
-  width: calc(119% + 1.3px);
-  height: 285px;
-  z-index: -1;
+  background-color: var(--input-background);
+  width: 100%;
+  border: 0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 12px 20px;
+  color: var(--input-text);
+  font-size: inherit;
+  margin:10px 0;
 }
 
-.custom-shape-divider-bottom-1678793596 .shape-fill-signup {
-  fill: #acc5fc;
+.signup-form a {
+  text-decoration: none;
+  color:var(--primary-heading);
+  margin:10px 100px;
 }
 
-#signup-button {
-  border-radius: 15px;
-  margin-left: 5em;
-  height: 4.5em;
-  width: 22em;
-  border: none;
-  outline: none;
-  font-size: 1em;
-  box-shadow: 4px 3px 3px rgba(0, 0, 0, 0.23);
-  color: white;
-  background-color: #4078e5;
-  padding: 1em;
-  width: 15em;
-  transition: box-shadow, background-color 0.5s;
+.signup-form h1 {
+  color: var(--primary-heading);
+}
+
+.signup-form label {
+  color:var(--label-color)
+}
+
+.signup-form button {
+  background-color: var(--primary-heading);
+  border:none;
+  color:var(--button-text);
+  border-radius: 4px;
+  cursor: pointer;
+  padding:12px 20px;
   font-weight: 700;
-}
-
-#signup-button:hover {
-  box-shadow: none;
-  background-color: #2e56a5;
+  margin: 10px 0;
 }

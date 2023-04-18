@@ -7,7 +7,7 @@ import { MainTable } from "./components/MainTable";
 
 function App() {
 
-  const isAuth = false;
+  const isAuth = true;
 
   return (
     <>

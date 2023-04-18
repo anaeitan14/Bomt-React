@@ -27,7 +27,7 @@ const Login = () => {
 
     google.accounts.id.renderButton(document.getElementById("google-div"), {
       theme: "outline",
-      size: "large",
+      size: "medium",
     });
 
     google.accounts.id.prompt();
@@ -49,7 +49,7 @@ const Login = () => {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button>Login</button>
+        <button>LOG IN</button>
         <a href="/signup">New user? click here to sign up</a>
         <a href="/forgot">Forgot password?</a>
         <div id="google-div"></div>
