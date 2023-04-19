@@ -12,6 +12,20 @@ const Login = () => {
       .then((data) => console.log(JSON.stringify(data)));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = { email, password };
+    fetch("http://localhost:5000/LOGIN_ENDPOINT", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(token),
+    })
+    .then(response => console.log(response.json()));
+    return true;
+  };
+
   function handleCallbackResponse(response) {
     var userObject = jwt_decode(response.credential);
     console.log(userObject);
@@ -35,7 +49,7 @@ const Login = () => {
 
   return (
     <div>
-      <form className="login-form">
+      <form className="login-form" onSubmit={handleSubmit}>
         <h1>Account login</h1>
         <label htmlFor="email">Email</label>
         <input
