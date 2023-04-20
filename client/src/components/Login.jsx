@@ -15,14 +15,15 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = { email, password };
-    fetch("http://localhost:5000/LOGIN_ENDPOINT", {
+    fetch("https://echo.zuplo.io/", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify(token),
     })
-    .then(response => console.log(response.json()));
+      .then((response) => response.json())
+      .then((data) => console.log(data.body));
     return true;
   };
 
