@@ -1,0 +1,11 @@
+@import url("../pages/colors-variables.css");
+
+html {
+    background-color: white;
+}
+
+#item-container {
+    display:flex;
+}
+
+#item-container 

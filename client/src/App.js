@@ -1,13 +1,9 @@
 import { Navigate } from "react-router-dom";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import ForgotPassword from "./components/ForgotPassword";
-import { TableSelection } from "./components/TableSelection";
-import { MainTable } from "./components/MainTable";
+import { MainTable } from "./pages/MainTable";
 
 function App() {
 
-  const isAuth = false;
+  const isAuth = true;
 
   return (
     <>
