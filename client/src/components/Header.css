@@ -1,6 +1,33 @@
 @import url("../pages/colors-variables.css");
 
+#header {
+  display: flex;
+  justify-content: space-between;
+}
 
-html {
-    background-color: white;
+button {
+  background-color: #007bff;
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 20px;
+  width: 200px;
+  transition: all 0.2s ease-in-out;
+}
+
+#header button {
+  background-color: #007bff;
+}
+
+#header button:hover {
+  background-color: #0062cc;
+}
+
+input {
+  border: none;
+  border-bottom: 2px solid black;
+  outline: none;
+  background: none;
 }

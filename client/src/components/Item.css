@@ -1,11 +1,22 @@
-@import url("../pages/colors-variables.css");
-
-html {
-    background-color: white;
+select {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
-#item-container {
-    display:flex;
+select:focus {
+  outline: none;
+  border-color: #007bff;
 }
 
-#item-container 
+p {
+  font-weight: bold;
+}
+
+option {
+  color: #333;
+}
+
+#item-container td {
+  border: 1px solid rgb(148, 143, 143);
+}
