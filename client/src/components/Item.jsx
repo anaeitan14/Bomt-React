@@ -1,19 +1,19 @@
 import "./Item.css";
 
-const Item = () => {
+const Item = ({PN, PNID, Description, MFR, MFRPN}) => {
   return (
     <tr id="item-container">
-      <td>Screw number 45</td>
-      <td>PNID</td>
-      <td>Description</td>
+      <td>{PN}</td>
+      <td>{PNID}</td>
+      <td>{Description}</td>
       <td>
         <select>
           <option>Buy</option>
           <option>Make</option>
         </select>
       </td>
-      <td>Screw house</td>
-      <td>45-80-30-21</td>
+      <td>{MFR}</td>
+      <td>{MFRPN}</td>
       <td>
         <select>
           <option value="">1</option>
