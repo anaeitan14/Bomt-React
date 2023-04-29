@@ -1,9 +1,19 @@
+@import url("../pages/colors-variables.css");
+
 #side {
-    display:flex;
-    flex-direction: column;
-    float:left;
+  display: flex;
+  flex-direction: column;
+  float: left;
+  background-color: var(--sidebar-background);
+  color: var(--button-text);
+  height:100vh;
+  width:10%;
+  padding: 0.8em;
 }
 
 #side a {
-    text-decoration: none;
+  text-decoration: none;
+  color: var(--button-text);
+  font-weight: 600;
+  margin:5% 0px;
 }

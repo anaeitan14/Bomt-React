@@ -1,15 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { TableSelection } from "./pages/TableSelection";
+import App from "./App";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
-import { TableSelection } from "./pages/TableSelection";
+import Queries from "./pages/Queries";
+import Reports from "./pages/Reports";
+import Logs from "./pages/Logs";
+import Users from "./pages/Users";
+import "./index.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
@@ -19,6 +23,11 @@ root.render(
         <Route path="signup" element={<Signup />} />
         <Route path="forgot" element={<ForgotPassword />} />
         <Route path="table-select" element={<TableSelection />} />
+        <Route path="queries" element={<Queries />} />
+        <Route path="logs" element={<Logs />} />
+        <Route path="reports" element={<Reports />} />
+        <Route path="users" element={<Users />} />
+        <Route path="logout" element={<App />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

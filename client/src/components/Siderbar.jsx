@@ -3,12 +3,11 @@ import "./Sidebar.css";
 const Sidebar = () => {
   return (
     <div id="side">
-      <h2>Username online</h2>
-      <a href="">Queries</a>
-      <a href="">Logs</a>
-      <a href="">Reports</a>
-      <a href="">Users</a>
-      <a href="">Logout</a>
+      <a href="/queries">Queries</a>
+      <a href="/logs">Logs</a>
+      <a href="/reports">Reports</a>
+      <a href="/users">Users</a>
+      <a href="/logout">Logout</a>
     </div>
   );
 };

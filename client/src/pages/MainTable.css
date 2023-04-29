@@ -1,2 +1,5 @@
 @import url(colors-variables.css);
 
+button {
+    margin:20px;
+}

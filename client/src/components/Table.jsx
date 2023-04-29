@@ -4,19 +4,25 @@ import "./Table.css";
 
 const Table = () => {
   return (
-    <div>
+    <div id="table-wrapper">
       <table id="styled-table">
       <TableHeaders />
-      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" />
-      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" />
-      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" />
-      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" />
-      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" />
-      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" />
-      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" />
-      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" />
-      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" />
-      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" />
+      <tbody>
+      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" Type="Buy" Tree="True"/>
+      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" Type="Buy" Tree="True"/>
+      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" Type="Buy" Tree="True"/>
+      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" Type="Buy" Tree="True"/>
+      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" Type="Buy" Tree="True"/>
+      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" Type="Buy" Tree="True"/>
+      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" Type="Buy" Tree="True"/>
+      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" Type="Buy" Tree="True"/>
+      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" Type="Buy" Tree="True"/>
+      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" Type="Buy" Tree="True"/>
+      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" Type="Buy" Tree="True"/>
+      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" Type="Buy" Tree="True"/>
+      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" Type="Buy" Tree="True"/>
+      <Item PN="AMD Ryzen 3800x" PNID="43-23-123" Description="Quad core CPU" MFR="AMD" MFRPN="R9K9FIE" Type="Buy" Tree="True"/>
+      </tbody>
       </table>
     </div>
   );

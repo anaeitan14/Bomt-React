@@ -1,19 +1,35 @@
-const AddItem = () => {
+import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+
+function AddItem({ buttonName, buttonTitle, buttonAction }) {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
-    <Popup trigger={<button className="button">Add item</button>} modal nested>
-      {(close) => (
-        <div className="modal">
-          <button className="close" onClick={close}>
-            &times;
-          </button>
-          <div className="content"> Testing popups</div>
-          <div className="actions">
-            <button className="button" onClick={() => alert("item added")}>
-              Add
-            </button>
-          </div>
-        </div>
-      )}
-    </Popup>
+    <>
+      <Button variant="primary" onClick={handleShow}>
+        {buttonName}
+      </Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{buttonTitle}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Item info</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            {buttonAction}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
-};
+}
+
+export default AddItem;
