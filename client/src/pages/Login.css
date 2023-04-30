@@ -12,25 +12,11 @@ body {
 .login-form {
   margin: 0 auto;
   width: 500px;
-  background-color: white;
+  background-color: rgba(163, 231, 201, 0.418);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   padding: 30px;
-}
-
-.login-form input {
-  outline: none;
-  display: block;
-  background-color: var(--input-background);
-  width: 100%;
-  border: 0;
-  border-radius: 4px;
-  box-sizing: border-box;
-  padding: 12px 20px;
-  color: var(--input-text);
-  font-size: inherit;
-  margin:10px 0;
 }
 
 .login-form a {
@@ -41,10 +27,6 @@ body {
 
 .login-form h1 {
   color: var(--primary-heading);
-}
-
-.login-form label {
-  color:var(--label-color)
 }
 
 .login-form button {

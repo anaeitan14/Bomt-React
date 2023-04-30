@@ -5,12 +5,15 @@
     font-family: sans-serif;
     min-width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    height:800px;
+    overflow-y:scroll;
+    display:block;
 }
 
 #styled-table th {
     background-color: #009879;
     color: #ffffff;
-    text-align: left;
+    text-align: center;
 }
 
 #styled-table td {

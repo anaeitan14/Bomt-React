@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-function AddItem({ buttonName, buttonTitle, buttonAction }) {
+function ModalButton({ buttonName, buttonTitle, buttonActionTitle }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -24,7 +24,7 @@ function AddItem({ buttonName, buttonTitle, buttonAction }) {
             Close
           </Button>
           <Button variant="primary" onClick={handleClose}>
-            {buttonAction}
+            {buttonActionTitle}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -32,4 +32,4 @@ function AddItem({ buttonName, buttonTitle, buttonAction }) {
   );
 }
 
-export default AddItem;
+export default ModalButton;

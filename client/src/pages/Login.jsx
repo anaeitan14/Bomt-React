@@ -1,6 +1,8 @@
 import "./Login.css";
 import { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -52,18 +54,24 @@ const Login = () => {
     <div>
       <form className="login-form" onSubmit={handleSubmit}>
         <h1>Account login</h1>
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          type="text"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
+          <Form.Control
+            onChange={(e)=>{setEmail(e.target.value)}}
+            placeholder="Email"
+            aria-label="Email"
+            aria-describedby="Email"
+          />
+        </InputGroup>
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon1">***</InputGroup.Text>
+          <Form.Control
+          onChange={(e)=>{setPassword(e.target.value)}}
+            placeholder="Password"
+            aria-label="Password"
+            aria-describedby="Password"
+          />
+        </InputGroup>
         <button>LOG IN</button>
         <a href="/signup">New user? click here to sign up</a>
         <a href="/forgot">Forgot password?</a>

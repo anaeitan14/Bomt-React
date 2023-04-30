@@ -1,5 +1,11 @@
 @import url(colors-variables.css);
 
+
 button {
     margin:20px;
+}
+
+#search-add-remove {
+    display:flex;
+    justify-content: space-around;
 }

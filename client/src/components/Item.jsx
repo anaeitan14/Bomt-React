@@ -1,4 +1,5 @@
 import "./Item.css";
+import ModalButton from "../components/ModalButton";
 
 const Item = ({ PN, PNID, Description, MFR, MFRPN, Type, Tree }) => {
   return (
@@ -10,36 +11,10 @@ const Item = ({ PN, PNID, Description, MFR, MFRPN, Type, Tree }) => {
       <td>{MFR}</td>
       <td>{MFRPN}</td>
       <td>
-        <select>
-          <option value="">1</option>
-          <option value="">2</option>
-          <option value="">3</option>
-          <option value="">4</option>
-          <option value="">5</option>
-        </select>
+        <ModalButton buttonName= "View" buttonTitle="Distributors" buttonActionTitle="Done"/>
       </td>
       <td>
-        <select>
-          <option value="">1</option>
-          <option value="">2</option>
-          <option value="">3</option>
-          <option value="">4</option>
-          <option value="">5</option>
-        </select>
-      </td>
-      <td>
-        <select>
-          <option value="">1</option>
-          <option value="">2</option>
-          <option value="">3</option>
-          <option value="">4</option>
-          <option value="">5</option>
-          <option value="">6</option>
-          <option value="">7</option>
-          <option value="">8</option>
-          <option value="">9</option>
-          <option value="">10</option>
-        </select>
+        <ModalButton buttonName="View" buttonTitle="Documents" buttonActionTitle="Done"/>
       </td>
       <td>{Tree}</td>
     </tr>

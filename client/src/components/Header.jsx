@@ -5,7 +5,7 @@ const Header = () => {
   const [usernameOnline, setUsernameOnline] = useState("");
 
   useEffect(()=> {
-    setUsernameOnline("Eitan");
+    setUsernameOnline("Username");
   });
 
   return (

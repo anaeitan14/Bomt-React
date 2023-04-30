@@ -10,9 +10,8 @@ const TableHeaders = () => {
         <th>Type</th>
         <th>MFR</th>
         <th>MFR PN</th>
-        <th>Dist 1 - 5</th>
-        <th>Dist PN 1 - 5</th>
-        <th>Doc 1 - 10</th>
+        <th>Dist</th>
+        <th>Doc</th>
         <th>Is tree available</th>
       </tr>
     </thead>
