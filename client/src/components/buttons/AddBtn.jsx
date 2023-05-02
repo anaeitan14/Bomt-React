@@ -27,7 +27,6 @@ const AddBtn = () => {
         <Modal.Body>
           <Form.Group>
             <InputGroup className="mb-3">
-              <Form.Label>Type</Form.Label>
               <InputGroup.Text id="basic-addon1">
                 &#x1F50E;&#xFE0E;
               </InputGroup.Text>
@@ -62,6 +61,7 @@ const AddBtn = () => {
             </InputGroup>
 
             <Form.Select className="mb-3">
+              <Form.Label>Type</Form.Label>
               <option value="Buy">Buy</option>
               <option value="Make">Make</option>
               <option value="Document">Document</option>
