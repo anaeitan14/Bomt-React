@@ -1,5 +1,6 @@
 import "./Item.css";
-import ModalButton from "../components/ModalButton";
+import DistBtn from "../components/buttons/DistBtn";
+import DocsBtn from "../components/buttons/DocsBtn";
 
 const Item = ({ PN, PNID, Description, MFR, MFRPN, Type, Tree }) => {
   return (
@@ -11,10 +12,10 @@ const Item = ({ PN, PNID, Description, MFR, MFRPN, Type, Tree }) => {
       <td>{MFR}</td>
       <td>{MFRPN}</td>
       <td>
-        <ModalButton buttonName= "View" buttonTitle="Distributors" buttonActionTitle="Done"/>
+        <DistBtn />
       </td>
       <td>
-        <ModalButton buttonName="View" buttonTitle="Documents" buttonActionTitle="Done"/>
+        <DocsBtn />
       </td>
       <td>{Tree}</td>
     </tr>
