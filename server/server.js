@@ -2,30 +2,23 @@ const express = require('express')
 const cors = require('cors')
 const crypto = require('crypto')
 const mongoose = require('mongoose')
+const User = require('./models/userSchema')
 const app = express()
+
+app.use(express.json())
 app.use(cors())
 mongoose.connect('mongodb://127.0.0.1:27017/Users')
-//.then(() => app.listen (5000).then(() => console.log("connected to the database and listening to the port"))).catch((err) => console.log(err));
-app.post
+/*.then(() => app.listen (5000, () => {
+    console.log("connected to the database and listening to the port")
+}))
+app.post*/
 
-const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true
-  }
-});
-
-const users = mongoose.model('users', userSchema);
-
-const email = "test@test.com"
+const email = "test2@test.com"
 const password = "123456"
-const hash = crypto.createHash('sha256').update(password).digest('hex')
+const salting_word = crypto.randomBytes(128).toString('base64');
+console.log(salting_word)
+const hash = crypto.createHash('sha256').update(password + salting_word).digest('hex')
 console.log(hash)
 
-users.insertMany([{email:email, password:hash}])
+User.insertMany([{email:email, password:hash, salting_word: salting_word}])
 
