@@ -7,7 +7,7 @@ const ForgotPassword = () => {
   const [email, setForgotEmail] = useState("");
 
   return (
-    <div>
+    <div className="container-fluid">
       <form class="reset-form">
         <h1>Forgot your password?</h1>
         <InputGroup className="mb-3">

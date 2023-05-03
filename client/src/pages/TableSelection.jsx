@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./TableSelection.css";
 import "reactjs-popup/dist/index.css";
 
 export const TableSelection = () => {
@@ -7,24 +6,22 @@ export const TableSelection = () => {
   const tables = ["Electronics INC", "Side hobby project", "School robotics"];
 
   return (
-    <div id="tables">
-      <div>
-        <h2>Choose your desired table</h2>
-        <ul>
-          {tables.map((table) => (
-            <li>
-              <button>{table}</button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="new-table-div">
-        <form>
-          <h2>Create a new table</h2>
-          <input type="text"></input>
-          <button>Create</button>
-        </form>
-      </div>
+    <div className="container-fluid">
+      <h2>Choose your desired table</h2>
+      <ul className="list-group">
+        {tables.map((table) => (
+          <li>
+            <button className="list-group-item  list-group-item-action">
+              {table}
+            </button>
+          </li>
+        ))}
+      </ul>
+      <form>
+        <h2>Create a new table</h2>
+        <input type="text" className="form-control"></input>
+        <button className="btn btn-primary">Create</button>
+      </form>
     </div>
   );
 };

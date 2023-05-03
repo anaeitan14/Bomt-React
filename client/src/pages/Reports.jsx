@@ -1,8 +1,11 @@
+import Sidebar from "../components/Sidebar";
+
 const Reports = () => {
-    return (
-        <>
-        </>
-    )
-}
+  return (
+    <>
+      <Sidebar />
+    </>
+  );
+};
 
 export default Reports;

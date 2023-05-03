@@ -1,8 +1,9 @@
 import "./Login.css";
+import axios from "axios";
 import { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -16,16 +17,14 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = { email, password };
-    fetch("https://echo.zuplo.io/", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(token),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data.body));
+
+    const URL = "http://localhost:5000/signup";
+
+    axios.post(URL, {
+      email: email,
+      password: password,
+    });
+
     return true;
   };
 
@@ -51,13 +50,15 @@ const Login = () => {
   }, []);
 
   return (
-    <div>
+    <div className="container-fluid">
       <form className="login-form" onSubmit={handleSubmit}>
         <h1>Account login</h1>
         <InputGroup className="mb-3">
           <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
           <Form.Control
-            onChange={(e)=>{setEmail(e.target.value)}}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
             placeholder="Email"
             aria-label="Email"
             aria-describedby="Email"
@@ -66,7 +67,9 @@ const Login = () => {
         <InputGroup className="mb-3">
           <InputGroup.Text id="basic-addon1">***</InputGroup.Text>
           <Form.Control
-          onChange={(e)=>{setPassword(e.target.value)}}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
             placeholder="Password"
             aria-label="Password"
             aria-describedby="Password"

@@ -1,6 +1,6 @@
 import Sidebar from "../components/Sidebar";
 
-const Logs = () => {
+const Profile = () => {
   return (
     <>
       <Sidebar />
@@ -8,4 +8,4 @@ const Logs = () => {
   );
 };
 
-export default Logs;
+export default Profile;

@@ -12,6 +12,7 @@ import Reports from "./pages/Reports";
 import Logs from "./pages/Logs";
 import Users from "./pages/Users";
 import "./index.css";
+import Profile from "./pages/Profile";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -28,6 +29,7 @@ root.render(
         <Route path="reports" element={<Reports />} />
         <Route path="users" element={<Users />} />
         <Route path="logout" element={<App />} />
+        <Route path="profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

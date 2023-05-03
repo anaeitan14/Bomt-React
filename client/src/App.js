@@ -1,16 +1,10 @@
 import { Navigate } from "react-router-dom";
-import { MainTable } from "./pages/MainTable";
+import { Home } from "./pages/Home";
 
 function App() {
-
   const isAuth = true;
 
-  return (
-    <>
-    {isAuth ? <MainTable/> : <Navigate to="/login"/>}
-    </>
-  );
+  return <>{isAuth ? <Home /> : <Navigate to="/login" />}</>;
 }
 
 export default App;
-

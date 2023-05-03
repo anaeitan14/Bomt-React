@@ -10,7 +10,7 @@ const Header = () => {
 
   return (
     <div id="header">
-      <h2><span>{usernameOnline}</span> online</h2>
+      <h2><a href="/profile"><span>{usernameOnline}</span></a> online</h2>
     </div>
   );
 };

@@ -9,6 +9,7 @@
   padding:2em;
 }
 
-#header span {
-  text-decoration: underline;
-}
+#header a {
+  color:var(--button-text);
+} 
+

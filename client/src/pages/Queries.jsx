@@ -1,8 +1,11 @@
+import Sidebar from "../components/Sidebar";
+
 const Queries = () => {
-    return (
-        <>
-        </>
-    )
-}
+  return (
+    <>
+      <Sidebar />
+    </>
+  );
+};
 
 export default Queries;

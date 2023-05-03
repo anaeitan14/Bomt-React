@@ -5,7 +5,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 
 const Signup = () => {
   return (
-    <div>
+    <div className="container-fluid">
       <div className="signup-form">
         <h1>Create account</h1>
         <form>
