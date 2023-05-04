@@ -24,7 +24,6 @@ app.post('/signup', async (req, res) => {
         const salting_word = crypto.randomBytes(32).toString('base64');
         const hash = crypto.createHash('sha256').update(password + salting_word).digest('hex')
     
-        // Create a new user with the hashed password
         const newUser = new User({
           email: email,
           password: hash,
@@ -39,11 +38,3 @@ app.post('/signup', async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
       }
 });
-const email = "test4@test.com"
-const password = "123456"
-console.log(salting_word)
-
-console.log(hash)
-
-User.insertMany([{email:email, password:hash, salting_word: salting_word}])
-
