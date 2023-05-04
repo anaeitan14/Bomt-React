@@ -8,6 +8,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const fetchData = () => {
     return fetch("http://172.20.26.41:5000/api")
@@ -20,10 +21,13 @@ const Login = () => {
 
     const URL = "http://localhost:5000/signup";
 
-    axios.post(URL, {
-      email: email,
-      password: password,
-    });
+    axios
+      .post(URL, {
+        email: email,
+        password: password,
+      })
+      .then()
+      .catch(error => console.log(error));
 
     return true;
   };
@@ -80,6 +84,7 @@ const Login = () => {
         <a href="/forgot">Forgot password?</a>
         <div id="google-div"></div>
       </form>
+      {error}
     </div>
   );
 };
