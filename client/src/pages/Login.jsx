@@ -17,7 +17,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const URL = "http://localhost:5000/api/register";
+    const URL = "http://localhost:5000/api/login";
 
     axios
       .post(URL, {
@@ -26,8 +26,6 @@ const Login = () => {
       })
       .then()
       .catch(error => console.log(error));
-
-    return true;
   };
 
   function handleCallbackResponse(response) {
