@@ -10,9 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const fetchData = () => {
-    
-  };
+  const fetchData = () => {};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,13 +22,21 @@ const Login = () => {
         email: email,
         password: password,
       })
-      .then()
-      .catch(error => console.log(error));
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
   };
 
   function handleCallbackResponse(response) {
-    var userObject = jwt_decode(response.credential);
-    console.log(userObject);
+    var userObject = response.credential;
+
+    URL = "http://localhost:5000/api/google-register";
+
+    axios
+      .post(URL, {
+        JWT: userObject,
+      })
+      .then((resposne) => console.log(response))
+      .catch((error) => console.log(error));
   }
 
   useEffect(() => {
@@ -79,8 +85,8 @@ const Login = () => {
         <button>LOG IN</button>
         <a href="/signup">New user? click here to sign up</a>
         <a href="/forgot">Forgot password?</a>
-        <div id="google-div"></div>
       </form>
+      <div id="google-div"></div>
       {error}
     </div>
   );

@@ -13,6 +13,11 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (password !== repeatPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
     const URL = "http://localhost:5000/api/register";
 
     axios
@@ -20,9 +25,8 @@ const Signup = () => {
         email: email,
         password: password,
       })
-      .then()
+      .then(response => console.log(response))
       .catch((error) => {
-        setError(error);
         console.log(error);
       });
   };
@@ -46,6 +50,7 @@ const Signup = () => {
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon1">***</InputGroup.Text>
             <Form.Control
+              type="password"
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
@@ -57,6 +62,7 @@ const Signup = () => {
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon1">***</InputGroup.Text>
             <Form.Control
+              type="password"
               onChange={(e) => {
                 setRepeatPassword(e.target.value);
               }}
