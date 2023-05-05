@@ -34,7 +34,7 @@ exports.login = async (req, res) => {
       return res.status(400).json({auth:false ,message: 'Incorrect information'})
     }
 
-    const hash = crypto.pbkdf2Sync(password, user.salt, 1000, 64, 'sha512').toString('hex');
+    const hash = crypto.pbkdf2Sync(password, user.salt, 950, 64, 'sha512').toString('hex');
 
     if(hash === user.password){
       return res.status(200).json({auth:true, message:'Login succesfull'})
