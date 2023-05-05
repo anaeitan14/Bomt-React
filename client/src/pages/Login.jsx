@@ -11,15 +11,13 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const fetchData = () => {
-    return fetch("http://172.20.26.41:5000/api")
-      .then((response) => response.json())
-      .then((data) => console.log(JSON.stringify(data)));
+    
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const URL = "http://localhost:5000/signup";
+    const URL = "http://localhost:5000/api/signup";
 
     axios
       .post(URL, {
@@ -74,6 +72,7 @@ const Login = () => {
             onChange={(e) => {
               setPassword(e.target.value);
             }}
+            type="password"
             placeholder="Password"
             aria-label="Password"
             aria-describedby="Password"
