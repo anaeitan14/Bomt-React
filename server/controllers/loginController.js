@@ -1,7 +1,7 @@
 const crypto = require('crypto')
 const User = require('../models/userSchema')
 
-exports.signup = async (req, res) => {
+exports.register = async (req, res) => {
     try {
         const { email, password } = req.body;
     
@@ -26,3 +26,23 @@ exports.signup = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
       }
 };
+
+exports.login = async (req, res) => {
+  try{
+    const {email, password} = req.body
+    const user = await User.findOne({email})
+    if(!user){
+      return res.status(400).json({auth:false ,message: 'Incorrect information'})
+    }
+
+    const salting_word = user.salting_word
+    const hash = crypto.createHash('sha256').update(password + salting_word).digest('hex')
+
+    if(hash === user.password){
+      return res.status(200).json({auth:true, message:"Login succesfull"})
+   }
+  }catch(error){
+    console.error(error)
+    res.status(500).json({message: "Internal server error"})
+  }
+}
