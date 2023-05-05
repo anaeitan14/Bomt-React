@@ -1,5 +1,6 @@
 const crypto = require('crypto')
 const User = require('../models/userSchema')
+const jwt = require('jsonwebtoken')
 
 exports.register = async (req, res) => {
     try {
@@ -25,6 +26,17 @@ exports.register = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
       }
 };
+
+exports.googleRegister = async (req, res) => {
+  try{
+    const info = req.body
+    const decoded = jwt.decode(info)
+
+    console.log(decoded)
+  }catch(error){
+
+  }
+}
 
 exports.login = async (req, res) => {
   try{
