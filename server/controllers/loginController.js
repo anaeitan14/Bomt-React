@@ -11,7 +11,7 @@ exports.register = async (req, res) => {
         }
     
         const salting_word = crypto.randomBytes(32).toString('base64');
-        const hash = crypto.pbkdf2Sync(password, salting_word, 1000, 64, 'sha512').toString('hex');    
+        const hash = crypto.pbkdf2Sync(password, salting_word, 950, 64, 'sha512').toString('hex');    
         const newUser = new User({
           email: email,
           password: hash,
