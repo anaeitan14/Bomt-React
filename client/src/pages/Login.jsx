@@ -17,7 +17,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const URL = "http://localhost:5000/api/signup";
+    const URL = "http://localhost:5000/api/register";
 
     axios
       .post(URL, {

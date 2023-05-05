@@ -11,8 +11,7 @@ exports.register = async (req, res) => {
         }
     
         const salting_word = crypto.randomBytes(32).toString('base64');
-        const hash = crypto.createHash('sha256').update(password + salting_word).digest('hex')
-    
+        const hash = crypto.pbkdf2Sync(password, salting_word, 1000, 64, 'sha512').toString('hex');    
         const newUser = new User({
           email: email,
           password: hash,
@@ -35,14 +34,14 @@ exports.login = async (req, res) => {
       return res.status(400).json({auth:false ,message: 'Incorrect information'})
     }
 
-    const salting_word = user.salting_word
-    const hash = crypto.createHash('sha256').update(password + salting_word).digest('hex')
+    const hash = crypto.pbkdf2Sync(password, user.salt, 1000, 64, 'sha512').toString('hex');
 
     if(hash === user.password){
-      return res.status(200).json({auth:true, message:"Login succesfull"})
+      return res.status(200).json({auth:true, message:'Login succesfull'})
    }
+   return res.status(400).json({auth:false, message: 'Incorrect information'})
   }catch(error){
     console.error(error)
-    res.status(500).json({message: "Internal server error"})
+    res.status(500).json({message: 'Internal server error'})
   }
 }

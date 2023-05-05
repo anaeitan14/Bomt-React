@@ -14,6 +14,16 @@ const userSchema = new mongoose.Schema({
     salting_word: {
         type: String,
         required: true
+    },
+
+    tables: {
+        type:[String],
+        default: []
+    },
+
+    time_stamp: {
+        type: Date,
+        default: Date.now
     }
   });
 
