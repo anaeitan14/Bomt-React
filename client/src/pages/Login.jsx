@@ -33,7 +33,7 @@ const Login = () => {
   };
 
   function handleCallbackResponse(response) {
-    var userObject = response.credential;
+    var userObject = response.credential.idToken;
 
     URL = "http://localhost:5000/api/google-register";
 
