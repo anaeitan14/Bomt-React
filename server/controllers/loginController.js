@@ -31,14 +31,10 @@ exports.register = async (req, res) => {
 exports.googleRegister = async (req, res) => {
   try{
     const {token} = req.body
-    const certsUrl = 'https://www.googleapis.com/oauth2/v1/certs';
-    const {info} = await axios.get(certsUrl);
-    const key = data['rsa-256']
-
-    const decoded = jwt.verify(token, publicKey, { algorithms: ['RS256'] });
+    const header = jwt.decode(token, {complete: true}).header
 
 
-    console.log(decoded)
+    console.log(token)
   }catch(error){
 
   }
