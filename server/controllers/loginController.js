@@ -33,10 +33,24 @@ exports.register = async (req, res) => {
 exports.googleRegister = async (req, res) => {
   try {
     const { JWT } = req.body;
-    console.log(JWT);
     const data = jwt.decode(JWT);
-    console.log(data);
-  } catch (error) {}
+  
+    const user = await User.findOne({email: data.email})
+    if(user){
+      res.status(400).json({message: "User exist already"})
+    }
+
+    const newUser = new User({
+      email: data.email,
+      password: "created with google"
+    })  
+    newUser.save();
+    res.status(200).json({message: "New user created succefully"})
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({message: "Internal server error"})
+  }
 };
 
 exports.login = async (req, res) => {
