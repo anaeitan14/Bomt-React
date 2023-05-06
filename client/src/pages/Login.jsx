@@ -35,13 +35,15 @@ const Login = () => {
   function handleCallbackResponse(response) {
     var userObject = response.credential.idToken;
 
+    console.log(userObject);
+
     URL = "http://localhost:5000/api/google-register";
 
     axios
       .post(URL, {
         JWT: userObject,
       })
-      .then((resposne) => console.log(response))
+      .then((response) => console.log(response))
       .catch((error) => console.log(error));
   }
 
