@@ -1,14 +1,15 @@
 import "./Login.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import jwt_decode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const fetchData = () => {};
 
@@ -22,8 +23,13 @@ const Login = () => {
         email: email,
         password: password,
       })
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
+      .then((response) => {
+        if (response.status === 200) {
+          // To add cookie for auth and redirect to main page
+          navigate("/");
+        }
+      })
+      .catch(()=>setErrorMessage("Incorrect information"));
   };
 
   function handleCallbackResponse(response) {
@@ -87,7 +93,7 @@ const Login = () => {
         <a href="/forgot">Forgot password?</a>
       </form>
       <div id="google-div"></div>
-      {error}
+      {errorMessage && <div>{errorMessage}</div>}
     </div>
   );
 };
