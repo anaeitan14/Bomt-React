@@ -18,7 +18,6 @@ const itemSchema = new mongoose.Schema({
 
     BuyMake:{
         type: String,
-        enum: ["Buy", "Make"],
         required: true
     },
 
