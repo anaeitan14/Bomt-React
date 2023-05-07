@@ -18,7 +18,7 @@ const itemSchema = new mongoose.Schema({
 
     BuyMake:{
         type: String,
-        enum: [Buy, Make],
+        enum: ["Buy", "Make"],
         required: true
     },
 
@@ -53,7 +53,7 @@ const itemSchema = new mongoose.Schema({
         }
     }],
     TreeAvailable: {
-        type: boolean,
+        type: Boolean,
         required: true
     }
   });
