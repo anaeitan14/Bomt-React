@@ -37,16 +37,15 @@ exports.googleRegister = async (req, res) => {
   
     const user = await User.findOne({email: data.email})
     if(user){
-      res.status(400).json({message: "User exist already"})
+      res.status(200).json({auth:true, message: "User exist already"})
     }
 
     const newUser = new User({
       email: data.email,
       password: "created with google",
-      salting_word: "none"
     })  
     newUser.save();
-    res.status(200).json({message: "New user created succefully"})
+    res.status(200).json({auth:true,  message: "New user created succefully"})
     
   } catch (error) {
     console.error(error);
@@ -79,3 +78,4 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+

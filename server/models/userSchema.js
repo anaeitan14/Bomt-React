@@ -13,7 +13,6 @@ const userSchema = new mongoose.Schema({
 
     salting_word: {
         type: String,
-        required: true
     },
 
     tables: {
