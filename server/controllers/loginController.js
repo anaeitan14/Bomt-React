@@ -42,7 +42,8 @@ exports.googleRegister = async (req, res) => {
 
     const newUser = new User({
       email: data.email,
-      password: "created with google"
+      password: "created with google",
+      salting_word: "none"
     })  
     newUser.save();
     res.status(200).json({message: "New user created succefully"})
