@@ -11,6 +11,17 @@ const itemSchema = new mongoose.Schema({
         required: true
     },
 
+    Description:{
+        type: String,
+        required: true
+    },
+
+    BuyMake:{
+        type: String,
+        enum: [Buy, Make],
+        required: true
+    },
+
     Manufacturer: {
         type: String,
     },
