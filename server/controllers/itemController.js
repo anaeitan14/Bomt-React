@@ -14,23 +14,13 @@ exports.addItem = async (req, res) => {
       BuyMake: "Buy",
       Manufacturer: item.Manufacturer,
       ManufacturerID: item.ManufacturerID,
-      Distrobutor: [
-        {
-          DistrobutorName: "uwu",
-          DistrobutorID: "123"
-        }
-      ],
-      Document: [
-        {
-          DocumentType: item.DocumentType,
-          DocumentLocation: item.DocumentLocation
-        }
-      ],
+      Distrobutor: item.Distrobutor,
+      Document: item.Document,
       TreeAvailable: item.TreeAvailable
     });
     
     await newItem.save();
-    console.log(item)
+    return(res.status(200).json({message: "Item added succsfully"}))
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
