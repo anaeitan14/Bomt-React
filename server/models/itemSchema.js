@@ -50,6 +50,13 @@ const itemSchema = new mongoose.Schema({
             required: true
         }
     }],
+    Father: {
+        type: String,
+        default: null
+    },
+    Sons: [{
+        type:[String],
+    }],
     TreeAvailable: {
         type: Boolean,
         required: true
