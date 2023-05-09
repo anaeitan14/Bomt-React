@@ -42,8 +42,6 @@ const RemoveBtn = () => {
                 setPNID(e.target.value);
               }}
               placeholder="PNID"
-              aria-label="PNID"
-              aria-describedby="PNID"
             />
           </InputGroup>
         </Modal.Body>
