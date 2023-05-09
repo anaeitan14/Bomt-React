@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import axios from "axios";
 
 const RemoveBtn = () => {
   const [show, setShow] = useState(false);
@@ -10,6 +11,19 @@ const RemoveBtn = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const removeItem = () => {
+    const URL = "http://localhost:5000/api/removeItem";
+
+    const item = {
+      pid: PNID,
+    };
+
+    axios
+      .post(URL, item)
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  };
 
   return (
     <>
@@ -23,7 +37,6 @@ const RemoveBtn = () => {
         </Modal.Header>
         <Modal.Body>
           <InputGroup className="mb-3">
-            <InputGroup.Text id="basic-addon1"></InputGroup.Text>
             <Form.Control
               onChange={(e) => {
                 setPNID(e.target.value);
@@ -38,7 +51,7 @@ const RemoveBtn = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={removeItem}>
             Remove
           </Button>
         </Modal.Footer>
