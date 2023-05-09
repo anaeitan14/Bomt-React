@@ -11,25 +11,24 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const fetchData = () => {};
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const URL = "http://localhost:5000/api/login";
 
+    const info = {
+      email: email,
+      password: password,
+    };
     axios
-      .post(URL, {
-        email: email,
-        password: password,
-      })
+      .post(URL, info)
       .then((response) => {
         if (response.status === 200) {
           // To add cookie for auth and redirect to main page
           navigate("/");
         }
       })
-      .catch(()=>setErrorMessage("Incorrect information"));
+      .catch(() => setErrorMessage("Incorrect information"));
   };
 
   function handleCallbackResponse(response) {

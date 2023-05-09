@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import axios from "axios";
 
+
 const AddBtn = () => {
   const [productID, setProductID] = useState("");
   const [productName, setProductName] = useState("");
@@ -125,7 +126,12 @@ const AddBtn = () => {
                 placeholder="Description"
               />
             </InputGroup>
-            <Form.Select className="mb-3">
+            <Form.Select
+              className="mb-3"
+              onChange={(e) => {
+                setBuyMake(e.target.value);
+              }}
+            >
               <Form.Label>Type</Form.Label>
               <option value="Buy">Buy</option>
               <option value="Make">Make</option>
