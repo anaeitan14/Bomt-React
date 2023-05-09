@@ -26,8 +26,7 @@ const itemSchema = new mongoose.Schema({
     },
 
     ManufacturerID: {
-        type: [String],
-        default: []
+        type: String
     },
 
     Distrobutor: [{
