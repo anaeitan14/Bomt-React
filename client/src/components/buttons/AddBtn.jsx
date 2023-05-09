@@ -6,38 +6,84 @@ import InputGroup from "react-bootstrap/InputGroup";
 import axios from "axios";
 
 const AddBtn = () => {
-  const [ProductID, setProductID] = useState("");
-  const [ProductName, setProductName] = useState("");
-  const [Description, setDescription] = useState("");
-  const [BuyMake, setBuyMake] = useState("");
-  const [Manufacturer, setManufacturer] = useState("");
-  const [ManufacturerID, setManufacturerID] = useState("");
-  const [DistributorName, setDistributorName] = useState("");
-  const [DistributorID, setDistributorID] = useState("");
-  const [DocumentType, setDocumentType] = useState("");
-  const [DocumentLocation, setDocumentLocation] = useState("");
-  const [TreeAvailable, setTreeAvailable] = useState(false);
-
+  const [productID, setProductID] = useState("");
+  const [productName, setProductName] = useState("");
+  const [description, setDescription] = useState("");
+  const [buyMake, setBuyMake] = useState("Buy");
+  const [manufacturer, setManufacturer] = useState("");
+  const [manufacturerID, setManufacturerID] = useState("");
+  const [treeAvailable, setTreeAvailable] = useState(false);
+  const [dynamicInputs, setDynamicInputs] = useState({});
+  const [distCount, setDistCount] = useState(1);
+  const [docCount, setDocCount] = useState(1);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const distInputs = [];
+  for (let i = 0; i < distCount; i++) {
+    let distID = "distID" + (i + 1);
+    let distID2 = "Distributor ID " + (i + 1);
+    let distName = "distName" + (i + 1);
+    let distName2 = "Distributor Name " + (i + 1);
+    distInputs.push(
+      <InputGroup className="mb-3">
+        <Form.Control
+          onChange={(e) => {
+            setDynamicInputs(e);
+          }}
+          placeholder={distID2}
+          name={distID}
+        />
+        <Form.Control
+          onChange={(e) => {
+            setDynamicInputs(e);
+          }}
+          placeholder={distName2}
+          name={distName}
+        />
+      </InputGroup>
+    );
+  }
+
+  const docInputs = [];
+  for (let i = 0; i < docCount; i++) {
+    let docType = "docType" + (i + 1);
+    let docType2 = "Document Type " + (i + 1);
+    let docLoc = "docLoc" + i;
+    let docLoc2 = "Document Location " + (i + 1);
+    docInputs.push(
+      <InputGroup className="mb-3">
+        <Form.Control
+          onChange={(e) => {
+            setDynamicInputs(e);
+          }}
+          placeholder={docType2}
+          name={docType}
+        />
+        <Form.Control
+          onChange={(e) => {
+            setDynamicInputs(e);
+          }}
+          placeholder={docLoc2}
+          name={docLoc}
+        />
+      </InputGroup>
+    );
+  }
 
   const handleAdd = () => {
     const URL = "http://localhost:5000/api/addItem";
 
     axios.post(URL, {
       item: {
-        ProductID: ProductID,
-        ProductName: ProductName,
-        Description: Description,
-        BuyMake: BuyMake,
-        Manufacturer: Manufacturer,
-        ManufacturerID: ManufacturerID,
-        DistributorName: DistributorName,
-        DistributorID: DistributorID,
-        DocumentType: DocumentType,
-        DocumentLocation: DocumentLocation,
-        TreeAvailable: TreeAvailable,
+        ProductID: productID,
+        ProductName: productName,
+        Description: description,
+        BuyMake: buyMake,
+        Manufacturer: manufacturer,
+        ManufacturerID: manufacturerID,
+        TreeAvailable: treeAvailable,
       },
     });
   };
@@ -98,34 +144,27 @@ const AddBtn = () => {
                 placeholder="Manufacturer ID"
               />
             </InputGroup>
-            <InputGroup className="mb-3">
-              <Form.Control
-                onChange={(e) => {
-                  setDistributorName(e.target.value);
-                }}
-                placeholder="Distributor Name"
-              />
-              <Form.Control
-                onChange={(e) => {
-                  setDistributorID(e.target.value);
-                }}
-                placeholder="Distributor ID"
-              />
-            </InputGroup>
-            <InputGroup className="mb-3">
-              <Form.Control
-                onChange={(e) => {
-                  setDocumentType(e.target.value);
-                }}
-                placeholder="Document Type"
-              />
-              <Form.Control
-                onChange={(e) => {
-                  setDocumentLocation(e.target.value);
-                }}
-                placeholder="Document Location"
-              />
-            </InputGroup>
+            <select onChange={(e) => setDistCount(e.target.value)}>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            {distInputs.map((inp) => inp)}
+            <select onChange={(e) => setDocCount(e.target.value)}>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+            {docInputs.map((inp) => inp)}
             <Form.Select
               className="mb-3"
               onChange={(e) => setTreeAvailable(e.target.value)}
