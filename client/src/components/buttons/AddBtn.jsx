@@ -76,13 +76,15 @@ const AddBtn = () => {
     const URL = "http://localhost:5000/api/addItem";
 
     const item = {
-      ProductID: productID,
-      ProductName: productName,
-      Description: description,
-      BuyMake: buyMake,
-      Manufacturer: manufacturer,
-      ManufacturerID: manufacturerID,
-      TreeAvailable: treeAvailable,
+      item: {
+        ProductID: productID,
+        ProductName: productName,
+        Description: description,
+        BuyMake: buyMake,
+        Manufacturer: manufacturer,
+        ManufacturerID: manufacturerID,
+        TreeAvailable: treeAvailable,
+      },
     };
 
     axios.post(URL, item);
