@@ -51,11 +51,12 @@ const itemSchema = new mongoose.Schema({
         }
     }],
     Father: {
-        type: String,
-        default: null
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Item'
     },
     Sons: [{
-        type:[String],
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Item'
     }],
     TreeAvailable: {
         type: Boolean,
