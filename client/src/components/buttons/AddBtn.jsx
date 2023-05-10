@@ -5,7 +5,6 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import axios from "axios";
 
-
 const AddBtn = () => {
   const [productID, setProductID] = useState("");
   const [productName, setProductName] = useState("");
@@ -14,12 +13,23 @@ const AddBtn = () => {
   const [manufacturer, setManufacturer] = useState("");
   const [manufacturerID, setManufacturerID] = useState("");
   const [treeAvailable, setTreeAvailable] = useState(false);
-  const [dynamicInputs, setDynamicInputs] = useState({});
   const [distCount, setDistCount] = useState(1);
   const [docCount, setDocCount] = useState(1);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [distriInputs, setDistriInputs] = useState({});
+  const [docuInputs, setDocuInputs] = useState({});
+
+  const handleOnChangeDistri = (event) => {
+    const { name, value } = event.target;
+    setDistriInputs({ ...distriInputs, [name]: value });
+  };
+
+  const handleOnChangeDocs = (event) => {
+    const { name, value } = event.target;
+    setDocuInputs({ ...docuInputs, [name]: value });
+  };
 
   const distInputs = [];
   for (let i = 0; i < distCount; i++) {
@@ -30,16 +40,12 @@ const AddBtn = () => {
     distInputs.push(
       <InputGroup className="mb-3">
         <Form.Control
-          onChange={(e) => {
-            setDynamicInputs(e);
-          }}
+          onChange={handleOnChangeDistri}
           placeholder={distID2}
           name={distID}
         />
         <Form.Control
-          onChange={(e) => {
-            setDynamicInputs(e);
-          }}
+          onChange={handleOnChangeDistri}
           placeholder={distName2}
           name={distName}
         />
@@ -51,21 +57,17 @@ const AddBtn = () => {
   for (let i = 0; i < docCount; i++) {
     let docType = "docType" + (i + 1);
     let docType2 = "Document Type " + (i + 1);
-    let docLoc = "docLoc" + i;
+    let docLoc = "docLoc" + (i + 1);
     let docLoc2 = "Document Location " + (i + 1);
     docInputs.push(
       <InputGroup className="mb-3">
         <Form.Control
-          onChange={(e) => {
-            setDynamicInputs(e);
-          }}
+          onChange={handleOnChangeDocs}
           placeholder={docType2}
           name={docType}
         />
         <Form.Control
-          onChange={(e) => {
-            setDynamicInputs(e);
-          }}
+          onChange={handleOnChangeDocs}
           placeholder={docLoc2}
           name={docLoc}
         />
@@ -84,6 +86,8 @@ const AddBtn = () => {
         BuyMake: buyMake,
         Manufacturer: manufacturer,
         ManufacturerID: manufacturerID,
+        Distrobutor: [distriInputs],
+        Document: [docuInputs],
         TreeAvailable: treeAvailable,
       },
     };
