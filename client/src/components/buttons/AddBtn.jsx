@@ -31,6 +31,30 @@ const AddBtn = () => {
     setDocuInputs({ ...docuInputs, [name]: value });
   };
 
+  const seperateObj = (obj) => {
+    const res = [];
+    const keys = Object.keys(obj);
+    for (let i = 0; i < keys.length; i += 2) {
+      res.push({
+        distName: obj[keys[i + 1]],
+        distID: obj[keys[i]],
+      });
+    }
+    return res;
+  };
+
+  const seperateDoc = (obj) => {
+    const res = [];
+    const keys = Object.keys(obj);
+    for (let i = 0; i < keys.length; i += 2) {
+      res.push({
+        distName: obj[keys[i]],
+        distLocation: obj[keys[i+1]],
+      });
+    }
+    return res;
+  };
+
   const distInputs = [];
   for (let i = 0; i < distCount; i++) {
     let distID = "distID" + (i + 1);
@@ -43,11 +67,13 @@ const AddBtn = () => {
           onChange={handleOnChangeDistri}
           placeholder={distID2}
           name={distID}
+          defaultValue=""
         />
         <Form.Control
           onChange={handleOnChangeDistri}
           placeholder={distName2}
           name={distName}
+          defaultValue=""
         />
       </InputGroup>
     );
@@ -65,11 +91,13 @@ const AddBtn = () => {
           onChange={handleOnChangeDocs}
           placeholder={docType2}
           name={docType}
+          defaultValue=""
         />
         <Form.Control
           onChange={handleOnChangeDocs}
           placeholder={docLoc2}
           name={docLoc}
+          defaultValue=""
         />
       </InputGroup>
     );
@@ -78,15 +106,8 @@ const AddBtn = () => {
   const handleAdd = () => {
     const URL = "http://localhost:5000/api/addItem";
 
-    const distInputsArray = Object.keys(distriInputs).map((key) => ({
-      DistrobutorID: key,
-      DistrobutorName: distriInputs[key],
-    }));
-
-    const docInputsArray = Object.keys(docuInputs).map((key) => ({
-      DocumentType: key,
-      DocumentLocation: docuInputs[key],
-    }));
+    const dis = seperateObj(distriInputs);
+    const doc = seperateDoc(docuInputs);
 
     const item = {
       ProductID: productID,
@@ -95,8 +116,8 @@ const AddBtn = () => {
       BuyMake: buyMake,
       Manufacturer: manufacturer,
       ManufacturerID: manufacturerID,
-      Distrobutor: distInputsArray,
-      Document: docInputsArray,
+      Distrobutor: dis,
+      Document: doc,
       TreeAvailable: treeAvailable,
     };
 
