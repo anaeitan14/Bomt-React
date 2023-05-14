@@ -49,7 +49,7 @@ const AddBtn = () => {
     for (let i = 0; i < keys.length; i += 2) {
       res.push({
         distName: obj[keys[i]],
-        distLocation: obj[keys[i+1]],
+        distLocation: obj[keys[i + 1]],
       });
     }
     return res;
@@ -120,6 +120,18 @@ const AddBtn = () => {
       Document: doc,
       TreeAvailable: treeAvailable,
     };
+
+    setProductID("");
+    setProductName("");
+    setDescription("");
+    setBuyMake("Buy");
+    setManufacturer("");
+    setManufacturerID("");
+    setTreeAvailable(false);
+    setDistCount(1);
+    setDocCount(1);
+    setDistriInputs({});
+    setDocuInputs({});
 
     axios
       .post(URL, item)
