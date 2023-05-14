@@ -78,21 +78,36 @@ const AddBtn = () => {
   const handleAdd = () => {
     const URL = "http://localhost:5000/api/addItem";
 
+    const distInputsArray = Object.keys(distriInputs).map((key) => ({
+      DistrobutorID: key,
+      DistrobutorName: distriInputs[key],
+    }));
+
+    const docInputsArray = Object.keys(docuInputs).map((key) => ({
+      DocumentType: key,
+      DocumentLocation: docuInputs[key],
+    }));
+
     const item = {
-      item: {
-        ProductID: productID,
-        ProductName: productName,
-        Description: description,
-        BuyMake: buyMake,
-        Manufacturer: manufacturer,
-        ManufacturerID: manufacturerID,
-        Distrobutor: [distriInputs],
-        Document: [docuInputs],
-        TreeAvailable: treeAvailable,
-      },
+      ProductID: productID,
+      ProductName: productName,
+      Description: description,
+      BuyMake: buyMake,
+      Manufacturer: manufacturer,
+      ManufacturerID: manufacturerID,
+      Distrobutor: distInputsArray,
+      Document: docInputsArray,
+      TreeAvailable: treeAvailable,
     };
 
-    axios.post(URL, item);
+    axios
+      .post(URL, item)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -156,7 +171,11 @@ const AddBtn = () => {
                 placeholder="Manufacturer ID"
               />
             </InputGroup>
-            <select onChange={(e) => setDistCount(e.target.value)}>
+            <select
+              class="form-select form-select-lg mb-3"
+              onChange={(e) => setDistCount(e.target.value)}
+            >
+              <option selected>Select the number of documents</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -164,7 +183,11 @@ const AddBtn = () => {
               <option value="5">5</option>
             </select>
             {distInputs.map((inp) => inp)}
-            <select onChange={(e) => setDocCount(e.target.value)}>
+            <select
+              class="form-select form-select-lg mb-3"
+              onChange={(e) => setDocCount(e.target.value)}
+            >
+              <option selected>Select the number of distributors</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
