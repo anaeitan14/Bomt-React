@@ -7,6 +7,7 @@ exports.addItem = async (req, res) => {
     if(existingItem){
       return res.status(400).json({message: "The item exists already"})
     }
+    console.log(item)
     const newItem = new Item({
       ProductID: item.ProductID,
       ProductName: item.ProductName,
@@ -14,8 +15,8 @@ exports.addItem = async (req, res) => {
       BuyMake: item.BuyMake,
       Manufacturer: item.Manufacturer,
       ManufacturerID: item.ManufacturerID,
-      Distrobutor: item.Distrobutor,
       Document: item.Document,
+      Distrobutor: item.Distrobutor,
       TreeAvailable: item.TreeAvailable
     });
     
