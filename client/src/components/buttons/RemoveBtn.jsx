@@ -9,8 +9,12 @@ const RemoveBtn = () => {
   const [show, setShow] = useState(false);
   const [PNID, setPNID] = useState("");
 
-  const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleClose = () => {
+    setPNID("");
+    setShow(false);
+  };
 
   const removeItem = () => {
     const URL = "http://localhost:5000/api/removeItem";
@@ -23,6 +27,9 @@ const RemoveBtn = () => {
       .post(URL, item)
       .then((response) => response.json())
       .then((data) => console.log(data));
+
+    setPNID("");
+    handleClose();
   };
 
   return (
