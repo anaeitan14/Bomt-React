@@ -11,6 +11,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 export const Home = () => {
   const [searchQuery, setSetQuery] = useState("");
   const [item, setItem] = useState({});
+  const [data, setData] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +26,18 @@ export const Home = () => {
     const data = response.data;
     setItem(data);
   };
+
+  const fetchData = async () => {
+    const URL = "http://localhost:5000/api/";
+
+    const response = await axios.get(URL);
+    const data = response.data;
+    setData(data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="container-fluid p-0">

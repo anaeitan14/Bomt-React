@@ -9,18 +9,31 @@ const AddBtn = () => {
   const [productID, setProductID] = useState("");
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
-  const [buyMake, setBuyMake] = useState("Buy");
+  const [buyMake, setBuyMake] = useState("");
   const [manufacturer, setManufacturer] = useState("");
   const [manufacturerID, setManufacturerID] = useState("");
   const [treeAvailable, setTreeAvailable] = useState(false);
-  const [distCount, setDistCount] = useState(1);
-  const [docCount, setDocCount] = useState(1);
+  const [distCount, setDistCount] = useState(0);
+  const [docCount, setDocCount] = useState(0);
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [distriInputs, setDistriInputs] = useState({});
   const [docuInputs, setDocuInputs] = useState({});
 
+  const handleClose = () => {
+    setProductID("");
+    setProductName("");
+    setDescription("");
+    setBuyMake("");
+    setManufacturer("");
+    setManufacturerID("");
+    setTreeAvailable(false);
+    setDistCount(0);
+    setDocCount(0);
+    setDistriInputs({});
+    setDocuInputs({});
+    setShow(false);
+  };
   const handleOnChangeDistri = (event) => {
     const { name, value } = event.target;
     setDistriInputs({ ...distriInputs, [name]: value });
@@ -29,6 +42,30 @@ const AddBtn = () => {
   const handleOnChangeDocs = (event) => {
     const { name, value } = event.target;
     setDocuInputs({ ...docuInputs, [name]: value });
+  };
+
+  const seperateObj = (obj) => {
+    const res = [];
+    const keys = Object.keys(obj);
+    for (let i = 0; i < keys.length; i += 2) {
+      res.push({
+        distName: obj[keys[i + 1]],
+        distID: obj[keys[i]],
+      });
+    }
+    return res;
+  };
+
+  const seperateDoc = (obj) => {
+    const res = [];
+    const keys = Object.keys(obj);
+    for (let i = 0; i < keys.length; i += 2) {
+      res.push({
+        distName: obj[keys[i]],
+        distLocation: obj[keys[i + 1]],
+      });
+    }
+    return res;
   };
 
   const distInputs = [];
@@ -43,11 +80,13 @@ const AddBtn = () => {
           onChange={handleOnChangeDistri}
           placeholder={distID2}
           name={distID}
+          defaultValue=""
         />
         <Form.Control
           onChange={handleOnChangeDistri}
           placeholder={distName2}
           name={distName}
+          defaultValue=""
         />
       </InputGroup>
     );
@@ -65,11 +104,13 @@ const AddBtn = () => {
           onChange={handleOnChangeDocs}
           placeholder={docType2}
           name={docType}
+          defaultValue=""
         />
         <Form.Control
           onChange={handleOnChangeDocs}
           placeholder={docLoc2}
           name={docLoc}
+          defaultValue=""
         />
       </InputGroup>
     );
@@ -78,21 +119,42 @@ const AddBtn = () => {
   const handleAdd = () => {
     const URL = "http://localhost:5000/api/addItem";
 
+    const dis = seperateObj(distriInputs);
+    const doc = seperateDoc(docuInputs);
+
     const item = {
-      item: {
-        ProductID: productID,
-        ProductName: productName,
-        Description: description,
-        BuyMake: buyMake,
-        Manufacturer: manufacturer,
-        ManufacturerID: manufacturerID,
-        Distrobutor: [distriInputs],
-        Document: [docuInputs],
-        TreeAvailable: treeAvailable,
-      },
+      ProductID: productID,
+      ProductName: productName,
+      Description: description,
+      BuyMake: buyMake,
+      Manufacturer: manufacturer,
+      ManufacturerID: manufacturerID,
+      Distrobutor: dis,
+      Document: doc,
+      TreeAvailable: treeAvailable,
     };
 
-    axios.post(URL, item);
+    setProductID("");
+    setProductName("");
+    setDescription("");
+    setBuyMake("");
+    setManufacturer("");
+    setManufacturerID("");
+    setTreeAvailable(false);
+    setDistCount(0);
+    setDocCount(0);
+    setDistriInputs({});
+    setDocuInputs({});
+
+    axios
+      .post(URL, item)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    handleClose();
   };
 
   return (
@@ -130,13 +192,13 @@ const AddBtn = () => {
                 placeholder="Description"
               />
             </InputGroup>
+            <Form.Label>Type</Form.Label>
             <Form.Select
               className="mb-3"
               onChange={(e) => {
                 setBuyMake(e.target.value);
               }}
             >
-              <Form.Label>Type</Form.Label>
               <option value="Buy">Buy</option>
               <option value="Make">Make</option>
             </Form.Select>
@@ -156,7 +218,11 @@ const AddBtn = () => {
                 placeholder="Manufacturer ID"
               />
             </InputGroup>
-            <select onChange={(e) => setDistCount(e.target.value)}>
+            <select
+              class="form-select form-select-lg mb-3"
+              onChange={(e) => setDistCount(e.target.value)}
+            >
+              <option selected>Select the number of documents</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -164,7 +230,11 @@ const AddBtn = () => {
               <option value="5">5</option>
             </select>
             {distInputs.map((inp) => inp)}
-            <select onChange={(e) => setDocCount(e.target.value)}>
+            <select
+              class="form-select form-select-lg mb-3"
+              onChange={(e) => setDocCount(e.target.value)}
+            >
+              <option selected>Select the number of distributors</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -177,11 +247,11 @@ const AddBtn = () => {
               <option value="10">10</option>
             </select>
             {docInputs.map((inp) => inp)}
+            <Form.Label>Is tree tree available?</Form.Label>
             <Form.Select
               className="mb-3"
               onChange={(e) => setTreeAvailable(e.target.value)}
             >
-              <Form.Label>Is tree</Form.Label>
               <option value="true">Yes</option>
               <option value="false">No</option>
             </Form.Select>
