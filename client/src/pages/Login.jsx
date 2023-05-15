@@ -20,28 +20,35 @@ const Login = () => {
       email: email,
       password: password,
     };
-    axios
-      .post(URL, info)
-      .then((response) => {
-        if (response.status === 200) {
-          // To add cookie for auth and redirect to main page
-          navigate("/");
-        }
-      })
-      .catch(() => setErrorMessage("Incorrect information"));
+
+    try {
+      const response = await axios.post(URL, info);
+      if (response.status === 200) {
+        localStorage.setItem("Authenticated", "True");
+        localStorage.setItem("UID", email);
+        navigate("/");
+      }
+    } catch (err) {
+      setErrorMessage("Incorrect information");
+    }
   };
 
-  function handleCallbackResponse(response) {
+  async function handleCallbackResponse(response) {
     var userObject = response.credential;
 
-    URL = "http://localhost:5000/api/google-register";
+    const URL = "http://localhost:5000/api/google-register";
 
-    axios
-      .post(URL, {
-        JWT: userObject,
-      })
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
+    try {
+      const response = await axios.post(URL, { JWT: userObject });
+
+      if (response.status === 200) {
+        localStorage.setItem("Authenticated", "True");
+        localStorage.setItem("UID", email);
+        navigate("/");
+      }
+    } catch (err) {
+      setErrorMessage("Incorrect information");
+    }
   }
 
   useEffect(() => {
