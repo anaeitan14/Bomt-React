@@ -1,10 +1,8 @@
-import Sidebar from "../components/Sidebar";
-
 const Users = () => {
 
   return (
     <>
-    <Sidebar/>
+    
     </>
   );
 };

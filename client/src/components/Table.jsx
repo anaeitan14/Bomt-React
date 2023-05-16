@@ -1,10 +1,9 @@
 import Item from "./Item";
-import "./Table.css";
 
 const Table = ({ data }) => {
   return (
     <div id="table-wrapper">
-      <table id="styled-table">
+      <table className="table table-striped table-hover table-bordered">
         <thead>
           <tr id="row-header">
             <th>PN</th>
@@ -19,7 +18,7 @@ const Table = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          <Item PN={data.ProductName} PNID={data.ProductID} />
+          <Item />
         </tbody>
       </table>
     </div>

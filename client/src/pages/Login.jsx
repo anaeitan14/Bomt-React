@@ -24,9 +24,7 @@ const Login = () => {
     try {
       const response = await axios.post(URL, info);
       if (response.status === 200) {
-        localStorage.setItem("Authenticated", "True");
-        localStorage.setItem("UID", email);
-        navigate("/");
+        // navigate("/");
       }
     } catch (err) {
       setErrorMessage("Incorrect information");

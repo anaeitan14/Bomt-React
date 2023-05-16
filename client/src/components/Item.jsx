@@ -1,4 +1,3 @@
-import "./Item.css";
 import DistBtn from "../components/buttons/DistBtn";
 import DocsBtn from "../components/buttons/DocsBtn";
 
