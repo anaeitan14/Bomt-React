@@ -7,7 +7,7 @@ exports.register = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email:email });
     if (user) {
       return res.status(400).json({ message: "User already exists" });
     }
@@ -45,7 +45,7 @@ exports.googleRegister = async (req, res) => {
       password: "created with google",
     })  
     newUser.save();
-    res.status(200).json({auth:true,  message: "New user created succefully"})
+    res.status(200).json({auth:true, email:data.email,  message: "New user created succefully"})
     
   } catch (error) {
     console.error(error);
