@@ -2,6 +2,7 @@ const crypto = require("crypto");
 const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
+const session = require('express-session')
 
 exports.register = async (req, res) => {
   try {
@@ -68,7 +69,8 @@ exports.login = async (req, res) => {
       .toString("hex");
 
     if (hash === user.password) {
-      return res.status(200).json({ auth: true, message: "Login succesfull" });
+      req.session.user = user
+      return res.status(200).json({auth: true, message: "user login succsefully"})
     }
     return res
       .status(400)
