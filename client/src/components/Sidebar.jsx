@@ -17,7 +17,7 @@ const Sidebar = () => {
       <a href="/logs">Logs</a>
       <a href="/reports">Reports</a>
       <a href="/users">Users</a>
-      <button onClick={handleSignout}>Logout</button>
+      <button id="logout" onClick={handleSignout}>Logout</button>
     </div>
   );
 };

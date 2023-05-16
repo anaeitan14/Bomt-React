@@ -3,6 +3,7 @@
 #side {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   float: left;
   background-color: var(--sidebar-background);
   color: var(--button-text);
@@ -11,12 +12,18 @@
   padding: 0.8em;
 }
 
-#side a {
+#side a,
+#logout {
   text-decoration: none;
   color: var(--button-text);
   font-weight: 600;
   margin: 5% 0px;
   display: block;
+}
+
+#logout {
+  border: none;
+  background: none;
 }
 
 /* @media only screen and (max-width: 1600px) {
