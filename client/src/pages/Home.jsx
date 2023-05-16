@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Header from "../components/Header";
+import Header from "../components/Navbar";
 import Table from "../components/Table";
 import AddBtn from "../components/buttons/AddBtn";
 import RemoveBtn from "../components/buttons/RemoveBtn";
@@ -37,15 +37,17 @@ export const Home = () => {
   }, []);
 
   return (
-    <div className="container-fluid p-0">
+    <>
       <Header />
-      <form onSubmit={handleSubmit}>
-        <div className="d-flex justify-content-around m-2">
-          <AddBtn />
-          <RemoveBtn />
-        </div>
-      </form>
-      <Table data={item} />
-    </div>
+      <div className="container-fluid p-0">
+        <form onSubmit={handleSubmit}>
+          <div className="d-flex justify-content-around m-2">
+            <AddBtn />
+            <RemoveBtn />
+          </div>
+        </form>
+        <Table data={item} />
+      </div>
+    </>
   );
 };
