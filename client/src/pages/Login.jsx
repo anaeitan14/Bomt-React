@@ -42,8 +42,6 @@ const Login = () => {
       const response = await axios.post(URL, { JWT: userObject });
 
       if (response.status === 200) {
-        localStorage.setItem("Authenticated", "True");
-        localStorage.setItem("UID", email);
         navigate("/");
       }
     } catch (err) {

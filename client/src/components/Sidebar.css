@@ -12,18 +12,12 @@
   padding: 0.8em;
 }
 
-#side a,
-#logout {
+#side a {
   text-decoration: none;
   color: var(--button-text);
   font-weight: 600;
   margin: 5% 0px;
   display: block;
-}
-
-#logout {
-  border: none;
-  background: none;
 }
 
 /* @media only screen and (max-width: 1600px) {

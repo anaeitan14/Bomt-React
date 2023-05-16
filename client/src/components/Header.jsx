@@ -2,18 +2,16 @@ import "./Header.css";
 import { useState, useEffect } from "react";
 
 const Header = () => {
-  const [usernameOnline, setUsernameOnline] = useState("");
+  const [usernameOnline, setUsernameOnline] = useState("Test");
 
-  useEffect(() => {
-    setUsernameOnline(localStorage.getItem("UID"));
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div id="header">
       <h2>
         <a href="/profile">
           <span>{usernameOnline}</span>
-        </a>{" "}
+        </a>
         online
       </h2>
     </div>
