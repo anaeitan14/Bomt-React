@@ -1,22 +1,22 @@
 import DistBtn from "../components/buttons/DistBtn";
 import DocsBtn from "../components/buttons/DocsBtn";
 
-const Item = ({ PN, PNID, Description, MFR, MFRPN, Type, Tree }) => {
+const Item = ({ data }) => {
   return (
     <tr id="item-container">
-      <td>{PN}</td>
-      <td>{PNID}</td>
-      <td>{Description}</td>
-      <td>{Type}</td>
-      <td>{MFR}</td>
-      <td>{MFRPN}</td>
+      <td>{data.ProductID}</td>
+      <td>{data.ProductName}</td>
+      <td>{data.Description}</td>
+      <td>{data.BuyMake}</td>
+      <td>{data.Manufacturer}</td>
+      <td>{data.ManufacturerID}</td>
       <td>
-        <DistBtn />
+        <DistBtn data={data.Distrobutor}/>
       </td>
       <td>
-        <DocsBtn />
+        <DocsBtn data={data.Documents} />
       </td>
-      <td>{Tree}</td>
+      <td>{data.TreeAvailable ? "Yes" : "No"}</td>
     </tr>
   );
 };

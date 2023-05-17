@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-const DocsBtn = () => {
-  const [show, setShow] = useState(false);
+const DocsBtn = ({ data }) => {
+  // useEffect(() => {
+  //   {
+  //     data.map((doc) => (
+  //       <div>
+  //         <p>{doc.DocumentType}</p>
+  //         <p>{doc.DocumentLocation}</p>
+  //       </div>
+  //     ));
+  //   }
+  // }, [data]);
 
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -13,7 +23,6 @@ const DocsBtn = () => {
       <Button variant="primary" onClick={handleShow}>
         View Docs
       </Button>
-
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Documents</Modal.Title>

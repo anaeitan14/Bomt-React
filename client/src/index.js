@@ -13,6 +13,7 @@ import Logs from "./pages/Logs";
 import Users from "./pages/Users";
 import "./index.css";
 import Profile from "./pages/Profile";
+import "bootstrap/dist/js/bootstrap.bundle";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

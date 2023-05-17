@@ -6,7 +6,7 @@ import AddBtn from "../components/buttons/AddBtn";
 import RemoveBtn from "../components/buttons/RemoveBtn";
 
 export const Home = () => {
-  const [searchQuery, setSetQuery] = useState("");
+  const [searchQuery, setQuery] = useState("");
   const [item, setItem] = useState({});
   const [data, setData] = useState({});
 
@@ -18,10 +18,17 @@ export const Home = () => {
     };
 
     const URL = "http://localhost:5000/api/searchItem";
+    let response;
 
-    const response = await axios.post(URL, query);
-    const data = response.data;
-    setItem(data);
+    try {
+      response = await axios.post(URL, query);
+      setData(response.data);
+    } catch (err) {
+      console.log(err);
+      if (err.response.status === 400) {
+        alert(err.response.data.message);
+      }
+    }
   };
 
   const fetchData = async () => {
@@ -39,15 +46,24 @@ export const Home = () => {
   return (
     <>
       <Header />
-      <div className="container-fluid p-0">
-        <form onSubmit={handleSubmit}>
-          <div className="d-flex justify-content-around m-2">
-            <AddBtn />
-            <RemoveBtn />
+      <div className="container-fluid p-3">
+        <form className="d-flex justify-content-around" onSubmit={handleSubmit}>
+          <div className="d-flex">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Item"
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <button class="btn btn-outline-success" type="submit">
+              Search
+            </button>
           </div>
+          <AddBtn />
+          <RemoveBtn />
         </form>
-        <Table data={item} />
       </div>
+      <Table data={data} />
     </>
   );
 };
