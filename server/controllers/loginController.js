@@ -59,9 +59,7 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      return res
-        .status(400)
-        .json({ auth: false, message: "Incorrect information" });
+      return res.status(400).json({ auth: false, message: "Incorrect information" });
     }
 
     const hash = crypto
@@ -70,11 +68,10 @@ exports.login = async (req, res) => {
 
     if (hash === user.password) {
       req.session.user = user
-      return res.status(200).json({auth: true, message: "user login succsefully"})
+      console.log(req.session)
+      return res.status(200).json({auth: true, message: "Redirect to table picker"})
     }
-    return res
-      .status(400)
-      .json({ auth: false, message: "Incorrect information" });
+    return res.status(400).json({ auth: false, message: "Incorrect information" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });

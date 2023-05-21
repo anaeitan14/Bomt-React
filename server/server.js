@@ -19,14 +19,6 @@ const sessionConfig = {
 app.use(express.json())
 app.use(expresssession(sessionConfig))
 
-app.get('/login', (req, res) => {
-    if (req.session.user) {
-      res.redirect('/');
-    } else {
-      res.redirect('/login');
-    }
-  });
-
 app.use(cors())
 app.use('/api', routes)
 mongoose.connect(mongoURI)
