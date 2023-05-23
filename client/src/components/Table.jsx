@@ -1,7 +1,6 @@
 import Item from "./Item";
 
 const Table = ({ data }) => {
-  console.log(data);
   return (
     <div id="table-wrapper">
       <table className="table table-striped table-hover table-bordered">

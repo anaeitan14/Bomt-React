@@ -14,7 +14,7 @@ const Item = ({ data }) => {
         <DistBtn data={data.Distrobutor} />
       </td>
       <td>
-        <DocsBtn data={data.Documents} />
+        <DocsBtn data={data.Document} />
       </td>
       <td>{data.TreeAvailable ? "Yes" : "No"}</td>
     </tr>

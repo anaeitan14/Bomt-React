@@ -14,9 +14,7 @@ const DistBtn = ({ data }) => {
       setDist(data);
       setDisplay(true);
     }
-  }, []);
-
-  console.log(dist);
+  });
 
   return (
     <>
@@ -30,12 +28,13 @@ const DistBtn = ({ data }) => {
         </Modal.Header>
         <Modal.Body>
           {display &&
-            dist.map((dist) => {
+            dist.map((dist, idx) => {
               return (
-                <>
-                  <p>{dist.DistrobutorID}</p>
-                  <p>{dist.DistrobutorName}</p>
-                </>
+                <p key={idx}>
+                  {" "}
+                  Distributor ID = {dist.DistrobutorID}, Distributor Name ={" "}
+                  {dist.DistrobutorName}
+                </p>
               );
             })}
         </Modal.Body>
