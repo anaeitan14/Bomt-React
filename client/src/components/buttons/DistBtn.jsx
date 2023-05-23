@@ -3,25 +3,20 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 const DistBtn = ({ data }) => {
-  // let dists;
-
-  // useEffect(() => {
-  //   {
-  //     dists = data.map((dist) => {
-  //       return (
-  //         <div>
-  //           <p>{dist.DistrobutorID}</p>
-  //           <p>{dist.DistrobutorName}</p>
-  //         </div>
-  //       );
-  //     });
-  //   }
-  // }, []);
-  // console.log(data);
-
   const [show, setShow] = useState(false);
+  const [dist, setDist] = useState([]);
+  const [display, setDisplay] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  useEffect(() => {
+    if (data !== undefined) {
+      setDist(data);
+      setDisplay(true);
+    }
+  }, []);
+
+  console.log(dist);
 
   return (
     <>
@@ -33,7 +28,17 @@ const DistBtn = ({ data }) => {
         <Modal.Header closeButton>
           <Modal.Title>Distributioners</Modal.Title>
         </Modal.Header>
-        {/* <Modal.Body>{dists}</Modal.Body> */}
+        <Modal.Body>
+          {display &&
+            dist.map((dist) => {
+              return (
+                <>
+                  <p>{dist.DistrobutorID}</p>
+                  <p>{dist.DistrobutorName}</p>
+                </>
+              );
+            })}
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleClose}>
             Close

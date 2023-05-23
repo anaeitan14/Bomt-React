@@ -11,7 +11,7 @@ const Item = ({ data }) => {
       <td>{data.Manufacturer}</td>
       <td>{data.ManufacturerID}</td>
       <td>
-        <DistBtn data={data.Distrobutor}/>
+        <DistBtn data={data.Distrobutor} />
       </td>
       <td>
         <DocsBtn data={data.Documents} />
