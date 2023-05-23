@@ -1,6 +1,7 @@
 import Item from "./Item";
 
 const Table = ({ data }) => {
+  console.log(data);
   return (
     <div id="table-wrapper">
       <table className="table table-striped table-hover table-bordered">
@@ -18,7 +19,7 @@ const Table = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          <Item />
+          <Item data={data} />
         </tbody>
       </table>
     </div>
