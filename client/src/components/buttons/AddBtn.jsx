@@ -9,7 +9,7 @@ const AddBtn = () => {
   const [productID, setProductID] = useState("");
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
-  const [buyMake, setBuyMake] = useState("");
+  const [buyMake, setBuyMake] = useState("Buy");
   const [manufacturer, setManufacturer] = useState("");
   const [manufacturerID, setManufacturerID] = useState("");
   const [treeAvailable, setTreeAvailable] = useState(false);
@@ -24,7 +24,7 @@ const AddBtn = () => {
     setProductID("");
     setProductName("");
     setDescription("");
-    setBuyMake("Buy");
+    setBuyMake("");
     setManufacturer("");
     setManufacturerID("");
     setTreeAvailable(false);
@@ -201,7 +201,7 @@ const AddBtn = () => {
                 setBuyMake(e.target.value);
               }}
             >
-              <option value="Buy" selected>Buy</option>
+              <option value="Buy">Buy</option>
               <option value="Make">Make</option>
             </Form.Select>
             <InputGroup className="mb-3">
