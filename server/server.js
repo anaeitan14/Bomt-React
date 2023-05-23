@@ -3,6 +3,7 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const routes = require('./routes/routes')
 const expresssession = require('express-session')
+const passport = require('passport')
 const mongoURI = 'mongodb://127.0.0.1:27017/BOMT'
 const app = express()
 
@@ -18,6 +19,20 @@ const sessionConfig = {
   };
 app.use(express.json())
 app.use(expresssession(sessionConfig))
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
 
 app.use(cors())
 app.use('/api', routes)

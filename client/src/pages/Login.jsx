@@ -24,7 +24,8 @@ const Login = () => {
     try {
       const response = await axios.post(URL, info);
       if (response.status === 200) {
-        // navigate("/");
+        console.log(response)
+        navigate("/");
       }
     } catch (err) {
       setErrorMessage("Incorrect information");
