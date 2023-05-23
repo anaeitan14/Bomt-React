@@ -20,11 +20,13 @@ const AddBtn = () => {
   const [distriInputs, setDistriInputs] = useState({});
   const [docuInputs, setDocuInputs] = useState({});
 
+  console.log(buyMake);
+
   const handleClose = () => {
     setProductID("");
     setProductName("");
     setDescription("");
-    setBuyMake("");
+    setBuyMake("Buy");
     setManufacturer("");
     setManufacturerID("");
     setTreeAvailable(false);
