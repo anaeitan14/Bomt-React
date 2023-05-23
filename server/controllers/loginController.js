@@ -37,10 +37,9 @@ exports.googleRegister = async (req, res) => {
   try {
     const { JWT } = req.body;
     const data = jwt.decode(JWT);
-  
     const user = await User.findOne({email: data.email})
     if(user){
-      res.status(200).json({auth:true, message: "User exist already"})
+      return res.status(200).json({auth:true, message: "User exist already"})
     }
 
     const newUser = new User({
@@ -48,11 +47,11 @@ exports.googleRegister = async (req, res) => {
       password: "created with google",
     })  
     newUser.save();
-    res.status(200).json({auth:true, email:data.email,  message: "New user created succefully"})
+    return res.status(200).json({auth:true, email:data.email,  message: "New user created succefully"})
     
   } catch (error) {
     console.error(error);
-    res.status(500).json({message: "Internal server error"})
+    return res.status(500).json({message: "Internal server error"})
   }
 };
 
