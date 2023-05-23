@@ -1,7 +1,9 @@
 const crypto = require("crypto");
 const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
-const axios = require("axios");
+const passport = require("passport")
+const LocalStrategy = require("passport-local").Strategy;
+
 const session = require('express-session')
 
 exports.register = async (req, res) => {
@@ -54,27 +56,45 @@ exports.googleRegister = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ auth: false, message: "Incorrect information" });
+passport.use(new LocalStrategy(
+  { usernameField: "email" },
+  async (email, password, done) => {
+    console.log(email)
+    console.log(password)
+    try {
+      const user = await User.findOne({ email });
+      if (!user) {
+        return done(null, false, { message: "Incorrect email or password." });
+      }
+      const hash = crypto
+        .pbkdf2Sync(password, user.salting_word, 950, 64, "sha512")
+        .toString("hex");
+      console.log(hash)
+      if (hash === user.password) {
+        return done(null, user);
+      } else {
+        return done(null, false, { message: "Incorrect email or password." });
+      }
+    } catch (error) {
+      done(error);
     }
-
-    const hash = crypto
-      .pbkdf2Sync(password, user.salting_word, 950, 64, "sha512")
-      .toString("hex");
-
-    if (hash === user.password) {
-      req.session.user = user
-      console.log(req.session)
-      return res.status(200).json({auth: true, message: "Redirect to table picker"})
-    }
-    return res.status(400).json({ auth: false, message: "Incorrect information" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal server error" });
   }
-};
+));
 
+exports.login = (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.status(400).json({ auth: false, message: info.message });
+    }
+    req.logIn(user, (err) => {
+      console.log("am I in")
+      if (err) {
+        return next(err);
+      }
+      return res.status(200).json({ auth: true, message: "Redirect to table picker" });
+    });
+  })(req, res, next);
+};
