@@ -24,7 +24,7 @@ const AddBtn = () => {
     setProductID("");
     setProductName("");
     setDescription("");
-    setBuyMake("");
+    setBuyMake("Buy");
     setManufacturer("");
     setManufacturerID("");
     setTreeAvailable(false);
@@ -49,8 +49,8 @@ const AddBtn = () => {
     const keys = Object.keys(obj);
     for (let i = 0; i < keys.length; i += 2) {
       res.push({
-        distName: obj[keys[i + 1]],
-        distID: obj[keys[i]],
+        DistrobutorName: obj[keys[i + 1]],
+        DistrobutorID: obj[keys[i]],
       });
     }
     return res;
@@ -61,8 +61,8 @@ const AddBtn = () => {
     const keys = Object.keys(obj);
     for (let i = 0; i < keys.length; i += 2) {
       res.push({
-        distName: obj[keys[i]],
-        distLocation: obj[keys[i + 1]],
+        DocumentType: obj[keys[i]],
+        DocumentLocation: obj[keys[i + 1]],
       });
     }
     return res;
@@ -146,8 +146,10 @@ const AddBtn = () => {
     setDistriInputs({});
     setDocuInputs({});
 
+    console.log({ item });
+
     axios
-      .post(URL, item)
+      .post(URL, { item })
       .then((response) => {
         console.log(response);
       })
@@ -199,7 +201,7 @@ const AddBtn = () => {
                 setBuyMake(e.target.value);
               }}
             >
-              <option value="Buy">Buy</option>
+              <option value="Buy" selected>Buy</option>
               <option value="Make">Make</option>
             </Form.Select>
             <InputGroup className="mb-3">
@@ -220,7 +222,7 @@ const AddBtn = () => {
             </InputGroup>
             <select
               class="form-select form-select-lg mb-3"
-              onChange={(e) => setDistCount(e.target.value)}
+              onChange={(e) => setDocCount(e.target.value)}
             >
               <option selected>Select the number of documents</option>
               <option value="1">1</option>
@@ -229,10 +231,10 @@ const AddBtn = () => {
               <option value="4">4</option>
               <option value="5">5</option>
             </select>
-            {distInputs.map((inp) => inp)}
+            {docInputs.map((inp) => inp)}
             <select
               class="form-select form-select-lg mb-3"
-              onChange={(e) => setDocCount(e.target.value)}
+              onChange={(e) => setDistCount(e.target.value)}
             >
               <option selected>Select the number of distributors</option>
               <option value="1">1</option>
@@ -246,7 +248,7 @@ const AddBtn = () => {
               <option value="9">9</option>
               <option value="10">10</option>
             </select>
-            {docInputs.map((inp) => inp)}
+            {distInputs.map((inp) => inp)}
             <Form.Label>Is tree tree available?</Form.Label>
             <Form.Select
               className="mb-3"
