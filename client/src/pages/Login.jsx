@@ -24,7 +24,7 @@ const Login = () => {
     try {
       const response = await axios.post(URL, info);
       if (response.status === 200) {
-        console.log(response)
+        console.log(response);
         navigate("/");
       }
     } catch (err) {
@@ -58,16 +58,24 @@ const Login = () => {
 
     google.accounts.id.renderButton(document.getElementById("google-div"), {
       theme: "outline",
-      size: "medium",
+      size: "large",
     });
 
     google.accounts.id.prompt();
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      if (errorMessage) {
+        setErrorMessage("");
+      }
+    }, 2500);
+  });
+
   return (
     <div className="container-fluid">
       <form className="login-form" onSubmit={handleSubmit}>
-        <h1>Account login</h1>
+        <h1 className="mb-4">Sign in</h1>
         <InputGroup className="mb-3">
           <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
           <Form.Control
@@ -91,12 +99,16 @@ const Login = () => {
             aria-describedby="Password"
           />
         </InputGroup>
-        <button>LOG IN</button>
+        <button>Sign in</button>
         <a href="/signup">New user? click here to sign up</a>
         <a href="/forgot">Forgot password?</a>
+        <div id="google-div"></div>
       </form>
-      <div id="google-div"></div>
-      {errorMessage && <div>{errorMessage}</div>}
+      {errorMessage && (
+        <div id="error-message" className="alert alert-danger mt-4 w-25">
+          {errorMessage}
+        </div>
+      )}
     </div>
   );
 };

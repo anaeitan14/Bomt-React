@@ -1,41 +1,36 @@
 @import url(colors-variables.css);
 
-html {
-  width: 100%;
-  height: 100%;
-}
-
 .login-form {
-  margin: 0 auto;
+  margin: 10% auto 0;
   width: 500px;
-  background-color: rgba(163, 231, 201, 0.418);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   padding: 30px;
+  box-shadow: 0px 0px 3px 2px rgba(97, 93, 93, 0.408);
 }
 
 .login-form a {
   text-decoration: none;
-  color:var(--primary-heading);
-  margin:3px 0;
-}
-
-.login-form h1 {
   color: var(--primary-heading);
+  margin: 3px 0;
 }
 
 .login-form button {
   background-color: var(--primary-heading);
-  border:none;
-  color:var(--button-text);
+  border: none;
+  color: var(--button-text);
   border-radius: 4px;
   cursor: pointer;
-  padding:12px 20px;
-  font-weight: 700;
+  padding: 12px 20px;
+  font-weight: 500;
   margin: 10px 0;
 }
 
+.login-form h1 {
+  color:var(--primary-heading)
+}
+
 #google-div {
-  margin:5px 0;
+  margin: 5px 0;
 }
