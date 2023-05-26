@@ -1,16 +1,16 @@
 const crypto = require("crypto");
 const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
-const passport = require("passport")
+const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
-const session = require('express-session')
+const session = require("express-session");
 
 exports.register = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email:email });
+    const user = await User.findOne({ email: email });
     if (user) {
       return res.status(400).json({ message: "User already exists" });
     }
@@ -37,48 +37,55 @@ exports.googleRegister = async (req, res) => {
   try {
     const { JWT } = req.body;
     const data = jwt.decode(JWT);
-    const user = await User.findOne({email: data.email})
-    if(user){
-      return res.status(200).json({auth:true, message: "User exist already"})
+    const user = await User.findOne({ email: data.email });
+    if (user) {
+      return res
+        .status(200)
+        .json({ auth: true, message: "User exist already" });
     }
 
     const newUser = new User({
       email: data.email,
       password: "created with google",
-    })  
+    });
     newUser.save();
-    return res.status(200).json({auth:true, email:data.email,  message: "New user created succefully"})
-    
+    return res.status(200).json({
+      auth: true,
+      email: data.email,
+      message: "New user created succefully",
+    });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({message: "Internal server error"})
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
-passport.use(new LocalStrategy(
-  { usernameField: "email" },
-  async (email, password, done) => {
-    console.log(email)
-    console.log(password)
-    try {
-      const user = await User.findOne({ email });
-      if (!user) {
-        return done(null, false, { message: "Incorrect email or password." });
+passport.use(
+  new LocalStrategy(
+    { usernameField: "email" },
+    async (email, password, done) => {
+      console.log(email);
+      console.log(password);
+      try {
+        const user = await User.findOne({ email });
+        if (!user) {
+          return done(null, false, { message: "Incorrect email or password." });
+        }
+        const hash = crypto
+          .pbkdf2Sync(password, user.salting_word, 950, 64, "sha512")
+          .toString("hex");
+        console.log(hash);
+        if (hash === user.password) {
+          return done(null, user);
+        } else {
+          return done(null, false, { message: "Incorrect email or password." });
+        }
+      } catch (error) {
+        done(error);
       }
-      const hash = crypto
-        .pbkdf2Sync(password, user.salting_word, 950, 64, "sha512")
-        .toString("hex");
-      console.log(hash)
-      if (hash === user.password) {
-        return done(null, user);
-      } else {
-        return done(null, false, { message: "Incorrect email or password." });
-      }
-    } catch (error) {
-      done(error);
     }
-  }
-));
+  )
+);
 
 exports.login = (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
@@ -89,11 +96,13 @@ exports.login = (req, res, next) => {
       return res.status(400).json({ auth: false, message: info.message });
     }
     req.logIn(user, (err) => {
-      console.log("am I in")
+      console.log("am I in");
       if (err) {
         return next(err);
       }
-      return res.status(200).json({ auth: true, message: "Redirect to table picker" });
+      return res
+        .status(200)
+        .json({ auth: true, message: "Redirect to table picker" });
     });
   })(req, res, next);
 };
