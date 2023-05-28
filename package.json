@@ -1,5 +1,16 @@
 {
+<<<<<<< HEAD
   "dependencies": {
     "react": "^18.2.0"
   }
 }
+=======
+    "name": "Bomt-React",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+      "start": " cd client; npm start; cd ..; cd server; npm start; cd .."
+    }
+  }
+  
+>>>>>>> 23543f0e460d87e3270a4d55579b9bbb904c77eb

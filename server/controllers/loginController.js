@@ -109,7 +109,7 @@ exports.login = (req, res, next) => {
       console.log(req.session);
       return res
         .status(200)
-        .json({ auth: true, message: "Redirect to table picker" });
+        .json({ auth: true, message: "You  can redirect" });
     });
   })(req, res, next);
 };
