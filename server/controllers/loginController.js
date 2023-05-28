@@ -64,8 +64,6 @@ passport.use(
   new LocalStrategy(
     { usernameField: "email" },
     async (email, password, done) => {
-      console.log(email);
-      console.log(password);
       try {
         const user = await User.findOne({ email });
         if (!user) {
@@ -74,7 +72,6 @@ passport.use(
         const hash = crypto
           .pbkdf2Sync(password, user.salting_word, 950, 64, "sha512")
           .toString("hex");
-        console.log(hash);
         if (hash === user.password) {
           return done(null, user);
         } else {
@@ -87,6 +84,16 @@ passport.use(
   )
 );
 
+passport.serializeUser((user, done) => {
+  done(null, user._id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id, (err, user) => {
+    done(err, user);
+  });
+});
+
 exports.login = (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) {
@@ -96,13 +103,23 @@ exports.login = (req, res, next) => {
       return res.status(400).json({ auth: false, message: info.message });
     }
     req.logIn(user, (err) => {
-      console.log("am I in");
       if (err) {
         return next(err);
       }
+      console.log(req.session);
       return res
         .status(200)
-        .json({ auth: true, message: "Redirect to table picker" });
+        .json({ auth: true, message: "You  can redirect" });
     });
   })(req, res, next);
+};
+
+exports.logout = (req, res) => {
+  if (req.user.session) {
+    req.user.session.destory();
+    console.log(req.user.session());
+    return res
+      .status(200)
+      .json({ auth: false, message: "User has disconnected" });
+  }
 };
