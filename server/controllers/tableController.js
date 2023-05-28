@@ -31,3 +31,9 @@ exports.createTable = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+exports.tables = async(req, res) => {
+  const tableNames = User.find(req.user.email)
+  tableNames = tableNames.table
+  console.log(table)
+}
