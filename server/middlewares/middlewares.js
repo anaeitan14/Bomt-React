@@ -6,3 +6,7 @@ exports.sessionCheck = (req, res, next) => {
   console.log(uid);
   next();
 };
+
+exports.permissionsCheck = async (req, res, next) => {
+  //to-do
+};

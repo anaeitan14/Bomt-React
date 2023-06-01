@@ -31,7 +31,7 @@ exports.addItem = async (req, res) => {
 
 exports.removeItem = async (req, res) => {
   try {
-    const { pid } = req.body;
+    const { pid } = req.body.data;
     const existingItem = await Item.findOneAndDelete({ ProductID: pid });
     if (!existingItem) {
       return res
