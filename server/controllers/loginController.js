@@ -36,7 +36,9 @@ exports.register = async (req, res) => {
 exports.googleRegister = async (req, res) => {
   try {
     const { JWT } = req.body;
+    console.log(JWT)
     const data = jwt.decode(JWT);
+    console.log(data)
     const user = await User.findOne({ email: data.email });
     if (user) {
       return res

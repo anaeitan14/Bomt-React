@@ -12,6 +12,5 @@ router.post("/addItem", itemController.addItem);
 router.post("/removeItem", itemController.removeItem);
 router.post("/searchItem", itemController.searchItem);
 router.post("/addTable", tableController.createTable);
-router.get("/tablegrabber". tableController.tables);
 
 module.exports = router;
