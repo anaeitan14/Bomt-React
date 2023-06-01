@@ -1,8 +1,9 @@
 const Item = require("../models/itemSchema");
+const User = require("../models/userSchema");
 
 exports.addItem = async (req, res) => {
   try {
-    const { item } = req.body;
+    const { item } = req.body.data;
     const existingItem = await Item.findOne({ ProductID: item.ProductID });
     if (existingItem) {
       return res.status(400).json({ message: "The item exists already" });

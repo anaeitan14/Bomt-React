@@ -32,8 +32,8 @@ exports.createTable = async (req, res) => {
   }
 };
 
-exports.tables = async(req, res) => {
-  const tableNames = User.find(req.user.email)
-  tableNames = tableNames.table
-  console.log(table)
-}
+exports.tables = async (req, res) => {
+  const tableNames = User.find(req.user.email);
+  tableNames = tableNames.table;
+  console.log(table);
+};
