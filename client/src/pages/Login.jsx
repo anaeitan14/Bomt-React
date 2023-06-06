@@ -24,8 +24,7 @@ const Login = () => {
     try {
       const response = await axios.post(URL, info);
       if (response.status === 200) {
-        alert("In if");
-        console.log(response);
+        localStorage.setItem("email", email);
         navigate("/");
       }
     } catch (err) {

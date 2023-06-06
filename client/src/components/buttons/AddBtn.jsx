@@ -134,6 +134,7 @@ const AddBtn = () => {
       Distrobutor: dis,
       Document: doc,
       TreeAvailable: treeAvailable,
+      email:localStorage.getItem("email")
     };
 
     setProductID("");
