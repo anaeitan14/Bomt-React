@@ -6,7 +6,7 @@ function Navbar() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    const URL = "";
+    const URL = "http://localhost:5000/api/logout";
     const data = {
       email: localStorage.getItem("email"),
     };
@@ -62,7 +62,16 @@ function Navbar() {
             </li>
             <li className="nav-item">
               <a className="nav-link">
-                <button onClick={handleLogout}>Logout</button>
+                <button
+                  style={{
+                    background: "none",
+                    color: "rgba(255, 255, 255, 0.55)",
+                    border: "none",
+                  }}
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
               </a>
             </li>
           </ul>
