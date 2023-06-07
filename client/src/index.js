@@ -29,7 +29,6 @@ root.render(
         <Route path="logs" element={<Logs />} />
         <Route path="reports" element={<Reports />} />
         <Route path="users" element={<Users />} />
-        <Route path="logout" element={<App />} />
         <Route path="profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>

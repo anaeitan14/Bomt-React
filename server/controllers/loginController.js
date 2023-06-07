@@ -3,7 +3,6 @@ const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-
 const session = require("express-session");
 
 exports.register = async (req, res) => {
@@ -108,7 +107,6 @@ exports.login = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      console.log(req.session);
       return res
         .status(200)
         .json({ auth: true, message: "You  can redirect" });
@@ -117,12 +115,11 @@ exports.login = (req, res, next) => {
 };
 
 exports.logout = (req, res) => {
-  if (req.user.session) {
-    req.user.session.destory();
-    console.log(req.user.session());
-    return res
-      .status(200)
-      .json({ auth: false, message: "User has disconnected" });
-  }
+  const email = req.body.email;
+  User.findOne({ email }).then(user => {
+    console.log(req.session)
+  }).catch(err => {
+    console.log(err);
+    res.sendStatus(500); // sends an error response
+  });
 };
-

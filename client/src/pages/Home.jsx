@@ -6,13 +6,19 @@ import AddBtn from "../components/buttons/AddBtn";
 import RemoveBtn from "../components/buttons/RemoveBtn";
 
 export const Home = () => {
+  useEffect(() => {
+    setEmail(localStorage.getItem("email"));
+  });
+
   const [searchQuery, setQuery] = useState("");
   const [data, setData] = useState({});
+  const [email, setEmail] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const query = {
+      email: email,
       pid: searchQuery,
     };
 
