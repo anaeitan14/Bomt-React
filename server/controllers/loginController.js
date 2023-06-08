@@ -114,12 +114,26 @@ exports.login = (req, res, next) => {
   })(req, res, next);
 };
 
-exports.logout = (req, res) => {
-  const email = req.body.email;
-  User.findOne({ email }).then(user => {
-    console.log(req.session)
-  }).catch(err => {
-    console.log(err);
-    res.sendStatus(500); // sends an error response
-  });
+exports.logout = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.sendStatus(404);
+    }
+
+    req.logout();
+    req.session.destroy(err => {
+      if (err) {
+        console.error(err);
+        return res.sendStatus(500);
+      }
+      res.sendStatus(200);
+    });
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
 };
