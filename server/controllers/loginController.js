@@ -35,9 +35,9 @@ exports.register = async (req, res) => {
 exports.googleRegister = async (req, res) => {
   try {
     const { JWT } = req.body;
-    console.log(JWT)
+    console.log(JWT);
     const data = jwt.decode(JWT);
-    console.log(data)
+    console.log(data);
     const user = await User.findOne({ email: data.email });
     if (user) {
       return res
@@ -107,9 +107,7 @@ exports.login = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      return res
-        .status(200)
-        .json({ auth: true, message: "You  can redirect" });
+      return res.status(200).json({ auth: true, message: "You  can redirect" });
     });
   })(req, res, next);
 };
@@ -125,7 +123,7 @@ exports.logout = async (req, res) => {
     }
 
     req.logout();
-    req.session.destroy(err => {
+    req.session.destroy((err) => {
       if (err) {
         console.error(err);
         return res.sendStatus(500);
