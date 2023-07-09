@@ -27,6 +27,7 @@ const Login = () => {
         alert("In if");
         console.log(response);
         navigate("/");
+        localStorage.setItem("email", email);
       }
     } catch (err) {
       setErrorMessage("Incorrect information");

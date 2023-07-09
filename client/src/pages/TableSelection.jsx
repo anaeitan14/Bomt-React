@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "reactjs-popup/dist/index.css";
+import axios from "axios";
+
 
 export const TableSelection = () => {
   // Sample data until there is an API
@@ -7,20 +9,25 @@ export const TableSelection = () => {
   const [data, setData] = useState([]);
   const [newTableName, setNewTableName] = useState("");
 
-  useState(async () => {
-    const data = await fetch("https://localhost:5000/tables");
-    setData(data);
-  }, []);
+  // useState(async () => {
+  //   const data = await fetch("https://localhost:5000/tables");
+  //   setData(data);
+  // }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const URL = "https://localhost:5000/tables";
+    const URL = "http://localhost:5000/addTable";
     const data = {
-      NewTableName: newTableName,
+      email: localStorage.getItem("email"),
+      NewTableName: newTableName
     };
 
-    const response = await fetch(URL, data);
+
+    console.log(data);
+
+
+    const response = await axios.post(URL, data);
     if (response.status == 200) {
       alert("Table created successfully");
     }
