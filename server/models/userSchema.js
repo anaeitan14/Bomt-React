@@ -15,10 +15,12 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
 
-  tables: {
-    type: [String],
-    default: [],
-  },
+  tables: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Table",
+    },
+  ],
 
   time_stamp: {
     type: Date,

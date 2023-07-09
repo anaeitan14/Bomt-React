@@ -20,8 +20,6 @@ const AddBtn = () => {
   const [distriInputs, setDistriInputs] = useState({});
   const [docuInputs, setDocuInputs] = useState({});
 
-  console.log(buyMake);
-
   const handleClose = () => {
     setProductID("");
     setProductName("");
@@ -134,6 +132,7 @@ const AddBtn = () => {
       Distrobutor: dis,
       Document: doc,
       TreeAvailable: treeAvailable,
+      email: localStorage.getItem("email"),
     };
 
     setProductID("");
@@ -147,8 +146,6 @@ const AddBtn = () => {
     setDocCount(0);
     setDistriInputs({});
     setDocuInputs({});
-
-    console.log({ item });
 
     axios
       .post(URL, { item })
@@ -223,7 +220,7 @@ const AddBtn = () => {
               />
             </InputGroup>
             <select
-              class="form-select form-select-lg mb-3"
+              className="form-select form-select-lg mb-3"
               onChange={(e) => setDocCount(e.target.value)}
             >
               <option selected>Select the number of documents</option>
@@ -233,9 +230,9 @@ const AddBtn = () => {
               <option value="4">4</option>
               <option value="5">5</option>
             </select>
-            {docInputs.map((inp) => inp)}
+            {docInputs.map((inp, key) => inp)}
             <select
-              class="form-select form-select-lg mb-3"
+              className="form-select form-select-lg mb-3"
               onChange={(e) => setDistCount(e.target.value)}
             >
               <option selected>Select the number of distributors</option>
@@ -250,7 +247,7 @@ const AddBtn = () => {
               <option value="9">9</option>
               <option value="10">10</option>
             </select>
-            {distInputs.map((inp) => inp)}
+            {distInputs.map((inp, key) => inp)}
             <Form.Label>Is tree tree available?</Form.Label>
             <Form.Select
               className="mb-3"

@@ -2,13 +2,28 @@ import { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import "./ForgotPassword.css";
+import axios from "axios";
 
 const ForgotPassword = () => {
   const [email, setForgotEmail] = useState("");
 
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    const data = {
+      email:email
+    }
+  
+    const URL = "";
+
+    axios.post(URL, data);
+  }
+  
+  
   return (
     <div className="container-fluid">
-      <form class="reset-form">
+      <form class="reset-form" onSubmit={handleSubmit}>
         <h1>Forgot your password?</h1>
         <InputGroup className="mb-3">
           <InputGroup.Text id="basic-addon1">***</InputGroup.Text>

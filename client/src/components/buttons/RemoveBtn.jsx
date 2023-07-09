@@ -21,6 +21,7 @@ const RemoveBtn = () => {
 
     const item = {
       pid: PNID,
+      email:localStorage.getItem("email")
     };
 
     axios

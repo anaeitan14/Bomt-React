@@ -68,6 +68,11 @@ const itemSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
+  table: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Table",
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Item", itemSchema);

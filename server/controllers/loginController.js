@@ -3,7 +3,6 @@ const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-
 const session = require("express-session");
 
 exports.register = async (req, res) => {
@@ -36,9 +35,9 @@ exports.register = async (req, res) => {
 exports.googleRegister = async (req, res) => {
   try {
     const { JWT } = req.body;
-    console.log(JWT)
+    console.log(JWT);
     const data = jwt.decode(JWT);
-    console.log(data)
+    console.log(data);
     const user = await User.findOne({ email: data.email });
     if (user) {
       return res
@@ -108,21 +107,31 @@ exports.login = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      console.log(req.session);
-      return res
-        .status(200)
-        .json({ auth: true, message: "You  can redirect" });
+      return res.status(200).json({ auth: true, message: "You  can redirect" });
     });
   })(req, res, next);
 };
 
-exports.logout = (req, res) => {
-  if (req.user.session) {
-    req.user.session.destory();
-    console.log(req.user.session());
-    return res
-      .status(200)
-      .json({ auth: false, message: "User has disconnected" });
+exports.logout = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.sendStatus(404);
+    }
+
+    req.logout();
+    req.session.destroy((err) => {
+      if (err) {
+        console.error(err);
+        return res.sendStatus(500);
+      }
+      res.sendStatus(200);
+    });
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
   }
 };
-
