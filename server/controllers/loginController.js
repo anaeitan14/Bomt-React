@@ -108,7 +108,7 @@ exports.login = (req, res, next) => {
         return next(err);
       }
       req.session.user = req.user;
-      console.log(req.session)
+      console.log(req.session);
       res.cookie("sessionID", req.sessionID);
       return res.status(200).json({ auth: true, message: "You can redirect" });
     });
@@ -120,7 +120,6 @@ exports.logout = async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    
 
     if (!user) {
       return res.sendStatus(404);

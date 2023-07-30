@@ -8,12 +8,12 @@ exports.sessionCheck = (req, res, next) => {
     console.log(now);
     console.log(sessionExpires);
 
-
-    // If the session has expired, log the user out and clear the session
     if (now > req.session.cookie._expires) {
-      req.logout(); // If using passport.js to manage login, this will log the user out
-      req.session.destroy(); // Destroy the session
-      return res.status(401).json({ message: "Session has expired. Please log in again." });
+      req.logout();
+      req.session.destroy();
+      return res
+        .status(401)
+        .json({ message: "Session has expired. Please log in again." });
     }
   }
 
