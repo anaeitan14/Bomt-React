@@ -2,6 +2,7 @@ const User = require("../models/userSchema");
 const Table = require("../models/tableSchema");
 
 exports.sessionCheck = (req, res, next) => {
+  //to-do
   const sessionExpires = new Date(req.session.cookie._expires);
   if (req.session && req.session.cookie && req.session.cookie.expires) {
     const now = new Date();
