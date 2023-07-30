@@ -14,7 +14,7 @@ const sessionConfig = {
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    maxAge: 3600000, // 1 hour
+    maxAge: 3600, //3600000,  1 hour
   },
 };
 app.use(express.json());

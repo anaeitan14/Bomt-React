@@ -3,7 +3,8 @@ const User = require("../models/userSchema");
 
 exports.addItem = async (req, res) => {
   try {
-    const { item } = req.body.data;
+    const { item } = req.body;
+    console.log(item);
     const existingItem = await Item.findOne({ ProductID: item.ProductID });
     if (existingItem) {
       return res.status(400).json({ message: "The item exists already" });
@@ -31,7 +32,7 @@ exports.addItem = async (req, res) => {
 
 exports.removeItem = async (req, res) => {
   try {
-    const { pid } = req.body.data;
+    const { pid } = req.body;
     const existingItem = await Item.findOneAndDelete({ ProductID: pid });
     if (!existingItem) {
       return res

@@ -107,16 +107,20 @@ exports.login = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      return res.status(200).json({ auth: true, message: "You  can redirect" });
+      req.session.user = req.user;
+      console.log(req.session)
+      res.cookie("sessionID", req.sessionID);
+      return res.status(200).json({ auth: true, message: "You can redirect" });
     });
   })(req, res, next);
 };
 
 exports.logout = async (req, res) => {
-  const { email } = req.body;
+  const { email } = req.body.email;
 
   try {
     const user = await User.findOne({ email });
+    
 
     if (!user) {
       return res.sendStatus(404);
@@ -126,12 +130,12 @@ exports.logout = async (req, res) => {
     req.session.destroy((err) => {
       if (err) {
         console.error(err);
-        return res.sendStatus(500);
+        return res.status(500);
       }
-      res.sendStatus(200);
+      return res.status(200);
     });
   } catch (error) {
     console.error(error);
-    res.sendStatus(500);
+    return res.status(500);
   }
 };

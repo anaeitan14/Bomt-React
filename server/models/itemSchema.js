@@ -71,7 +71,7 @@ const itemSchema = new mongoose.Schema({
   table: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Table",
-    required: true,
+    //required: true,
   },
 });
 
