@@ -1,3 +1,5 @@
+require('dotenv').config({path: 'bop.env'});
+const User = require("./models/userSchema");
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -9,12 +11,12 @@ const app = express();
 
 const sessionConfig = {
   secret:
-    "mysadjiaid34$@#$#V@#432g4g234g#@$@V#$V#@432g4432g4v#@V@$#$@##H$32h432g@$B%RTERTY%%$6456gb456b4%B^#$%V#%VdsadasWQEQWEASDQWEASDqweasdAWWEDQWDASDQWDASDQWDwdqwdecret",
+    process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    maxAge: 3600, //3600000,  1 hour
+    maxAge: 3600000, //1 hour
   },
 };
 app.use(express.json());
@@ -22,14 +24,17 @@ app.use(expresssession(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser(function (user, done) {
-  done(null, user.id);
+passport.serializeUser((user, done) => {
+  done(null, user._id);
 });
 
-passport.deserializeUser(function (id, done) {
-  User.findById(id, function (err, user) {
-    done(err, user);
-  });
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
 });
 
 app.use(cors());

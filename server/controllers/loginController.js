@@ -3,7 +3,6 @@ const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const session = require("express-session");
 
 exports.register = async (req, res) => {
   try {
@@ -85,16 +84,6 @@ passport.use(
   )
 );
 
-passport.serializeUser((user, done) => {
-  done(null, user._id);
-});
-
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    done(err, user);
-  });
-});
-
 exports.login = (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) {
@@ -107,8 +96,10 @@ exports.login = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      req.session.user = req.user;
+      //req.session.user = user;
       console.log(req.session);
+      req.session.user = user;
+      req.session.save();
       res.cookie("sessionID", req.sessionID);
       return res.status(200).json({ auth: true, message: "You can redirect" });
     });

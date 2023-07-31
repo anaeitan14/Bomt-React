@@ -3,8 +3,8 @@ const Table = require("../models/tableSchema");
 
 exports.createTable = async (req, res) => {
   try {
-    const { email } = req.body.email;
-    const { name } = req.body.name;
+    const email = req.session.user.email;
+    const name = req.body.name;
     const user = await User.findOne({ email: email });
 
     const table = new Table({
@@ -15,6 +15,8 @@ exports.createTable = async (req, res) => {
     });
 
     await table.save();
+    user.tables.push(table);
+    await user.save();
     return res.status(200).json({ message: "Table created successfully" });
   } catch (error) {
     console.error(error);

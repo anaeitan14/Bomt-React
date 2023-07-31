@@ -4,7 +4,7 @@ const Table = require("../models/tableSchema");
 exports.sessionCheck = (req, res, next) => {
   //to-do
   const sessionExpires = new Date(req.session.cookie._expires);
-  if (req.session && req.session.cookie && req.session.cookie.expires) {
+  if (req.session && req.session.cookie && req.session.cookie._expires) {
     const now = new Date();
     console.log(now);
     console.log(sessionExpires);
@@ -17,8 +17,6 @@ exports.sessionCheck = (req, res, next) => {
         .json({ message: "Session has expired. Please log in again." });
     }
   }
-
-  // Continue to the next middleware or route handler
   next();
 };
 exports.checkPermissions = async (req, res, next) => {
