@@ -97,7 +97,6 @@ exports.login = (req, res, next) => {
         return next(err);
       }
       //req.session.user = user;
-      console.log(req.session);
       req.session.user = user;
       req.session.save();
       res.cookie("sessionID", req.sessionID);

@@ -4,12 +4,10 @@ const User = require("../models/userSchema");
 exports.addItem = async (req, res) => {
   try {
     const { item } = req.body;
-    console.log(item);
     const existingItem = await Item.findOne({ ProductID: item.ProductID });
     if (existingItem) {
       return res.status(400).json({ message: "The item exists already" });
     }
-    console.log(item);
     const newItem = new Item({
       ProductID: item.ProductID,
       ProductName: item.ProductName,
@@ -17,8 +15,8 @@ exports.addItem = async (req, res) => {
       BuyMake: item.BuyMake,
       Manufacturer: item.Manufacturer,
       ManufacturerID: item.ManufacturerID,
-      Document: item.Document,
       Distrobutor: item.Distrobutor,
+      Document: item.Document,
       TreeAvailable: item.TreeAvailable,
     });
 
@@ -50,7 +48,6 @@ exports.searchItem = async (req, res) => {
   try {
     const { pid } = req.body;
     const findItem = await Item.findOne({ ProductID: pid });
-    console.log(pid);
     if (!findItem) {
       return res
         .status(400)

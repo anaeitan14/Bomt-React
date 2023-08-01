@@ -27,34 +27,63 @@ exports.createTable = async (req, res) => {
 exports.tables = async (req, res) => {
   const tableNames = User.find(req.user.email);
   tableNames = tableNames.table;
-  console.log(table);
 };
 
 exports.addManager = async (req, res) => {
   try {
-    const { email } = req.body.email;
-    const { requestedEmail } = req.body.requestedEmail;
-    const { tableName } = req.body.tableName;
-    const user = await User.findOne({ email: email });
+    const requestedEmail = req.body.requestedEmail;
+    const tableName = req.body.tableName;
+    const user = req.session.user;
     const table = await Table.findOne({ name: tableName });
     const requestedUser = await User.findOne({ email: requestedEmail });
     if (!requestedUser) {
       return res.status(404).json({ message: "User not found" });
     }
-
     if (!table) {
       return res.status(404).json({ message: "Table not found" });
     }
-
-    if (table.admin._id.toString() !== user._id) {
+    const isInside = requestedUser.tables.some(
+      (checkTable) => checkTable._id.toString() === table._id.toString()
+    );
+    if (
+      table.admin &&
+      table.admin._id &&
+      table.admin._id.toString() !== user._id &&
+      isInside
+    ) {
+      //requestedUser.tables.push(table);
+      await requestedUser.save();
       return res
         .status(403)
         .json({ message: "Only the admin can add a manager" });
     }
-
     table.managers.push(requestedUser._id);
     await table.save();
     return res.status(200).json({ message: "Manager added successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+exports.addNormalUser = async (req, res) => {
+  try {
+    const requestedEmail = req.body.requestedEmail;
+    const tableName = req.body.tableName;
+    const table = await Table.findOne({ name: tableName });
+    const requestedUser = await User.findOne({ email: requestedEmail });
+    if (!requestedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    if (!table) {
+      return res.status(404).json({ message: "Table not found" });
+    }
+
+    requestedUser.tables.push(table);
+    await requestedUser.save();
+    return res
+      .status(200)
+      .json({ message: "user added succesfully to the table" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });

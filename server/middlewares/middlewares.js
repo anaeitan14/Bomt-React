@@ -8,7 +8,6 @@ exports.sessionCheck = (req, res, next) => {
     const now = new Date();
     console.log(now);
     console.log(sessionExpires);
-
     if (now > req.session.cookie._expires) {
       req.logout();
       req.session.destroy();
@@ -21,21 +20,19 @@ exports.sessionCheck = (req, res, next) => {
 };
 exports.checkPermissions = async (req, res, next) => {
   try {
-    const { email } = req.body.email;
-    const user = await User.findOne({ email: email });
+    const user = req.session.user;
     const tableName = req.body.tableName;
 
-    const table = await Table.findById({ name: tableName })
+    const table = await Table.findOne({ name: tableName })
       .populate("admin", "role")
       .populate("managers", "role");
 
     if (!table) {
       return res.status(404).json({ message: "Table not found" });
     }
-
-    const isAdmin = table.admin._id.toString() === user._id;
+    const isAdmin = table.admin._id.toString() === user._id.toString();
     const isManager = table.managers.some(
-      (manager) => manager._id.toString() === user._id
+      (manager) => manager._id.toString() === user._id.toString()
     );
 
     if (!(isAdmin || isManager)) {
