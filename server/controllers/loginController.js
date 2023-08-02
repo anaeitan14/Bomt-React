@@ -13,45 +13,61 @@ exports.register = async (req, res) => {
     }
 
     const salting_word = crypto.randomBytes(32).toString("base64");
-    const hash = crypto
+    const hash = crypto // crypting the password using sha512 and irritiating it with a salting word so it won't be easily cracked.
       .pbkdf2Sync(password, salting_word, 950, 64, "sha512")
       .toString("hex");
     const newUser = new User({
       email: email,
       password: hash,
-      salting_word: salting_word,
+      salting_word: salting_word, //saving the salting word for logging back in later.
     });
 
     await newUser.save();
-    res.status(200).json({ message: "User created successfully" });
+    return res.status(200).json({ message: "User created successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
 exports.googleRegister = async (req, res) => {
+  //since googleRegister handles both the registering and logging in using a gmail, it has 2 req.login
   try {
     const { JWT } = req.body;
     console.log(JWT);
-    const data = jwt.decode(JWT);
+    const data = jwt.decode(JWT); //decoding the jwt from the front, receiving the data.
     console.log(data);
     const user = await User.findOne({ email: data.email });
     if (user) {
-      return res
-        .status(200)
-        .json({ auth: true, message: "User exist already" });
+      req.logIn(user, (err) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ message: "Failed to log in the user" });
+        }
+        req.session.user = user;
+        req.session.save;
+        res.cookie("sessionID", req.sessionID);
+        return res.status(200).json({ auth: true, message: "User logged in" });
+      });
     }
 
     const newUser = new User({
       email: data.email,
-      password: "created with google",
+      password: "created with google", //to distinguish wether a user is signed with google or email, there's no point in having his password hashed, if he won't be using it anyway.
     });
     newUser.save();
-    return res.status(200).json({
-      auth: true,
-      email: data.email,
-      message: "New user created succefully",
+    req.logIn(newUser, (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Failed to log in the user" });
+      }
+      req.session.user = newUser;
+      req.session.save;
+      res.cookie("sessionID", req.sessionID);
+      return res.status(200).json({
+        auth: true,
+        message: "New user created successfully",
+      });
     });
   } catch (error) {
     console.error(error);
@@ -61,6 +77,7 @@ exports.googleRegister = async (req, res) => {
 
 exports.login = (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
+    //going to passport.use localstrat in server.js
     if (err) {
       return next(err);
     }
@@ -71,16 +88,16 @@ exports.login = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      req.session.user = user;
+      req.session.user = user; //saving user in session for future use.
       req.session.save();
-      res.cookie("sessionID", req.sessionID);
+      res.cookie("sessionID", req.sessionID); //sending session ID in cookie.
       return res.status(200).json({ auth: true, message: "You can redirect" });
     });
   })(req, res, next);
 };
 
 exports.logout = async (req, res) => {
-  const { email } = req.body.email;
+  const email = req.session.user.email;
 
   try {
     const user = await User.findOne({ email });
@@ -89,16 +106,15 @@ exports.logout = async (req, res) => {
       return res.sendStatus(404);
     }
 
-    req.logout();
     req.session.destroy((err) => {
       if (err) {
         console.error(err);
         return res.status(500);
       }
-      return res.status(200);
+      return res.status(200).json({ message: "user has logged out" });
     });
   } catch (error) {
     console.error(error);
-    return res.status(500);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };

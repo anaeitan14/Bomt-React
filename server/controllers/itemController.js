@@ -41,17 +41,17 @@ exports.addItem = async (req, res) => {
 
 exports.addChild = async (req, res) => {
   try {
-    tableName = req.body.tableName;
-    pid = req.body.pid;
-    const Father = await Item.findOne({ ProductID: pid });
+    tableName = req.session.table;
+    pid = req.body.pid; //pid of the father
+    const Father = await Item.findOne({ ProductID: pid }); 
     const Table = await Table.findOne({ name: tableName });
     if (!Father) {
       return res.status(404).json({
         message: "Item not found, please add an item that has the pid",
       });
     }
-    const pids = req.body.pids;
-    for (let i = 0; i < pids.length; i++) {
+    const pids = req.body.pids; // the children pids
+    for (let i = 0; i < pids.length; i++) { // irritating over the children, connecting them towards the father
       const potentialChild = await Item.findOne({ ProductID: pids[i] });
       if (!potentialChild) {
         return res.status(404).json({
@@ -73,7 +73,7 @@ exports.addChild = async (req, res) => {
       potentialChild.Father = Father;
       await potentialChild.save();
     }
-    Father.TreeAvailable = true;
+    Father.TreeAvailable = true; // if the father wasn't a father until now, he's now.
     await Father.save();
     return res.status(200).json({ message: "Chidlren added succesfully" });
   } catch (error) {
@@ -102,7 +102,7 @@ exports.removeItem = async (req, res) => {
         req.session.user.email,
     });
     await logData.save();
-    table.products.filter((id) => !id.equals(pid));
+    table.products.filter((id) => !id.equals(pid)); // deleting the item from the table array
     await table.save();
     return res.status(200).json({ message: "Item deleted" });
   } catch (error) {
@@ -115,7 +115,7 @@ exports.searchItem = async (req, res) => {
   try {
     const { pid } = req.body;
     const tableName = req.session.table;
-    const table = await Table.findOne({ name: tableName }).populate("products");
+    const table = await Table.findOne({ name: tableName }).populate("products"); //making sure array products has something in it, code would break without it.
     const findItem = await Item.findOne({ ProductID: pid });
     if (!findItem) {
       return res
@@ -124,7 +124,7 @@ exports.searchItem = async (req, res) => {
     }
     let products = table.products;
     for (let i = 0; i < products.length; i++) {
-      if (products[i]._id.toString() === findItem._id.toString()) {
+      if (products[i]._id.toString() === findItem._id.toString()) { //only revealing the item if its inside the table the client is in.
         return res.status(200).json(findItem);
       }
     }

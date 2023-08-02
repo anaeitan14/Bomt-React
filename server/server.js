@@ -11,7 +11,8 @@ const LocalStrategy = require("passport-local").Strategy;
 const mongoURI = "mongodb://127.0.0.1:27017/BOMT";
 const app = express();
 
-const sessionConfig = {
+const sessionConfig = { 
+  //simple session config
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
@@ -20,6 +21,7 @@ const sessionConfig = {
     maxAge: 3600000, //1 hour
   },
 };
+//setting up the server, using sessions, allowing for json requests, and intiliazing passport.
 app.use(express.json());
 app.use(expresssession(sessionConfig));
 app.use(passport.initialize());
@@ -32,13 +34,13 @@ passport.use(
       try {
         const user = await User.findOne({ email });
         if (!user) {
-          return done(null, false, { message: "Incorrect email or password." });
+          return done(null, false, { message: "Incorrect email or password." }); //I don't want the user to know if he had a wrong email or password, could be abuseable.
         }
         const hash = crypto
-          .pbkdf2Sync(password, user.salting_word, 950, 64, "sha512")
+          .pbkdf2Sync(password, user.salting_word, 950, 64, "sha512") //encrypthing the password using pbkdf2Sync, using the same salting word I used for registering the user.
           .toString("hex");
-        if (hash === user.password) {
-          return done(null, user);
+        if (hash === user.password) { //comparing hashes
+          return done(null, user); //user managed to log in, returning the user object.
         } else {
           return done(null, false, { message: "Incorrect email or password." });
         }
@@ -50,10 +52,11 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user._id);
+  done(null, user._id); //storing user._id in the session
 });
 
 passport.deserializeUser(async (id, done) => {
+  //grabbing information about the user, saving it in req.user for  future methods.
   try {
     const user = await User.findById(id);
     done(null, user);
@@ -65,6 +68,7 @@ passport.deserializeUser(async (id, done) => {
 app.use(cors());
 app.use("/api", routes);
 mongoose.connect(mongoURI).then(() =>
+//connecting to a local database, using port 5000
   app.listen(5000, () => {
     console.log("connected to the database and listening in port 5000");
   })
