@@ -2,7 +2,7 @@ const crypto = require("crypto");
 const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
+
 
 exports.register = async (req, res) => {
   try {
@@ -60,29 +60,6 @@ exports.googleRegister = async (req, res) => {
   }
 };
 
-passport.use(
-  new LocalStrategy(
-    { usernameField: "email" },
-    async (email, password, done) => {
-      try {
-        const user = await User.findOne({ email });
-        if (!user) {
-          return done(null, false, { message: "Incorrect email or password." });
-        }
-        const hash = crypto
-          .pbkdf2Sync(password, user.salting_word, 950, 64, "sha512")
-          .toString("hex");
-        if (hash === user.password) {
-          return done(null, user);
-        } else {
-          return done(null, false, { message: "Incorrect email or password." });
-        }
-      } catch (error) {
-        done(error);
-      }
-    }
-  )
-);
 
 exports.login = (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
@@ -96,7 +73,6 @@ exports.login = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      //req.session.user = user;
       req.session.user = user;
       req.session.save();
       res.cookie("sessionID", req.sessionID);

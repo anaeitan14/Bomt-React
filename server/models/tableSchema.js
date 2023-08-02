@@ -20,9 +20,15 @@ const tableSchema = new mongoose.Schema({
   products: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
+      ref: "Item",
     },
   ],
+  logs: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Log"
+    }
+  ]
 });
 
 module.exports = mongoose.model("Table", tableSchema);

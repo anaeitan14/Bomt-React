@@ -18,10 +18,11 @@ exports.sessionCheck = (req, res, next) => {
   }
   next();
 };
-exports.checkPermissions = async (req, res, next) => {
+
+exports.checkAdminManager = async (req, res, next) => {
   try {
     const user = req.session.user;
-    const tableName = req.body.tableName;
+    const tableName = req.session.table;
 
     const table = await Table.findOne({ name: tableName })
       .populate("admin", "role")

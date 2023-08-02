@@ -25,8 +25,26 @@ exports.createTable = async (req, res) => {
 };
 
 exports.tables = async (req, res) => {
-  const tableNames = User.find(req.user.email);
-  tableNames = tableNames.table;
+  const tables = req.session.user.tables;
+  console.log(tables);
+  const tableNames = [];
+  for (let i = 0; i < tables.length; i++) {
+    const Name = await Table.findById(tables[i]);
+    tableNames[i] = Name.name;
+  }
+  return res.status(200).json({ tableNames });
+};
+
+exports.pickTable = async (req, res) => {
+  try {
+    const { tableName } = req.body;
+    req.session.table = tableName;
+    req.session.save();
+    return res.status(200).json({ message: "picked the table" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 exports.addManager = async (req, res) => {
@@ -51,13 +69,21 @@ exports.addManager = async (req, res) => {
       table.admin._id.toString() !== user._id &&
       isInside
     ) {
-      //requestedUser.tables.push(table);
       await requestedUser.save();
       return res
         .status(403)
         .json({ message: "Only the admin can add a manager" });
     }
     table.managers.push(requestedUser._id);
+    const logData = new Log({
+      UID: req.session.user,
+      action:
+        "User " +
+        requestedUser.email +
+        " was promoted to manager by " +
+        req.session.user.email,
+    });
+    await logData.save();
     await table.save();
     return res.status(200).json({ message: "Manager added successfully" });
   } catch (error) {
@@ -80,6 +106,15 @@ exports.addNormalUser = async (req, res) => {
     }
 
     requestedUser.tables.push(table);
+    const logData = new Log({
+      UID: req.session.user,
+      action:
+        "User " +
+        requestedUser.email +
+        " was given access by " +
+        req.session.user.email,
+    });
+    await logData.save();
     await requestedUser.save();
     return res
       .status(200)
