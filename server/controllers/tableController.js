@@ -3,9 +3,8 @@ const Table = require("../models/tableSchema");
 
 exports.createTable = async (req, res) => {
   try {
-    const email = req.session.user.email;
+    const user = req.session.user;
     const name = req.body.name;
-    const user = await User.findOne({ email: email });
 
     const table = new Table({
       name,
@@ -13,7 +12,8 @@ exports.createTable = async (req, res) => {
       managers: [],
       products: [],
     });
-
+    req.session.table = table;
+    req.session.save;
     await table.save();
     user.tables.push(table); //user has the tables he's part of.
     await user.save();
@@ -40,9 +40,15 @@ exports.pickTable = async (req, res) => {
   //after clicking on a table to join, request gives the table name.
   try {
     const { tableName } = req.body;
-    req.session.table = tableName; //setting the table name inside the session, to follow.
-    req.session.save();
-    return res.status(200).json({ message: "picked the table" });
+    const table = Table.findOne({ name: tableName });
+    for (let i = 0; i < req.session.user.tables.length; i++) {
+      if (req.session.user.tables[i]._id.toString() === table._id.toString()) {
+        req.session.table = tableName; //setting the table name inside the session, to follow.
+        req.session.save();
+        return res.status(200).json({ message: "picked the table" });
+      }
+    }
+    return res.status(404).json({ message: "table not found" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
