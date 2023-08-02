@@ -1,4 +1,3 @@
-const User = require("../models/userSchema");
 const Table = require("../models/tableSchema");
 
 exports.sessionCheck = (req, res, next) => {

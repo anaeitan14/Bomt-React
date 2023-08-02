@@ -1,4 +1,4 @@
-require('dotenv').config({path: 'bop.env'});
+require("dotenv").config({ path: "bop.env" });
 const crypto = require("crypto");
 const User = require("./models/userSchema");
 const express = require("express");
@@ -12,8 +12,7 @@ const mongoURI = "mongodb://127.0.0.1:27017/BOMT";
 const app = express();
 
 const sessionConfig = {
-  secret:
-    process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {

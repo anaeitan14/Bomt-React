@@ -26,9 +26,9 @@ const tableSchema = new mongoose.Schema({
   logs: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Log"
-    }
-  ]
+      ref: "Log",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Table", tableSchema);

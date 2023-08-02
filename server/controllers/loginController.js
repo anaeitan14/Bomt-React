@@ -3,7 +3,6 @@ const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 
-
 exports.register = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -59,7 +58,6 @@ exports.googleRegister = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 exports.login = (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
