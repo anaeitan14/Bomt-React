@@ -45,7 +45,7 @@ exports.pickTable = async (req, res) => {
     const { tableName } = req.body;
     const table = Table.findOne({ name: tableName });
     for (let i = 0; i < req.session.user.tables.length; i++) {
-      if (req.session.user.tables[i]._id.toString() === table._id.toString()) {
+      if (req.session.user.tables[i]._id === table._id) {
         req.session.table = tableName; //setting the table name inside the session, to follow.
         req.session.save();
         return res.status(200).json({ message: "picked the table" });
