@@ -4,6 +4,8 @@ const Table = require("../models/tableSchema");
 exports.createTable = async (req, res) => {
   try {
     const user = req.session.user;
+    const realUser = await User.findById(user._id);
+    console.log(realUser);
     const name = req.body.name;
 
     const table = new Table({
@@ -13,10 +15,11 @@ exports.createTable = async (req, res) => {
       products: [],
     });
     req.session.table = table;
-    req.session.save;
+    req.session.save();
     await table.save();
-    user.tables.push(table); //user has the tables he's part of.
-    await user.save();
+    realUser.tables.push(table); //user has the tables he's part of.
+    await realUser.save();
+    req.session.user = realUser;
     return res.status(200).json({ message: "Table created successfully" });
   } catch (error) {
     console.error(error);
