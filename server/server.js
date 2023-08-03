@@ -26,6 +26,22 @@ app.use(express.json());
 app.use(expresssession(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
+const allowedOrigins = ["http://localhost:3000"];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Check if the request origin is in the allowedOrigins array, or if it's not set (e.g., when using Postman)
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true, // Allow credentials (cookies, session) to be sent with the request
+};
+
+app.use(cors(corsOptions));
+
 
 passport.use(
   new LocalStrategy(
@@ -65,7 +81,7 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-app.use(cors());
+
 app.use("/api", routes);
 mongoose.connect(mongoURI).then(() =>
 //connecting to a local database, using port 5000
