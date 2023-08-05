@@ -30,7 +30,7 @@ export const TableSelection = () => {
 
     const response = await instance.post("/addTable", data);
     if (response.status === 200) {
-      alert("Table created successfully");
+      fetchTables();
     }
   };
 
