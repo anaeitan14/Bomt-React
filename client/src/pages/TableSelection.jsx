@@ -36,8 +36,11 @@ export const TableSelection = () => {
 
   const handleClick = async (table) => {
     setSelectedTable(table);
+  };
 
-    const data = {tableName:selectedTable}
+  const handlePick = async (e) => {
+    e.preventDefault();
+    const data = { tableName: selectedTable };
     const response = await instance.post("/pickTable", data);
     if (response.status === 200) {
       navigate("/");
@@ -52,12 +55,14 @@ export const TableSelection = () => {
           {data.map((table) => {
             return (
               <li>
-                <button
-                  onClick={() => handleClick(table)}
-                  className="list-group-item list-group-item-action w-50"
-                >
-                  {table}
-                </button>
+                <form onSubmit={handlePick}>
+                  <button
+                    onClick={() => handleClick(table)}
+                    className="list-group-item list-group-item-action w-50"
+                  >
+                    {table}
+                  </button>
+                </form>
               </li>
             );
           })}
