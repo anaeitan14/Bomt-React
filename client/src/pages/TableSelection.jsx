@@ -48,17 +48,17 @@ export const TableSelection = () => {
   };
 
   return (
-    <div className="d-flex justify-content-around align-items-center mt-5 bg-dark text-white">
+    <div className="vh-100 d-flex justify-content-center align-items-center bg-dark text-white overflow-hidden">
       <div className="container-fluid">
         <h2>Choose your desired table</h2>
-        <ul className="list-group">
+        <ul className="list-group list-unstyled">
           {data.map((table) => {
             return (
-              <li>
+              <li className="m-1">
                 <form onSubmit={handlePick}>
                   <button
                     onClick={() => handleClick(table)}
-                    className="list-group-item list-group-item-action w-50"
+                    className="list-group-item list-group-item-action w-50 rounded"
                   >
                     {table}
                   </button>
@@ -68,12 +68,12 @@ export const TableSelection = () => {
           })}
         </ul>
       </div>
-      <div className="container-fluid">
+      <div className="d-flex justify-content-center container-fluid">
         <form onSubmit={handleSubmit}>
           <h2>Create a new table</h2>
           <input
             type="text"
-            className="form-control w-50"
+            className="form-control"
             onChange={(e) => setNewTableName(e.target.value)}
           />
           <button className="btn btn-primary mt-2">Create</button>
