@@ -9,11 +9,9 @@ export const TableSelection = () => {
   const [selectedTable, setSelectedTable] = useState("");
   const navigate = useNavigate();
 
-  console.log(selectedTable);
-
   useEffect(() => {
     fetchTables();
-  }, []);
+  }, [data]);
 
   const fetchTables = async () => {
     try {
@@ -40,7 +38,6 @@ export const TableSelection = () => {
     setSelectedTable(table);
 
     const data = {tableName:selectedTable}
-    console.log(table);
     const response = await instance.post("/pickTable", data);
     if (response.status === 200) {
       navigate("/");
