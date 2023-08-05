@@ -1,5 +1,6 @@
 const User = require("../models/userSchema");
 const Table = require("../models/tableSchema");
+const Log = require("../models/logSchema");
 
 exports.createTable = async (req, res) => {
   try {
@@ -20,6 +21,7 @@ exports.createTable = async (req, res) => {
     realUser.tables.push(table); //user has the tables he's part of.
     await realUser.save();
     req.session.user = realUser;
+    console.log(realUser);
     return res.status(200).json({ message: "Table created successfully" });
   } catch (error) {
     console.error(error);
@@ -42,12 +44,18 @@ exports.tables = async (req, res) => {
 exports.pickTable = async (req, res) => {
   //after clicking on a table to join, request gives the table name.
   try {
+    const email = req.session.user.email;
+    const user = await User.findOne({ email: email });
     const { tableName } = req.body;
-    const table = Table.findOne({ name: tableName });
-    for (let i = 0; i < req.session.user.tables.length; i++) {
-      if (req.session.user.tables[i]._id === table._id) {
+    console.log(tableName);
+    const table = await Table.findOne({ name: tableName });
+    console.log(table._id);
+    for (let i = 0; i < user.tables.length; i++) {
+      console.log(user.tables[i]._id);
+      if (user.tables[i].toString() === table._id.toString()) {
         req.session.table = tableName; //setting the table name inside the session, to follow.
         req.session.save();
+        console.log(req.session);
         return res.status(200).json({ message: "picked the table" });
       }
     }
@@ -64,30 +72,36 @@ exports.addManager = async (req, res) => {
     const requestedEmail = req.body.requestedEmail;
     const tableName = req.session.table;
     const user = req.session.user;
-    const table = await Table.findOne({ name: tableName });
+    const addingTable = await Table.findOne({ name: tableName });
     const requestedUser = await User.findOne({ email: requestedEmail });
     if (!requestedUser) {
       return res.status(404).json({ message: "User not found" });
     }
-    if (!table) {
+    if (!addingTable) {
       return res.status(404).json({ message: "Table not found" });
     }
+    const isUser = requestedUser.tables.some(
+      (table) => table._id.toString() === addingTable._id
+    );
+    if (!isUser) {
+      return res
+        .status(400)
+        .json({ message: "need to be a regular user first" });
+    }
     const isInside = requestedUser.tables.some(
-      //probably pointless, considering removing it, I have it in perm check middleware
-      (checkTable) => checkTable._id.toString() === table._id.toString()
+      (checkTable) => checkTable._id.toString() === addingTable._id.toString()
     );
     if (
-      //checking if the user is not an admin.
-      table.admin &&
-      table.admin._id &&
-      table.admin._id.toString() !== user._id &&
+      addingTable.admin &&
+      addingTable.admin._id &&
+      addingTable.admin._id.toString() !== user._id &&
       isInside
     ) {
       return res
         .status(403)
         .json({ message: "Only the admin can add a manager" });
     }
-    table.managers.push(requestedUser); //adding the user as manager
+    addingTable.managers.push(requestedUser); //adding the user as manager
     requestedUser.tables.push(table);
     const logData = new Log({
       UID: req.session.user,
@@ -97,10 +111,10 @@ exports.addManager = async (req, res) => {
         " was promoted to manager by " +
         req.session.user.email,
     });
-    table.logs.push(logData);
+    addingTable.logs.push(logData);
     await requestedUser.save();
     await logData.save();
-    await table.save();
+    await addingTable.save();
     return res.status(200).json({ message: "Manager added successfully" });
   } catch (error) {
     console.error(error);
@@ -111,7 +125,7 @@ exports.addManager = async (req, res) => {
 exports.addNormalUser = async (req, res) => {
   try {
     const requestedEmail = req.body.requestedEmail;
-    const tableName = req.body.tableName;
+    const tableName = req.session.table;
     const table = await Table.findOne({ name: tableName });
     const requestedUser = await User.findOne({ email: requestedEmail });
     if (!requestedUser) {

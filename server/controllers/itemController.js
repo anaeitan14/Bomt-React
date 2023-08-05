@@ -86,7 +86,7 @@ exports.removeItem = async (req, res) => {
   try {
     const { pid } = req.body;
     const tableName = req.session.table;
-    const table = Table.findOne({ name: tableName });
+    const table = await Table.findOne({ name: tableName }).populate("products"); //making sure array products has something in it, code would break without it.
     const existingItem = await Item.findOneAndDelete({ ProductID: pid });
     if (!existingItem) {
       return res
@@ -102,7 +102,9 @@ exports.removeItem = async (req, res) => {
         req.session.user.email,
     });
     await logData.save();
+    console.log(table.products)
     table.products.filter((id) => !id.equals(pid)); // deleting the item from the table array
+    table.logs.push(logData);
     await table.save();
     return res.status(200).json({ message: "Item deleted" });
   } catch (error) {
