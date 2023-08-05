@@ -104,6 +104,7 @@ exports.removeItem = async (req, res) => {
     await logData.save();
     console.log(table.products)
     table.products.filter((id) => !id.equals(pid)); // deleting the item from the table array
+    table.logs.push(logData);
     await table.save();
     return res.status(200).json({ message: "Item deleted" });
   } catch (error) {
