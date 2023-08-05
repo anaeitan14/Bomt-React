@@ -102,7 +102,6 @@ exports.addManager = async (req, res) => {
         .json({ message: "Only the admin can add a manager" });
     }
     addingTable.managers.push(requestedUser); //adding the user as manager
-    requestedUser.tables.push(table);
     const logData = new Log({
       UID: req.session.user,
       action:
