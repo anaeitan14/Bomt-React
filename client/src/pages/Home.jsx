@@ -4,6 +4,7 @@ import Header from "../components/Navbar";
 import Table from "../components/Table";
 import AddBtn from "../components/buttons/AddBtn";
 import RemoveBtn from "../components/buttons/RemoveBtn";
+import ChildBtn from "../components/buttons/ChildBtn";
 
 export const Home = () => {
   useEffect(() => {
@@ -53,6 +54,7 @@ export const Home = () => {
           </div>
           <AddBtn />
           <RemoveBtn />
+          <ChildBtn/>
         </form>
       </div>
       <Table data={data} />

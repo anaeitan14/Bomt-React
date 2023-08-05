@@ -11,7 +11,7 @@ export const TableSelection = () => {
 
   useEffect(() => {
     fetchTables();
-  }, [data]);
+  }, [data.length]);
 
   const fetchTables = async () => {
     try {
