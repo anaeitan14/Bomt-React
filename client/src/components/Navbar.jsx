@@ -1,19 +1,22 @@
 import React from "react";
-import axios from "axios";
+import instance from "../pages/axios-instance";
 import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    const URL = "http://localhost:5000/api/logout";
+    const URL = "/logout";
     const data = {
       email: localStorage.getItem("email"),
     };
 
-    await axios.post(URL, data);
     localStorage.clear();
-    navigate("/login");
+    
+    const response = await instance.post(URL, data);
+    if (response.status === 200) {
+      navigate("/login");
+    }
   };
 
   return (
