@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import instance from "./axios-instance";
 import Header from "../components/Navbar";
 import Table from "../components/Table";
 import AddBtn from "../components/buttons/AddBtn";
@@ -22,11 +22,11 @@ export const Home = () => {
       pid: searchQuery,
     };
 
-    const URL = "http://localhost:5000/api/searchItem";
+    const URL = "/searchItem";
     let response;
 
     try {
-      response = await axios.post(URL, query);
+      response = await instance.post(URL, query);
       setData(response.data);
     } catch (err) {
       if (err.response.status === 400) {

@@ -16,7 +16,7 @@ const Item = ({ data }) => {
       <td>
         <DocsBtn data={data.Document} />
       </td>
-      <td>{data.TreeAvailable ? "Yes" : "No"}</td>
+      <td>{Object.keys(data).length !== 0 ? (data.TreeAvailable ? "Yes" : "No") : null}</td>
     </tr>
   );
 };
