@@ -20,6 +20,7 @@ exports.createTable = async (req, res) => {
     realUser.tables.push(table); //user has the tables he's part of.
     await realUser.save();
     req.session.user = realUser;
+    console.log(realUser);
     return res.status(200).json({ message: "Table created successfully" });
   } catch (error) {
     console.error(error);
@@ -42,12 +43,18 @@ exports.tables = async (req, res) => {
 exports.pickTable = async (req, res) => {
   //after clicking on a table to join, request gives the table name.
   try {
+    const email = req.session.user.email;
+    const user = await User.findOne({ email: email });
     const { tableName } = req.body;
-    const table = Table.findOne({ name: tableName });
-    for (let i = 0; i < req.session.user.tables.length; i++) {
-      if (req.session.user.tables[i]._id === table._id) {
+    console.log(tableName);
+    const table = await Table.findOne({ name: tableName });
+    console.log(table._id);
+    for (let i = 0; i < user.tables.length; i++) {
+      console.log(user.tables[i]._id);
+      if (user.tables[i].toString() === table._id.toString()) {
         req.session.table = tableName; //setting the table name inside the session, to follow.
         req.session.save();
+        console.log(req.session);
         return res.status(200).json({ message: "picked the table" });
       }
     }
