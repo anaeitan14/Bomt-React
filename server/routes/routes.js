@@ -4,6 +4,7 @@ const loginController = require("../controllers/loginController");
 const itemController = require("../controllers/itemController");
 const tableController = require("../controllers/tableController");
 const logsController = require("../controllers/logController");
+const reportController = require("../controllers/reportController");
 const middlewares = require("../middlewares/middlewares");
 
 router.post("/register", loginController.register);
@@ -44,5 +45,11 @@ router.get(
   middlewares.sessionCheck,
   middlewares.checkAdminManager,
   logsController.logs
+);
+router.get(
+  "/getReportOne",
+  middlewares.sessionCheck,
+  middlewares.checkAdminManager,
+  reportController.exportToCSV
 );
 module.exports = router;

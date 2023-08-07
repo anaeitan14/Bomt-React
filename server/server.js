@@ -26,8 +26,8 @@ app.use(express.json());
 app.use(expresssession(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
-const allowedOrigins = ["http://localhost:3000"];
 
+const allowedOrigins = ["http://localhost:3000"];
 const corsOptions = {
   origin: (origin, callback) => {
     // Check if the request origin is in the allowedOrigins array, or if it's not set (e.g., when using Postman)
