@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import axios from "axios";
+import instance from "../../pages/axios-instance";
 
 const AddBtn = () => {
   const [productID, setProductID] = useState("");
@@ -117,7 +117,7 @@ const AddBtn = () => {
   }
 
   const handleAdd = () => {
-    const URL = "http://localhost:5000/api/addItem";
+    const URL = "/addItem";
 
     const dis = seperateObj(distriInputs);
     const doc = seperateDoc(docuInputs);
@@ -147,7 +147,7 @@ const AddBtn = () => {
     setDistriInputs({});
     setDocuInputs({});
 
-    axios
+    instance
       .post(URL, { item })
       .then((response) => {
         console.log(response);

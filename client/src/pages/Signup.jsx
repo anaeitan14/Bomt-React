@@ -1,34 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./Signup.css";
-import axios from "axios";
+import instance from "./axios-instance";
 import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== repeatPassword) {
-      setError("Passwords do not match");
+      setErrorMessage("Passwords do not match");
       return;
     }
 
-    const URL = "http://localhost:5000/api/register";
+    const info = { email: email, password: password };
 
-    axios
-      .post(URL, {
-        email: email,
-        password: password,
-      })
-      .then(response => console.log(response))
-      .catch((error) => {
-        console.log(error);
-      });
+    const URL = "/register";
+    try {
+      const response = await instance.post(URL, info);
+      if (response.status === 200) {
+        navigate("/login"); // Navigate to the '/table-select' page
+      }
+    } catch (err) {
+      console.log(err);
+      setErrorMessage("Incorrect information");
+    }
   };
 
   return (
