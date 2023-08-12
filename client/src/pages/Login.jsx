@@ -24,6 +24,7 @@ const Login = () => {
     try {
       const response = await instance.post(URL, info);
       if (response.status === 200) {
+        localStorage.setItem("email", email);
         navigate("/table-select"); // Navigate to the '/table-select' page
       }
     } catch (err) {
@@ -32,84 +33,84 @@ const Login = () => {
     }
   };
 
-  // async function handleCallbackResponse(response) {
-  //   var userObject = response.credential;
+  async function handleCallbackResponse(response) {
+    var userObject = response.credential;
 
-  //   const URL = "http://localhost:5000/api/google-register";
+    const URL = "http://localhost:5000/api/google-register";
 
-    //   try {
-    //     const response = await axios.post(URL, { JWT: userObject });
-
-    //     if (response.status === 200) {
-    //       navigate("/");
-    //     }
-    //   } catch (err) {
-    //     setErrorMessage("Incorrect information");
-    //   }
-    // }
-
-    // useEffect(() => {
-    //   /* global google */
-    //   google.accounts.id.initialize({
-    //     client_id:
-    //       "629491949981-6dlq72o30aiv6ba91mu9jgcvbh4tfd9h.apps.googleusercontent.com",
-    //     callback: handleCallbackResponse,
-    //   });
-
-    //   google.accounts.id.renderButton(document.getElementById("google-div"), {
-    //     theme: "outline",
-    //     size: "large",
-    //   });
-
-    //   google.accounts.id.prompt();
-    // }, []);
-
-    // useEffect(() => {
-    //   setTimeout(() => {
-    //     if (errorMessage) {
-    //       setErrorMessage("");
-    //     }
-    //   }, 2500);
-    // });
-
-    return (
-      <div className="container-fluid">
-        <form className="login-form" onSubmit={handleSubmit}>
-          <h1 className="mb-4">Sign in</h1>
-          <InputGroup className="mb-3">
-            <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
-            <Form.Control
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              placeholder="Email"
-              aria-label="Email"
-              aria-describedby="Email"
-            />
-          </InputGroup>
-          <InputGroup className="mb-3">
-            <InputGroup.Text id="basic-addon1">***</InputGroup.Text>
-            <Form.Control
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              type="password"
-              placeholder="Password"
-              aria-label="Password"
-              aria-describedby="Password"
-            />
-          </InputGroup>
-          <button>Sign in</button>
-          <a href="/signup">New user? click here to sign up</a>
-          <a href="/forgot">Forgot password?</a>
-          <div id="google-div"></div>
-        </form>
-        {errorMessage && (
-          <div id="error-message" className="alert alert-danger mt-4 w-25">
-            {errorMessage}
-          </div>
-        )}
-      </div>
-    );
+    try {
+      const response = await instance.post(URL, { JWT: userObject });
+      if (response.status === 200) {
+        localStorage.setItem("email", userObject.email);
+        navigate("/table-select");
+      }
+    } catch (err) {
+      setErrorMessage("Incorrect information");
+    }
   }
+
+  useEffect(() => {
+    /* global google */
+    google.accounts.id.initialize({
+      client_id:
+        "629491949981-6dlq72o30aiv6ba91mu9jgcvbh4tfd9h.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
+
+    google.accounts.id.renderButton(document.getElementById("google-div"), {
+      theme: "outline",
+      size: "large",
+    });
+
+    google.accounts.id.prompt();
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (errorMessage) {
+        setErrorMessage("");
+      }
+    }, 2500);
+  });
+
+  return (
+    <div className="container-fluid">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <h1 className="mb-4">Sign in</h1>
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
+          <Form.Control
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            placeholder="Email"
+            aria-label="Email"
+            aria-describedby="Email"
+          />
+        </InputGroup>
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon1">***</InputGroup.Text>
+          <Form.Control
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            type="password"
+            placeholder="Password"
+            aria-label="Password"
+            aria-describedby="Password"
+          />
+        </InputGroup>
+        <button>Sign in</button>
+        <a href="/signup">New user? click here to sign up</a>
+        <a href="/forgot">Forgot password?</a>
+        <div id="google-div"></div>
+      </form>
+      {errorMessage && (
+        <div id="error-message" className="alert alert-danger mt-4 w-25">
+          {errorMessage}
+        </div>
+      )}
+    </div>
+  );
+};
 export default Login;

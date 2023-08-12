@@ -24,6 +24,7 @@ const formatDocuments = (documents, maxEntries = 10) => {
 exports.exportToCSV = async (req, res) => {
   try {
     const tableName = req.session.table;
+    console.log(tableName);
     const table = await Table.findOne({ name: tableName }).populate("products");
 
     if (!table) {
