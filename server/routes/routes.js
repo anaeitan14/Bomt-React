@@ -46,7 +46,8 @@ router.get(
   middlewares.checkAdminManager,
   logsController.logs
 );
-router.get(
+// Hi again :) changed to post since you need table name in the controller u wrote :)
+router.post(
   "/getReportOne",
   middlewares.sessionCheck,
   middlewares.checkAdminManager,
