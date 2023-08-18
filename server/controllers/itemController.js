@@ -41,17 +41,17 @@ exports.addItem = async (req, res) => {
 
 exports.addChild = async (req, res) => {
   try {
+    console.log(req.body);
     const tableName = req.session.table;
-    pid = req.body.pid; //pid of the father
+    const {pid} = req.body; //pid of the father
     const Father = await Item.findOne({ ProductID: pid }); 
     const table = await Table.findOne({ name: tableName });
-    console.log(table);
     if (!Father) {
       return res.status(404).json({
         message: "Item not found, please add an item that has the pid",
       });
     }
-    const pids = req.body.pids; // the children pids
+    const {pids} = req.body; // the children pids
     for (let i = 0; i < pids.length; i++) { // irritating over the children, connecting them towards the father
       const potentialChild = await Item.findOne({ ProductID: pids[i] });
       if (!potentialChild) {

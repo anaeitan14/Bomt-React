@@ -5,27 +5,41 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import instance from "../../pages/axios-instance";
 
-const AddBtn = () => {
-  const [productID, setProductID] = useState("");
+const ChildBtn = ({data}) => {
+  const [products, setProducts] = useState("");
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
 
   const handleClose = () => {
-    setProductID("");
+    setProducts("");
     setShow(false);
   };
 
   const handleAdd = async () => {
     const URL = "/addChild";
+    let pids = [];
+    console.log(pids);
+
+    if (!data) {
+      alert("Cannot add a child item to this item");
+    } 
+
+    if(products.length > 0) {
+      pids = products.split(" ");
+      console.log(pids);
+    } else {
+      alert("Must enter a PID for the child item");
+    }
 
     const item = {
-      ProductID: productID,
+      pid: data,
+      pids: pids
     };
 
-    setProductID("");
+    setProducts("");
 
     try {
-      const response = await instance.post(URL, { item });
+      const response = await instance.post(URL, item );
       console.log(response);
     } catch (err) {
       console.log(err);
@@ -36,7 +50,7 @@ const AddBtn = () => {
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        Add child
+        Add childs
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -47,7 +61,7 @@ const AddBtn = () => {
             <InputGroup className="mb-3">
               <Form.Control
                 onChange={(e) => {
-                  setProductID(e.target.value);
+                  setProducts(e.target.value);
                 }}
                 placeholder="Product ID"
               />
@@ -67,4 +81,4 @@ const AddBtn = () => {
   );
 };
 
-export default AddBtn;
+export default ChildBtn;

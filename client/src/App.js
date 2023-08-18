@@ -1,10 +1,29 @@
-import { Navigate } from "react-router-dom";
-import { Home } from "./pages/Home";
+import { useNavigate } from "react-router-dom";
+import Login from "./pages/Login";
+import { useEffect } from "react";
+import instance from "./pages/axios-instance";
+
 
 function App() {
-  const isAuth = true;
+  const navigate = useNavigate();
 
-  return <>{isAuth ? <Home /> : <Navigate to="/login" />}</>;
+  const getAuthentication = async () => {
+    const response = await instance.get("/getLogs");
+    console.log(response.request.status);
+    if (response.request.status === 200) {
+      navigate("/home");
+    }
+  };
+
+  useEffect(() => {
+    getAuthentication();
+  }, []);
+
+  return (
+    <>
+      <Login />
+    </>
+  );
 }
 
 export default App;

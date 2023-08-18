@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +24,7 @@ const Login = () => {
 
     try {
       const response = await instance.post(URL, info);
-      if (response.status === 200) {
+      if (response.data.auth === true) {
         localStorage.setItem("email", email);
         navigate("/table-select"); // Navigate to the '/table-select' page
       }
