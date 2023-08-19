@@ -40,6 +40,7 @@ const formatDocuments = (documents, maxEntries = 10) => {
 exports.exportToCSV = async (req, res) => {
   try {
     const tableName = req.session.table;
+    console.log(tableName);
     const table = await Table.findOne({ name: tableName }).populate("products");
 
     if (!table) {
@@ -72,8 +73,10 @@ exports.exportToCSV = async (req, res) => {
         console.error(err);
         return res.status(500).json({ message: "Failed to export to CSV" });
       }
-      console.log("CSV file created successfully");
-      return res.status(200).json({ message: "Data exported to CSV file" });
+      console.log("CSV file created successfully"); 
+      // Hi eran :) idk what res.download() does but it works so now i can download the file from the browser.
+      return res.download("products.csv");
+      return res.status(200).json({ message: "Data exported to CSV file" }); // idk if this needed anymore
     });
   } catch (error) {
     console.error(error);

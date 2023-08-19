@@ -46,6 +46,7 @@ router.get(
   middlewares.checkAdminManager,
   logsController.logs
 );
+
 router.get(
   "/getReportOne",
   middlewares.sessionCheck,

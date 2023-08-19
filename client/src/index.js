@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { TableSelection } from "./pages/TableSelection";
 import App from "./App";
 import Login from "./pages/Login";
+import { Home } from "./pages/Home";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 import Queries from "./pages/Queries";
@@ -21,6 +22,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="home" element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
         <Route path="forgot" element={<ForgotPassword />} />

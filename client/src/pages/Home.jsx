@@ -54,7 +54,7 @@ export const Home = () => {
           </div>
           <AddBtn />
           <RemoveBtn />
-          <ChildBtn/>
+          <ChildBtn data={searchQuery}/>
         </form>
       </div>
       <Table data={data} />

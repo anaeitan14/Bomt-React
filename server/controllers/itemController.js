@@ -41,9 +41,10 @@ exports.addItem = async (req, res) => {
 
 exports.addChild = async (req, res) => {
   try {
+    console.log(req.body);
     const tableName = req.session.table;
-    pid = req.body.pid; //pid of the father
-    const father = await Item.findOne({ ProductID: pid }); 
+    const pid = req.body.pid; //pid of the father
+    const father = await Item.findOne({ ProductID: pid });
     const table = await Table.findOne({ name: tableName });
     console.log(table);
     if (!father) {
@@ -51,8 +52,9 @@ exports.addChild = async (req, res) => {
         message: "Item not found, please add an item that has the pid",
       });
     }
-    const pids = req.body.pids; // the children pids
-    for (let i = 0; i < pids.length; i++) { // irritating over the children, connecting them towards the father
+    const { pids } = req.body.pids; // the children pids
+    for (let i = 0; i < pids.length; i++) {
+      // irritating over the children, connecting them towards the father
       const child = await Item.findOne({ ProductID: pids[i] });
       if (!child) {
         return res.status(404).json({
@@ -71,7 +73,7 @@ exports.addChild = async (req, res) => {
       });
       await logData.save();
       father.Sons.push(child);
-      child.father = father;
+      child.Father = father;
       await child.save();
     }
     father.TreeAvailable = true; // if the father wasn't a father until now, he's now.
@@ -103,7 +105,7 @@ exports.removeItem = async (req, res) => {
         req.session.user.email,
     });
     await logData.save();
-    console.log(table.products)
+    console.log(table.products);
     table.products.filter((id) => !id.equals(pid)); // deleting the item from the table array
     table.logs.push(logData);
     await table.save();
@@ -127,7 +129,8 @@ exports.searchItem = async (req, res) => {
     }
     let products = table.products;
     for (let i = 0; i < products.length; i++) {
-      if (products[i]._id.toString() === findItem._id.toString()) { //only revealing the item if its inside the table the client is in.
+      if (products[i]._id.toString() === findItem._id.toString()) {
+        //only revealing the item if its inside the table the client is in.
         return res.status(200).json(findItem);
       }
     }
