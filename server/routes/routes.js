@@ -52,4 +52,11 @@ router.get(
   middlewares.checkAdminManager,
   reportController.exportToCSV
 );
+
+router.post(
+  "/getReportTwo",
+  middlewares.sessionCheck,
+  middlewares.checkAdminManager,
+  reportController.createCSV
+);
 module.exports = router;

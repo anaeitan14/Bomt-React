@@ -43,18 +43,18 @@ exports.addChild = async (req, res) => {
   try {
     const tableName = req.session.table;
     pid = req.body.pid; //pid of the father
-    const Father = await Item.findOne({ ProductID: pid }); 
+    const father = await Item.findOne({ ProductID: pid }); 
     const table = await Table.findOne({ name: tableName });
     console.log(table);
-    if (!Father) {
+    if (!father) {
       return res.status(404).json({
         message: "Item not found, please add an item that has the pid",
       });
     }
     const pids = req.body.pids; // the children pids
     for (let i = 0; i < pids.length; i++) { // irritating over the children, connecting them towards the father
-      const potentialChild = await Item.findOne({ ProductID: pids[i] });
-      if (!potentialChild) {
+      const child = await Item.findOne({ ProductID: pids[i] });
+      if (!child) {
         return res.status(404).json({
           message: "Item that has " + pids[i] + " pid, was not found",
         });
@@ -63,19 +63,19 @@ exports.addChild = async (req, res) => {
         UID: req.session.user,
         action:
           "Item " +
-          Father.ProductID +
+          father.ProductID +
           " receieve a new child " +
           pids[i] +
           ", by user " +
           req.session.user.email,
       });
       await logData.save();
-      Father.Sons.push(potentialChild);
-      potentialChild.Father = Father;
-      await potentialChild.save();
+      father.Sons.push(child);
+      child.father = father;
+      await child.save();
     }
-    Father.TreeAvailable = true; // if the father wasn't a father until now, he's now.
-    await Father.save();
+    father.TreeAvailable = true; // if the father wasn't a father until now, he's now.
+    await father.save();
     return res.status(200).json({ message: "Chidlren added succesfully" });
   } catch (error) {
     console.error(error);

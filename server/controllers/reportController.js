@@ -1,5 +1,21 @@
 const fs = require("fs");
 const Table = require("../models/tableSchema");
+const Item = require("../models/itemSchema")
+
+function writeLineToFile(fileStream, line, indentationLevel) {
+  const indentation = '    '.repeat(indentationLevel);
+  fileStream.write(`${indentation}${line}\n`);
+}
+
+function writeHierarchyToFile(fileStream, item, indentationLevel) {
+  const line = `${item.ProductName};${item.Information};${item.AnotherInformation}`;
+  writeLineToFile(fileStream, line, indentationLevel);
+
+  for (const sonId of item.Sons) {
+    const son = Item.findById(sonId); // Replace this with your logic to find the son
+    writeHierarchyToFile(fileStream, son, indentationLevel + 1);
+  }
+}
 
 const formatDistrobutors = (distrobutors, maxEntries = 5) => {
   const filledEntries = distrobutors.map(
@@ -62,5 +78,28 @@ exports.exportToCSV = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+exports.createCSV = async (req, res) => {
+  try {
+    const pid = req.body.pid;
+    const rootItem = await Item.findOne({ ProductID: pid });
+
+    if (!rootItem) {
+      return res.status(404).json({ message: 'Root item not found' });
+    }
+
+    const filePath = 'hierarchical_data.csv';
+    const fileStream = fs.createWriteStream(filePath);
+
+    writeHierarchyToFile(fileStream, rootItem, 0);
+
+    fileStream.end();
+    return res.status(200).json({ message: 'CSV file created successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
