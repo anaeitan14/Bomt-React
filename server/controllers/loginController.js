@@ -2,6 +2,7 @@ const crypto = require("crypto");
 const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
+const nodemailer = require("nodemailer");
 
 function passwordCheck(password) {
   if (!/[A-Z]/.test(password)) {
@@ -73,7 +74,7 @@ exports.googleRegister = async (req, res) => {
           return res.status(500).json({ message: "Failed to log in the user" });
         }
         req.session.user = user;
-        req.session.save;
+        req.session.save();
         res.cookie("sessionID", req.sessionID);
         return res.status(200).json({ auth: true, message: "User logged in" });
       });
@@ -145,4 +146,36 @@ exports.logout = async (req, res) => {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
   }
+};
+
+exports.forgot = async (req, res) => {
+  const transporter = nodemailer.createTransport({
+    service: process.env.SERVICE,
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
+    },
+  });
+  const user = await User.findOne({ email: req.session.user.email });
+  const newPassword = randomstring.generate(16);
+  const hash = crypto // crypting the password using sha512 and irritiating it with a salting word so it won't be easily cracked.
+    .pbkdf2Sync(newPassword, user.salting_word, 950, 64, "sha512")
+    .toString("hex");
+
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: req.session.user.email,
+    subject: "Password reset",
+    text: `Your new password is ${newPassword},\nPlease change it ASAP as it is not a secure password.`,
+  };
+
+  transporter.sendEmail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Internal server error" });
+    } else {
+      console.log(`Email sent: ${info.response}`);
+      return res.status(200).json({ message: "New password send succesfully" });
+    }
+  });
 };
