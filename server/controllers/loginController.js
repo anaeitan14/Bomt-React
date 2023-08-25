@@ -3,6 +3,28 @@ const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 
+function passwordCheck(password) {
+  if (!/[A-Z]/.test(password)) {
+    return false;
+  }
+
+  if (!/[a-z]/.test(password)) {
+    return false;
+  }
+
+  if (!/[0-9]/.test(password)) {
+    return false;
+  }
+
+  if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(password)) {
+    return false;
+  }
+  if (password.length() < 10) {
+    return false;
+  }
+  return true;
+}
+
 exports.register = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -11,7 +33,13 @@ exports.register = async (req, res) => {
     if (user) {
       return res.status(400).json({ message: "User already exists" });
     }
+    const valid = passwordCheck(password);
 
+    if (valid) {
+      return res
+        .status(404)
+        .json({ message: "password is too weak, please pick another one" });
+    }
     const salting_word = crypto.randomBytes(32).toString("base64");
     const hash = crypto // crypting the password using sha512 and irritiating it with a salting word so it won't be easily cracked.
       .pbkdf2Sync(password, salting_word, 950, 64, "sha512")

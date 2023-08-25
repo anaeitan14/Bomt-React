@@ -1,21 +1,6 @@
 const fs = require("fs");
 const Table = require("../models/tableSchema");
-const Item = require("../models/itemSchema")
-
-function writeLineToFile(fileStream, line, indentationLevel) {
-  const indentation = '    '.repeat(indentationLevel);
-  fileStream.write(`${indentation}${line}\n`);
-}
-
-function writeHierarchyToFile(fileStream, item, indentationLevel) {
-  const line = `${item.ProductName};${item.Information};${item.AnotherInformation}`;
-  writeLineToFile(fileStream, line, indentationLevel);
-
-  for (const sonId of item.Sons) {
-    const son = Item.findById(sonId); // Replace this with your logic to find the son
-    writeHierarchyToFile(fileStream, son, indentationLevel + 1);
-  }
-}
+const Item = require("../models/itemSchema");
 
 const formatDistrobutors = (distrobutors, maxEntries = 5) => {
   const filledEntries = distrobutors.map(
@@ -40,7 +25,6 @@ const formatDocuments = (documents, maxEntries = 10) => {
 exports.exportToCSV = async (req, res) => {
   try {
     const tableName = req.session.table;
-    console.log(tableName);
     const table = await Table.findOne({ name: tableName }).populate("products");
 
     if (!table) {
@@ -73,10 +57,10 @@ exports.exportToCSV = async (req, res) => {
         console.error(err);
         return res.status(500).json({ message: "Failed to export to CSV" });
       }
-      console.log("CSV file created successfully"); 
+      console.log("CSV file created successfully");
       // Hi eran :) idk what res.download() does but it works so now i can download the file from the browser.
       return res.download("products.csv");
-      return res.status(200).json({ message: "Data exported to CSV file" }); // idk if this needed anymore
+      //return res.status(200).json({ message: "Data exported to CSV file" }); // idk if this needed anymore
     });
   } catch (error) {
     console.error(error);
@@ -84,6 +68,21 @@ exports.exportToCSV = async (req, res) => {
   }
 };
 
+function writeLineToFile(fileStream, line, indentationLevel) {
+  const indentation = "    ".repeat(indentationLevel);
+  fileStream.write(`${indentation}${line}\n`);
+}
+
+async function writeHierarchyToFile(fileStream, item, indentationLevel) {
+  const line = `${item.ProductName};${item.Description};${item.Manufacturer}`;
+  if (item) {
+    writeLineToFile(fileStream, line, indentationLevel);
+  }
+  for (const sonId of item.Sons) {
+    const son = await Item.findById(sonId);
+    writeHierarchyToFile(fileStream, son, indentationLevel + 1);
+  }
+}
 
 exports.createCSV = async (req, res) => {
   try {
@@ -91,18 +90,16 @@ exports.createCSV = async (req, res) => {
     const rootItem = await Item.findOne({ ProductID: pid });
 
     if (!rootItem) {
-      return res.status(404).json({ message: 'Root item not found' });
+      return res.status(404).json({ message: "Root item not found" });
     }
 
-    const filePath = 'hierarchical_data.csv';
+    const filePath = "hierarchical_data.csv";
     const fileStream = fs.createWriteStream(filePath);
-
-    writeHierarchyToFile(fileStream, rootItem, 0);
-
+    await writeHierarchyToFile(fileStream, rootItem, 0);
     fileStream.end();
-    return res.status(200).json({ message: 'CSV file created successfully' });
+    return res.status(200).json({ message: "CSV file created successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
