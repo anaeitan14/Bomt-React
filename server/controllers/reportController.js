@@ -86,8 +86,13 @@ async function writeHierarchyToFile(fileStream, item, indentationLevel) {
 
 exports.createCSV = async (req, res) => {
   try {
+    console.log(req.body);
     const pid = req.body.pid;
+    console.log(pid);
     const rootItem = await Item.findOne({ ProductID: pid });
+
+    console.log("this is the root item----------------------------------------------")
+    console.log(rootItem.ProductName);
 
     if (!rootItem) {
       return res.status(404).json({ message: "Root item not found" });
@@ -97,7 +102,8 @@ exports.createCSV = async (req, res) => {
     const fileStream = fs.createWriteStream(filePath);
     await writeHierarchyToFile(fileStream, rootItem, 0);
     fileStream.end();
-    return res.status(200).json({ message: "CSV file created successfully" });
+    return res.download("hierarchical_data.csv");
+    //return res.status(200).json({ message: "CSV file created successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });

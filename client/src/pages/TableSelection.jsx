@@ -30,8 +30,8 @@ export const TableSelection = () => {
 
     const response = await instance.post("/addTable", data);
     if (response.status === 200) {
-
       fetchTables();
+      navigate("/home");
     }
   };
 
@@ -44,7 +44,7 @@ export const TableSelection = () => {
     const data = { tableName: selectedTable };
     const response = await instance.post("/pickTable", data);
     if (response.status === 200) {
-      navigate("/");
+      navigate("/home");
     }
   };
 
