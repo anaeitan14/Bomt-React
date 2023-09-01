@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -160,9 +159,9 @@ const AddBtn = () => {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <button onClick={handleShow}>
         Add item
-      </Button>
+      </button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add item</Modal.Title>
@@ -259,12 +258,12 @@ const AddBtn = () => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <button onClick={handleClose}>
             Close
-          </Button>
-          <Button variant="primary" onClick={handleAdd}>
+          </button>
+          <button onClick={handleAdd}>
             Add
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </>

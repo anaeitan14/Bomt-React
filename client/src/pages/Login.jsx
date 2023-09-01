@@ -1,10 +1,7 @@
-import "./Login.css";
 import instance from "./axios-instance";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-
+import "../index.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -60,7 +57,7 @@ const Login = () => {
 
     google.accounts.id.renderButton(document.getElementById("google-div"), {
       theme: "outline",
-      size: "large",
+      size: "medium",
     });
 
     google.accounts.id.prompt();
@@ -75,42 +72,41 @@ const Login = () => {
   });
 
   return (
-    <div className="container-fluid">
+    <div className="login-container">
       <form className="login-form" onSubmit={handleSubmit}>
-        <h1 className="mb-4">Sign in</h1>
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
-          <Form.Control
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            placeholder="Email"
-            aria-label="Email"
-            aria-describedby="Email"
+        <h1 className="login-heading">BOMT - Login</h1>
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            className="login-input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
           />
-        </InputGroup>
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="basic-addon1">***</InputGroup.Text>
-          <Form.Control
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            type="password"
-            placeholder="Password"
-            aria-label="Password"
-            aria-describedby="Password"
-          />
-        </InputGroup>
-        <button>Sign in</button>
-        <a href="/signup">New user? click here to sign up</a>
-        <a href="/forgot">Forgot password?</a>
-        <div id="google-div"></div>
-      </form>
-      {errorMessage && (
-        <div id="error-message" className="alert alert-danger mt-4 w-25">
-          {errorMessage}
         </div>
-      )}
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            className="login-input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button className="login-button">Sign in</button>
+        <a href="/signup" className="login-link">
+          New user? Click here to sign up
+        </a>
+        <a href="/forgot" className="login-link">
+          Forgot password?
+        </a>
+        <div id="google-div" className="google-button"></div>
+        {errorMessage && <div id="error-message">{errorMessage}</div>}
+      </form>
     </div>
   );
 };

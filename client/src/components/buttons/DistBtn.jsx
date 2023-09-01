@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 const DistBtn = ({ data }) => {
@@ -18,9 +17,9 @@ const DistBtn = ({ data }) => {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <button  onClick={handleShow}>
         View Dists
-      </Button>
+      </button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -39,9 +38,9 @@ const DistBtn = ({ data }) => {
             })}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
+          <button  onClick={handleClose}>
             Close
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </>

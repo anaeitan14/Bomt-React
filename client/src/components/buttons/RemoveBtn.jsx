@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -35,9 +34,9 @@ const RemoveBtn = () => {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <button onClick={handleShow}>
         Remove item
-      </Button>
+      </button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -54,12 +53,12 @@ const RemoveBtn = () => {
           </InputGroup>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <button onClick={handleClose}>
             Close
-          </Button>
-          <Button variant="primary" onClick={removeItem}>
+          </button>
+          <button onClick={removeItem}>
             Remove
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </>

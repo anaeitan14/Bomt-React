@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "reactjs-popup/dist/index.css";
 import instance from "./axios-instance";
+import "./TableSelection.css";
 
 export const TableSelection = () => {
   const [data, setData] = useState([]);
@@ -49,35 +49,33 @@ export const TableSelection = () => {
   };
 
   return (
-    <div className="vh-100 d-flex justify-content-center align-items-center bg-dark text-white overflow-hidden">
-      <div className="container-fluid">
-        <h2>Choose your desired table</h2>
-        <ul className="list-group list-unstyled">
-          {data.map((table) => {
-            return (
-              <li className="m-1">
-                <form onSubmit={handlePick}>
-                  <button
-                    onClick={() => handleClick(table)}
-                    className="list-group-item list-group-item-action w-50 rounded"
-                  >
-                    {table}
-                  </button>
-                </form>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-      <div className="d-flex justify-content-center container-fluid">
+    <div className="table-selection-container">
+      <h2 className="table-selection-heading">Choose your desired table</h2>
+      <ul className="table-list">
+        {data.map((table) => {
+          return (
+            <li key={table} className="table-item">
+              <form onSubmit={handlePick}>
+                <button
+                  onClick={() => handleClick(table)}
+                  className="table-button"
+                >
+                  {table}
+                </button>
+              </form>
+            </li>
+          );
+        })}
+      </ul>
+      <div className="create-table-form">
         <form onSubmit={handleSubmit}>
-          <h2>Create a new table</h2>
+          <h2 className="create-table-heading">Create a new table</h2>
           <input
             type="text"
-            className="form-control"
+            className="create-table-input"
             onChange={(e) => setNewTableName(e.target.value)}
           />
-          <button className="btn btn-primary mt-2">Create</button>
+          <button className="table-button">Create</button>
         </form>
       </div>
     </div>

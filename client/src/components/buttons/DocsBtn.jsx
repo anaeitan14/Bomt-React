@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 const DocsBtn = ({ data }) => {
@@ -18,9 +17,9 @@ const DocsBtn = ({ data }) => {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <button  onClick={handleShow}>
         View Docs
-      </Button>
+      </button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Documents</Modal.Title>
@@ -37,9 +36,9 @@ const DocsBtn = ({ data }) => {
             })}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
+          <button onClick={handleClose}>
             Close
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </>

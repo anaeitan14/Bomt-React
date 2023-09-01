@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import Button from "react-bootstrap/Button";
 import instance from "./axios-instance";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
@@ -11,7 +10,7 @@ const Reports = () => {
   const [pid, setPid] = useState("");
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
-  
+
   const handleClose = () => {
     setPid("");
     setShow(false);
@@ -40,7 +39,7 @@ const Reports = () => {
   };
 
   const handleClick2 = async () => {
-    const pidObj = {pid:pid}
+    const pidObj = { pid: pid };
 
     try {
       const report = await instance.post("/getReportTwo", pidObj, {
@@ -68,12 +67,8 @@ const Reports = () => {
       <Navbar />
       <div className="d-flex flex-column align-items-center justify-content-center vh-100">
         {/* vh-100 ensures the container takes up the full viewport height */}
-        <Button onClick={handleClick} className="btn btn-primary mb-3">
-          Generate Report
-        </Button>
-        <Button variant="primary" onClick={handleShow}  className="btn btn-warning mb-3">
-        Generate hierarchical report
-        </Button>
+        <button onClick={handleClick}>Generate Report</button>
+        <button onClick={handleShow}>Generate hierarchical report</button>
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -92,12 +87,8 @@ const Reports = () => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClick2}>
-            Add
-          </Button>
+          <button onClick={handleClose}>Close</button>
+          <button onClick={handleClick2}>Add</button>
         </Modal.Footer>
       </Modal>
     </>

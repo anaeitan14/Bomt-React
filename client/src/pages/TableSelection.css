@@ -1,0 +1,78 @@
+/* Table Selection styles */
+.table-selection-container {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #333; /* Dark background color for the table selection */
+  color: #fff; /* White text color */
+  padding: 20px; /* Add padding to center content */
+}
+
+.table-selection-heading {
+  font-size: 24px;
+  color: #fff;
+  margin-bottom: 20px;
+  text-align: center; /* Center the heading text */
+}
+
+.table-list {
+  list-style: none;
+  padding: 0;
+  text-align: center; /* Center the list items */
+}
+
+.table-item {
+  margin-bottom: 10px;
+}
+
+.table-button {
+  text-decoration: none;
+  color: #333; /* Change button text color to make it visible on the background */
+  font-size: 18px;
+  padding: 15px 20px; /* Slightly larger padding for buttons */
+  border: none;
+  cursor: pointer;
+  border-radius: 8px; /* Make buttons rounder */
+  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Add transitions for button transform, background color, and text color */
+  min-width: 200px; /* Set a minimum width for the buttons */
+  text-align: center; /* Center the button text */
+}
+
+.table-button:hover {
+  transform: scale(1.05); /* Slightly increase button size on hover */
+  background-color: #007bff; /* Change background color on hover */
+  color: #fff; /* Change text color on hover to white */
+}
+
+.create-table-heading {
+  font-size: 24px;
+  color: #fff;
+  margin-top: 20px; /* Add space between heading and form */
+  text-align: center; /* Center the heading text */
+}
+
+.create-table-form {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* Add space between table list and create table form */
+}
+
+.create-table-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Make input rounder */
+  font-size: 16px;
+  margin-bottom: 15px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Add transitions for input */
+}
+
+.create-table-input:focus {
+  border-color: #007bff; /* Change border color on input focus */
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.5); /* Add box shadow on input focus */
+}

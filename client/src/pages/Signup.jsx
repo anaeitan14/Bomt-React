@@ -1,9 +1,7 @@
 import { useState } from "react";
-import "./Signup.css";
 import instance from "./axios-instance";
-import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
-import InputGroup from "react-bootstrap/InputGroup";
+import "../index.css";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -26,7 +24,7 @@ const Signup = () => {
     try {
       const response = await instance.post(URL, info);
       if (response.status === 200) {
-        navigate("/login"); // Navigate to the '/table-select' page
+        navigate("/login"); // Navigate to the '/login' page
       }
     } catch (err) {
       console.log(err);
@@ -35,48 +33,54 @@ const Signup = () => {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="signup-container">
       <div className="signup-form">
         <h1>Create account</h1>
         <form onSubmit={handleSubmit}>
-          <InputGroup className="mb-3">
-            <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
-            <Form.Control
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              placeholder="Email"
-              aria-label="Email"
-              aria-describedby="Email"
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              className="signup-input"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
-          </InputGroup>
-          <InputGroup className="mb-3">
-            <InputGroup.Text id="basic-addon1">***</InputGroup.Text>
-            <Form.Control
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
               type="password"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              placeholder="Password"
-              aria-label="Password"
-              aria-describedby="Password"
+              id="password"
+              className="signup-input"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
-          </InputGroup>
-          <InputGroup className="mb-3">
-            <InputGroup.Text id="basic-addon1">***</InputGroup.Text>
-            <Form.Control
+          </div>
+          <div className="form-group">
+            <label htmlFor="repeatPassword">Repeat Password</label>
+            <input
               type="password"
-              onChange={(e) => {
-                setRepeatPassword(e.target.value);
-              }}
-              placeholder="Repeat Password"
-              aria-label="Repeat Password"
-              aria-describedby="Repeat Password"
+              id="repeatPassword"
+              className="signup-input"
+              placeholder="Repeat your password"
+              value={repeatPassword}
+              onChange={(e) => setRepeatPassword(e.target.value)}
+              required
             />
-          </InputGroup>
-          <button>Create account</button>
-          <a href="/login">Back to login</a>
+          </div>
+          <button type="submit" className="signup-button">
+            Create account
+          </button>
+          <a href="/login" className="login-link">
+            Back to login
+          </a>
         </form>
+        {errorMessage && <div id="error-message">{errorMessage}</div>}
       </div>
     </div>
   );

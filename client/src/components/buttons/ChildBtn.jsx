@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import instance from "../../pages/axios-instance";
 
-const ChildBtn = ({data}) => {
+const ChildBtn = ({ data }) => {
   const [products, setProducts] = useState("");
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
@@ -22,9 +21,9 @@ const ChildBtn = ({data}) => {
 
     if (!data) {
       alert("Cannot add a child item to this item");
-    } 
+    }
 
-    if(products.length > 0) {
+    if (products.length > 0) {
       pids = products.split(" ");
       console.log(pids);
     } else {
@@ -33,13 +32,13 @@ const ChildBtn = ({data}) => {
 
     const item = {
       pid: data,
-      pids: pids
+      pids: pids,
     };
 
     setProducts("");
 
     try {
-      const response = await instance.post(URL, item );
+      const response = await instance.post(URL, item);
       console.log(response);
     } catch (err) {
       console.log(err);
@@ -49,9 +48,7 @@ const ChildBtn = ({data}) => {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Add childs
-      </Button>
+      <button onClick={handleShow}>Add childs</button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add item</Modal.Title>
@@ -69,12 +66,8 @@ const ChildBtn = ({data}) => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleAdd}>
-            Add
-          </Button>
+          <button onClick={handleClose}>Close</button>
+          <button onClick={handleAdd}>Add</button>
         </Modal.Footer>
       </Modal>
     </>

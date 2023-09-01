@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -44,9 +43,9 @@ const Users = () => {
   return (
     <>
       <Navbar />
-      <Button variant="primary" onClick={handleShow}>
+      <button onClick={handleShow}>
         Add user
-      </Button>
+      </button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add user</Modal.Title>
@@ -64,17 +63,17 @@ const Users = () => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <button  onClick={handleClose}>
             Close
-          </Button>
-          <Button variant="primary" onClick={handleAddUser}>
+          </button>
+          <button  onClick={handleAddUser}>
             Add
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
-      <Button variant="primary" onClick={handleShow}>
+      <button onClick={handleShow}>
         Add manager
-      </Button>
+      </button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add manager</Modal.Title>
@@ -92,12 +91,12 @@ const Users = () => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <button onClick={handleClose}>
             Close
-          </Button>
-          <Button variant="primary" onClick={handleAddManager}>
+          </button>
+          <button onClick={handleAddManager}>
             Add
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </>
