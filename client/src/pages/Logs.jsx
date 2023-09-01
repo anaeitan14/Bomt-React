@@ -1,34 +1,38 @@
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import instance from "./axios-instance";
+import "./Logs.css";
 
 const Logs = () => {
-  const [logs, setLogs] = useState({});
+  const [logs, setLogs] = useState([]);
 
   useEffect(() => {
     loadLogs();
-    console.log(logs);
   }, []);
 
   const loadLogs = async () => {
-    const response = await instance.get("/getLogs");
-    console.log(response.data);
-    setLogs(response.data);
+    try {
+      const response = await instance.get("/getLogs");
+      setLogs(response.data);
+    } catch (error) {
+      console.error("Error loading logs:", error);
+    }
   };
 
   return (
     <>
       <Navbar />
-      <ul>
-        <div>
-          {logs.length > 0
-            ? logs.map((log) => (
-                <li>
-                  {log.action} at {log.timestamp}
-                </li>
-              ))
-            : null}
-        </div>
+      <ul className="logs-list">
+        {logs.length > 0 ? (
+          logs.map((log, index) => (
+            <li key={index} className="log-item">
+              <span className="log-text">{log.action} at </span>
+              <span className="timestamp">{log.timestamp}</span>
+            </li>
+          ))
+        ) : (
+          <div className="empty-logs">No logs available.</div>
+        )}
       </ul>
     </>
   );

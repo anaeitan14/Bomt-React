@@ -1,0 +1,56 @@
+/* Global styles that apply to the entire application */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar styles */
+.navbar {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+}
+
+/* Logs list styles */
+.logs-list {
+  list-style: none;
+  padding: 0;
+}
+
+/* Log item styles */
+.log-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.3s ease;
+}
+
+/* Log item hover effect */
+.log-item:hover {
+  opacity: 0.8;
+}
+
+/* Log text styles */
+.log-text {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Timestamp styles */
+.timestamp {
+  font-size: 14px;
+  color: #777;
+}
+
+/* Empty logs message styles */
+.empty-logs {
+  font-size: 18px;
+  color: #333;
+  text-align: center;
+  margin-top: 20px;
+}

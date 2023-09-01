@@ -1,9 +1,11 @@
 /* Global styles that apply to the entire application */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  background-color: #f2f2f2; /* Change this to your desired background color */
   margin: 0;
   padding: 0;
+  height: 100vh; /* 100% viewport height */
+  overflow: hidden; /* Hide overflow content */
 }
 
 /* Container styles */
@@ -14,6 +16,9 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Form styles */
@@ -26,19 +31,19 @@ body {
   width: 400px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: opacity 0.3s ease; /* Add transition effect for opacity */
+  transition: opacity 0.3s ease;
 }
 
 .login-heading,
 .forgot-password-form h1,
 .signup-form h1 {
-  font-size: 32px; /* Increase font size for a more prominent header */
-  color: #007bff; /* Change text color to a bright blue */
+  font-size: 32px;
+  color: #333;
   margin-bottom: 20px;
   text-align: center;
-  font-weight: bold; /* Add bold font weight */
-  text-transform: uppercase; /* Uppercase text for a modern look */
-  letter-spacing: 2px; /* Add letter spacing for a stylish effect */
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 /* Label styles */
@@ -58,26 +63,25 @@ body {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 8px; /* Make inputs rounder */
+  border-radius: 8px;
   font-size: 16px;
   margin-bottom: 15px;
-  transition: border-color 0.3s ease; /* Add transition for input border color */
+  transition: border-color 0.3s ease;
 }
 
-/* Input focus effect */
 .login-input:focus,
 .forgot-password-input:focus,
 .signup-input:focus {
-  border-color: #007bff; /* Change border color on input focus */
-  outline: none; /* Remove default outline */
-  box-shadow: 0 0 6px rgba(0, 123, 255, 0.5); /* Add box shadow on input focus */
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
 }
 
 /* Button styles with improved design */
 .login-button,
 .forgot-password-button,
 .signup-button {
-  background-color: #007bff;
+  background-color: #007bff; /* Change button background color to a pleasant blue */
   color: #fff;
   padding: 12px 24px; /* Increase padding for a more substantial button */
   border: none;
@@ -102,7 +106,7 @@ body {
 .signup-link {
   display: block;
   text-decoration: none;
-  color: #007bff;
+  color: #007bff; /* Change link color to match the header color */
   margin-top: 20px; /* Add more space between the header and links */
   font-size: 18px; /* Slightly increase font size for better readability */
   text-align: center; /* Center-align the links */

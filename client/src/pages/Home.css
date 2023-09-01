@@ -1,0 +1,77 @@
+/* Global styles that apply to the entire application */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container styles */
+.home-container {
+  position: relative;
+}
+
+/* Form styles */
+.home-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Input styles */
+.home-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-right: 10px;
+  transition: border-color 0.3s ease;
+}
+
+/* Input focus effect */
+.home-input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
+}
+
+/* Button styles */
+.home-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+/* Button hover effect */
+.home-button:hover {
+  background-color: #0056b3;
+}
+
+/* Add button */
+.add-btn,
+.remove-btn,
+.child-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 8px;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* Add button hover effect */
+.add-btn:hover,
+.remove-btn:hover,
+.child-btn:hover {
+  background-color: #0056b3;
+}

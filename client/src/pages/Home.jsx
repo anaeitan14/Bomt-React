@@ -5,7 +5,7 @@ import Table from "../components/Table";
 import AddBtn from "../components/buttons/AddBtn";
 import RemoveBtn from "../components/buttons/RemoveBtn";
 import ChildBtn from "../components/buttons/ChildBtn";
-import "../index.css";
+import "./Home.css"; // Import the Home component-specific styles
 
 export const Home = () => {
   useEffect(() => {
@@ -55,21 +55,23 @@ export const Home = () => {
   };
 
   return (
-    <div className="position-relative">
+    <div className="home-container">
       <Header />
       <div className="container-fluid p-3">
-        <form className="d-flex justify-content-around" onSubmit={handleSubmit}>
+        <form className="home-form" onSubmit={handleSubmit}>
           <input
-            className="form-control me-2"
+            className="home-input"
             type="search"
             placeholder="Item"
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button type="submit">Search</button>
+          <button type="submit" className="home-button">
+            Search
+          </button>
         </form>
-        <AddBtn />
-        <RemoveBtn />
-        <ChildBtn data={searchQuery} />
+        <AddBtn className="add-btn" />
+        <RemoveBtn className="remove-btn" />
+        <ChildBtn className="child-btn" data={searchQuery} />
       </div>
       <Table data={data} />
     </div>

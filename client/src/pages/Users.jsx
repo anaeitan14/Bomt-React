@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import instance from "./axios-instance";
 import Navbar from "../components/Navbar";
+import "./Users.css";
 
 const Users = () => {
   const [user, setUser] = useState("");
@@ -43,9 +44,7 @@ const Users = () => {
   return (
     <>
       <Navbar />
-      <button onClick={handleShow}>
-        Add user
-      </button>
+      <button onClick={handleShow}>Add user</button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add user</Modal.Title>
@@ -63,17 +62,11 @@ const Users = () => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <button  onClick={handleClose}>
-            Close
-          </button>
-          <button  onClick={handleAddUser}>
-            Add
-          </button>
+          <button onClick={handleClose}>Close</button>
+          <button onClick={handleAddUser}>Add</button>
         </Modal.Footer>
       </Modal>
-      <button onClick={handleShow}>
-        Add manager
-      </button>
+      <button onClick={handleShow}>Add manager</button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add manager</Modal.Title>
@@ -91,12 +84,8 @@ const Users = () => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <button onClick={handleClose}>
-            Close
-          </button>
-          <button onClick={handleAddManager}>
-            Add
-          </button>
+          <button onClick={handleClose}>Close</button>
+          <button onClick={handleAddManager}>Add</button>
         </Modal.Footer>
       </Modal>
     </>
