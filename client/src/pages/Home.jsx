@@ -52,12 +52,12 @@ export const Home = () => {
         alert(err.response.data.message);
       }
     }
-  };
+  };   
 
   return (
     <div className="home-container">
       <Header />
-      <div className="container-fluid p-3">
+      <div className="container-fluid p-3 d-flex justify-content-around">
         <form className="home-form" onSubmit={handleSubmit}>
           <input
             className="home-input"

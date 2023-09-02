@@ -3,6 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import instance from "../../pages/axios-instance";
+import "./Button.css";
 
 const ChildBtn = ({ data }) => {
   const [products, setProducts] = useState("");
@@ -48,7 +49,9 @@ const ChildBtn = ({ data }) => {
 
   return (
     <>
-      <button onClick={handleShow}>Add childs</button>
+      <button className="custom-button" onClick={handleShow}>
+        Add childs
+      </button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add item</Modal.Title>
@@ -66,8 +69,12 @@ const ChildBtn = ({ data }) => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <button onClick={handleClose}>Close</button>
-          <button onClick={handleAdd}>Add</button>
+          <button className="custom-button" vonClick={handleClose}>
+            Close
+          </button>
+          <button className="custom-button" onClick={handleAdd}>
+            Add
+          </button>
         </Modal.Footer>
       </Modal>
     </>

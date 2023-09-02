@@ -3,6 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import axios from "axios";
+import "./Button.css";
 
 const RemoveBtn = () => {
   const [show, setShow] = useState(false);
@@ -20,7 +21,7 @@ const RemoveBtn = () => {
 
     const item = {
       pid: PNID,
-      email:localStorage.getItem("email")
+      email: localStorage.getItem("email"),
     };
 
     axios
@@ -34,7 +35,7 @@ const RemoveBtn = () => {
 
   return (
     <>
-      <button onClick={handleShow}>
+      <button className="custom-button" onClick={handleShow}>
         Remove item
       </button>
 
@@ -53,10 +54,10 @@ const RemoveBtn = () => {
           </InputGroup>
         </Modal.Body>
         <Modal.Footer>
-          <button onClick={handleClose}>
+          <button className="custom-button" onClick={handleClose}>
             Close
           </button>
-          <button onClick={removeItem}>
+          <button className="custom-button" onClick={removeItem}>
             Remove
           </button>
         </Modal.Footer>

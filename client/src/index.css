@@ -1,17 +1,18 @@
 /* Global styles that apply to the entire application */
 body {
-  font-family: Arial, sans-serif;
   background-color: #f2f2f2; /* Change this to your desired background color */
   margin: 0;
   padding: 0;
   height: 100vh; /* 100% viewport height */
   overflow: hidden; /* Hide overflow content */
+  font-family: "Open Sans", sans-serif;
 }
 
 /* Container styles */
 .login-container,
 .forgot-password-container,
 .signup-container {
+  font-family: "Open Sans", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,7 +43,6 @@ body {
   margin-bottom: 20px;
   text-align: center;
   font-weight: bold;
-  text-transform: uppercase;
   letter-spacing: 2px;
 }
 

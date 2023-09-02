@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useState } from "react";
+import "../components/buttons/Button.css";
 
 const Reports = () => {
   const [pid, setPid] = useState("");
@@ -67,8 +68,8 @@ const Reports = () => {
       <Navbar />
       <div className="d-flex flex-column align-items-center justify-content-center vh-100">
         {/* vh-100 ensures the container takes up the full viewport height */}
-        <button onClick={handleClick}>Generate Report</button>
-        <button onClick={handleShow}>Generate hierarchical report</button>
+        <button className="custom-button" onClick={handleClick}>Generate Report</button>
+        <button className="custom-button" onClick={handleShow}>Generate hierarchical report</button>
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -87,8 +88,8 @@ const Reports = () => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <button onClick={handleClose}>Close</button>
-          <button onClick={handleClick2}>Add</button>
+          <button className="custom-button" onClick={handleClose}>Close</button>
+          <button className="custom-button" onClick={handleClick2}>Add</button>
         </Modal.Footer>
       </Modal>
     </>

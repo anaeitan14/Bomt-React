@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
+import "./Button.css";
 
 const DistBtn = ({ data }) => {
   const [show, setShow] = useState(false);
@@ -17,7 +18,7 @@ const DistBtn = ({ data }) => {
 
   return (
     <>
-      <button  onClick={handleShow}>
+      <button className="custom-button" onClick={handleShow}>
         View Dists
       </button>
 
@@ -38,7 +39,7 @@ const DistBtn = ({ data }) => {
             })}
         </Modal.Body>
         <Modal.Footer>
-          <button  onClick={handleClose}>
+          <button className="custom-button" onClick={handleClose}>
             Close
           </button>
         </Modal.Footer>
