@@ -37,41 +37,19 @@ body {
   box-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
 }
 
-/* Button styles */
-.home-button {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
+.search-button {
+  background-color: #3498db; /* Blue background color */
+  color: #ffffff; /* White text color */
+  padding: 12px 24px;
   border: none;
-  cursor: pointer;
-  font-size: 18px;
   border-radius: 8px;
-  transition: background-color 0.3s ease;
-}
-
-/* Button hover effect */
-.home-button:hover {
-  background-color: #0056b3;
-}
-
-/* Add button */
-.add-btn,
-.remove-btn,
-.child-btn {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
   cursor: pointer;
-  font-size: 18px;
-  border-radius: 8px;
-  margin-right: 10px;
-  transition: background-color 0.3s ease;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.4s ease;
+  margin: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Add button hover effect */
-.add-btn:hover,
-.remove-btn:hover,
-.child-btn:hover {
-  background-color: #0056b3;
+.search-button:hover {
+  background-color: #2980b9; /* Darker blue background color on hover */
 }

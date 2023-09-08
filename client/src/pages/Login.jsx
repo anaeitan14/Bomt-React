@@ -23,6 +23,7 @@ const Login = () => {
       const response = await instance.post(URL, info);
       if (response.data.auth === true) {
         localStorage.setItem("email", email);
+        localStorage.setItem("Queries", "");
         navigate("/table-select"); // Navigate to the '/table-select' page
       }
     } catch (err) {
@@ -40,6 +41,7 @@ const Login = () => {
       const response = await instance.post(URL, { JWT: userObject });
       if (response.status === 200) {
         localStorage.setItem("email", userObject.email);
+        localStorage.setItem("Queries", "");
         navigate("/table-select");
       }
     } catch (err) {

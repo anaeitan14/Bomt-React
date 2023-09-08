@@ -50,23 +50,25 @@ export const TableSelection = () => {
 
   return (
     <div className="table-selection-container">
-      <h2 className="table-selection-heading">Choose your desired table</h2>
-      <ul className="table-list">
-        {data.map((table) => {
-          return (
-            <li key={table} className="table-item">
-              <form onSubmit={handlePick}>
-                <button
-                  onClick={() => handleClick(table)}
-                  className="table-button"
-                >
-                  {table}
-                </button>
-              </form>
-            </li>
-          );
-        })}
-      </ul>
+      <div>
+        <h2 className="table-selection-heading">Choose your desired table</h2>
+        <ul className="table-list">
+          {data.map((table) => {
+            return (
+              <li key={table} className="table-item">
+                <form onSubmit={handlePick}>
+                  <button
+                    onClick={() => handleClick(table)}
+                    className="table-button"
+                  >
+                    {table}
+                  </button>
+                </form>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
       <div className="create-table-form">
         <form onSubmit={handleSubmit}>
           <h2 className="create-table-heading">Create a new table</h2>

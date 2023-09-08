@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import instance from "./axios-instance";
-import Header from "../components/Navbar";
+import Navbar from "../components/Navbar";
 import Table from "../components/Table";
 import AddBtn from "../components/buttons/AddBtn";
 import RemoveBtn from "../components/buttons/RemoveBtn";
@@ -32,6 +32,12 @@ export const Home = () => {
       response = await instance.post(URL, query);
       setData(response.data);
       setSons(response.data.Sons);
+
+      if (response.data) {
+        const queries = localStorage.getItem("Queries");
+        localStorage.setItem("Queries", queries.concat(`,${query.pid}`));
+      }
+
       if (sons.length > 0) {
         for (let i = 0; i < sons.length; i++) {
           try {
@@ -52,11 +58,11 @@ export const Home = () => {
         alert(err.response.data.message);
       }
     }
-  };   
+  };
 
   return (
     <div className="home-container">
-      <Header />
+      <Navbar />
       <div className="container-fluid p-3 d-flex justify-content-around">
         <form className="home-form" onSubmit={handleSubmit}>
           <input
@@ -65,13 +71,13 @@ export const Home = () => {
             placeholder="Item"
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button type="submit" className="home-button">
+          <button type="submit" className="search-button">
             Search
           </button>
         </form>
-        <AddBtn className="add-btn" />
-        <RemoveBtn className="remove-btn" />
-        <ChildBtn className="child-btn" data={searchQuery} />
+        <AddBtn />
+        <RemoveBtn />
+        <ChildBtn data={searchQuery} />
       </div>
       <Table data={data} />
     </div>

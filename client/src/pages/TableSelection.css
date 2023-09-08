@@ -1,7 +1,6 @@
 /* Table Selection styles */
 .table-selection-container {
   display: flex;
-  flex-direction: column; /* Stack elements vertically */
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -50,16 +49,8 @@
   font-size: 24px;
   color: #fff;
   margin-top: 20px; /* Add space between heading and form */
-  text-align: center; /* Center the heading text */
 }
 
-.create-table-form {
-  display: flex;
-  flex-direction: column; /* Stack elements vertically */
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px; /* Add space between table list and create table form */
-}
 
 .create-table-input {
   width: 100%;
