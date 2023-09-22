@@ -59,50 +59,73 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.googleRegister = async (req, res) => {
-  //since googleRegister handles both the registering and logging in using a gmail, it has 2 req.login
-  try {
-    const { JWT } = req.body;
-    console.log(JWT);
-    const data = jwt.decode(JWT); //decoding the jwt from the front, receiving the data.
-    console.log(data);
-    const user = await User.findOne({ email: data.email });
-    if (user) {
-      req.logIn(user, (err) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).json({ message: "Failed to log in the user" });
-        }
-        req.session.user = user;
-        req.session.save();
-        res.cookie("sessionID", req.sessionID);
-        return res.status(200).json({ auth: true, message: "User logged in" });
-      });
+exports.googleReg = (req, res, next) => {
+  passport.authenticate("google", (err, user) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.status(401).json({ message: "Google authentication failed" });
     }
 
-    const newUser = new User({
-      email: data.email,
-      password: "created with google", //to distinguish wether a user is signed with google or email, there's no point in having his password hashed, if he won't be using it anyway.
-    });
-    newUser.save();
-    req.logIn(newUser, (err) => {
+    req.logIn(user, (err) => {
       if (err) {
-        console.error(err);
-        return res.status(500).json({ message: "Failed to log in the user" });
+        return next(err);
       }
-      req.session.user = newUser;
-      req.session.save;
-      res.cookie("sessionID", req.sessionID);
-      return res.status(200).json({
-        auth: true,
-        message: "New user created successfully",
-      });
+      req.session.user = user;
+      req.session.save();
+
+      return res
+        .status(200)
+        .json({ message: "Google authentication successful" });
     });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
+  })(req, res, next);
 };
+
+//exports.googleRegister = async (req, res) => {
+//  //since googleRegister handles both the registering and logging in using a gmail, it has 2 req.login
+//  try {
+//    const { JWT } = req.body;
+//    console.log(JWT);
+//    const data = jwt.decode(JWT); //decoding the jwt from the front, receiving the data.
+//    console.log(data);
+//    const user = await User.findOne({ email: data.email });
+//    if (user) {
+//      req.logIn(user, (err) => {
+//        if (err) {
+//          console.error(err);
+//          return res.status(500).json({ message: "Failed to log in the user" });
+//        }
+//        req.session.user = user;
+//        req.session.save();
+//        res.cookie("sessionID", req.sessionID);
+//        return res.status(200).json({ auth: true, message: "User logged in" });
+//      });
+//    }
+//
+//    const newUser = new User({
+//      email: data.email,
+//      password: "created with google", //to distinguish wether a user is signed with google or email, there's no point in having his password hashed, if he won't be using it anyway.
+//    });
+//    newUser.save();
+//    req.logIn(newUser, (err) => {
+//      if (err) {
+//        console.error(err);
+//        return res.status(500).json({ message: "Failed to log in the user" });
+//      }
+//      req.session.user = newUser;
+//      req.session.save();
+//      res.cookie("sessionID", req.sessionID);
+//      return res.status(200).json({
+//        auth: true,
+//        message: "New user created successfully",
+//      });
+//    });
+//  } catch (error) {
+//    console.error(error);
+//    return res.status(500).json({ message: "Internal server error" });
+//  }
+//};
 
 exports.login = (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
@@ -157,6 +180,9 @@ exports.forgot = async (req, res) => {
     },
   });
   const user = await User.findOne({ email: req.session.user.email });
+  if (!user) {
+    return res.status(404).json({ message: "Email not found" });
+  }
   const newPassword = randomstring.generate(16);
   const hash = crypto // crypting the password using sha512 and irritiating it with a salting word so it won't be easily cracked.
     .pbkdf2Sync(newPassword, user.salting_word, 950, 64, "sha512")

@@ -39,12 +39,14 @@ const Login = () => {
 
     try {
       const response = await instance.post(URL, { JWT: userObject });
+      console.log(response.status);
       if (response.status === 200) {
         localStorage.setItem("email", userObject.email);
         localStorage.setItem("Queries", "");
         navigate("/table-select");
       }
     } catch (err) {
+      console.log(err);
       setErrorMessage("Incorrect information");
     }
   }

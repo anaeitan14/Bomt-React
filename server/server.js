@@ -8,10 +8,13 @@ const routes = require("./routes/routes");
 const expresssession = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const GoogleStrategy = require("passport-google-oauth2").Strategy;
+const jwt = require("jsonwebtoken");
 const mongoURI = "mongodb://127.0.0.1:27017/BOMT";
+
 const app = express();
 
-const sessionConfig = { 
+const sessionConfig = {
   //simple session config
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -42,7 +45,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-
 passport.use(
   new LocalStrategy(
     { usernameField: "email" },
@@ -55,13 +57,44 @@ passport.use(
         const hash = crypto
           .pbkdf2Sync(password, user.salting_word, 950, 64, "sha512") //encrypthing the password using pbkdf2Sync, using the same salting word I used for registering the user.
           .toString("hex");
-        if (hash === user.password) { //comparing hashes
+        if (hash === user.password) {
+          //comparing hashes
           return done(null, user); //user managed to log in, returning the user object.
         } else {
           return done(null, false, { message: "Incorrect email or password." });
         }
       } catch (error) {
         done(error);
+      }
+    }
+  )
+);
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.clientID,
+      clientSecret: process.env.clientSECRET,
+      callbackURL: "http://localhost:3000/auth/google/callback",
+    },
+    async (req, accessToken, refreshToken, profile, done) => {
+      try {
+        const { JWT } = req.body;
+        console.log(JWT);
+        const data = jwt.decode(JWT); //decoding the jwt from the front, receiving the data.
+        console.log(data);
+        const user = await User.findOne({ email: data.email });
+        if (user) {
+          return done(null, user);
+        }
+        const newUser = new User({
+          email: data.email,
+          password: "created with google",
+        });
+        await newUser.save();
+        return done(null, newUser);
+      } catch (error) {
+        return done(error, false);
       }
     }
   )
@@ -81,10 +114,9 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-
 app.use("/api", routes);
 mongoose.connect(mongoURI).then(() =>
-//connecting to a local database, using port 5000
+  //connecting to a local database, using port 5000
   app.listen(5000, () => {
     console.log("connected to the database and listening in port 5000");
   })

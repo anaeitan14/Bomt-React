@@ -73,14 +73,33 @@ function writeLineToFile(fileStream, line, indentationLevel) {
   fileStream.write(`${indentation}${line}\n`);
 }
 
-async function writeHierarchyToFile(fileStream, item, indentationLevel) {
+async function writeHierarchyToFile(
+  fileStream,
+  item,
+  indentationLevel,
+  currentDepth,
+  maxDepth
+) {
+  console.log(item.ProductName);
   const line = `${item.ProductName};${item.Description};${item.Manufacturer}`;
   if (item) {
     writeLineToFile(fileStream, line, indentationLevel);
   }
-  for (const sonId of item.Sons) {
-    const son = await Item.findById(sonId);
-    writeHierarchyToFile(fileStream, son, indentationLevel + 1);
+
+  if (maxDepth === -1 || currentDepth < maxDepth) {
+    for (const sonId of item.Sons) {
+      const son = await Item.findById(sonId);
+      if (!son) {
+        break;
+      }
+      writeHierarchyToFile(
+        fileStream,
+        son,
+        indentationLevel + 1,
+        currentDepth + 1,
+        maxDepth
+      );
+    }
   }
 }
 
@@ -91,7 +110,9 @@ exports.createCSV = async (req, res) => {
     console.log(pid);
     const rootItem = await Item.findOne({ ProductID: pid });
 
-    console.log("this is the root item----------------------------------------------")
+    console.log(
+      "this is the root item----------------------------------------------"
+    );
     console.log(rootItem.ProductName);
 
     if (!rootItem) {
@@ -100,7 +121,7 @@ exports.createCSV = async (req, res) => {
 
     const filePath = "hierarchical_data.csv";
     const fileStream = fs.createWriteStream(filePath);
-    await writeHierarchyToFile(fileStream, rootItem, 0);
+    await writeHierarchyToFile(fileStream, rootItem, 0, 0, -1);
     fileStream.end();
     return res.download("hierarchical_data.csv");
     //return res.status(200).json({ message: "CSV file created successfully" });
