@@ -10,6 +10,7 @@ import "../components/buttons/Button.css";
 const Reports = () => {
   const [pid, setPid] = useState("");
   const [show, setShow] = useState(false);
+  const [depth, setDepth] = useState(0);
   const handleShow = () => setShow(true);
 
   const handleClose = () => {
@@ -40,7 +41,7 @@ const Reports = () => {
   };
 
   const handleClick2 = async () => {
-    const pidObj = { pid: pid };
+    const pidObj = { pid: pid, depth: depth };
 
     try {
       const report = await instance.post("/getReportTwo", pidObj, {
@@ -68,8 +69,12 @@ const Reports = () => {
       <Navbar />
       <div className="d-flex flex-column align-items-center justify-content-center vh-100">
         {/* vh-100 ensures the container takes up the full viewport height */}
-        <button className="custom-button" onClick={handleClick}>Generate Report</button>
-        <button className="custom-button" onClick={handleShow}>Generate hierarchical report</button>
+        <button className="custom-button" onClick={handleClick}>
+          Generate Report
+        </button>
+        <button className="custom-button" onClick={handleShow}>
+          Generate hierarchical report
+        </button>
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -84,12 +89,23 @@ const Reports = () => {
                 }}
                 placeholder="Product ID"
               />
+              <Form.Control
+                onChange={(e) => {
+                  setDepth(e.target.value);
+                }}
+                placeholder="Depth level"
+                type="number"
+              />
             </InputGroup>
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <button className="custom-button" onClick={handleClose}>Close</button>
-          <button className="custom-button" onClick={handleClick2}>Add</button>
+          <button className="custom-button" onClick={handleClose}>
+            Close
+          </button>
+          <button className="custom-button" onClick={handleClick2}>
+            Add
+          </button>
         </Modal.Footer>
       </Modal>
     </>

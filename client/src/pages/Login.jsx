@@ -35,7 +35,7 @@ const Login = () => {
   async function handleCallbackResponse(response) {
     var userObject = response.credential;
 
-    const URL = "http://localhost:5000/api/google-register";
+    const URL = "/google-register";
 
     try {
       const response = await instance.post(URL, { JWT: userObject });

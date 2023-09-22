@@ -30,7 +30,10 @@ app.use(expresssession(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:5000/api/google-register",
+];
 const corsOptions = {
   origin: (origin, callback) => {
     // Check if the request origin is in the allowedOrigins array, or if it's not set (e.g., when using Postman)
@@ -75,7 +78,9 @@ passport.use(
     {
       clientID: process.env.clientID,
       clientSecret: process.env.clientSECRET,
-      callbackURL: "http://localhost:3000/auth/google/callback",
+      callbackURL: "http://localhost:3000/table-select",
+      passReqToCallback: true,
+      scope: ["email", "profile"], // Include the desired scopes here
     },
     async (req, accessToken, refreshToken, profile, done) => {
       try {
