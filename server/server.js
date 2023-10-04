@@ -8,7 +8,6 @@ const routes = require("./routes/routes");
 const expresssession = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const jwt = require("jsonwebtoken");
 const mongoURI = "mongodb://127.0.0.1:27017/BOMT";
 
@@ -48,7 +47,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-passport.use("local",
+passport.use(
+  "local",
   new LocalStrategy(
     { usernameField: "email" },
     async (email, password, done) => {
@@ -73,18 +73,23 @@ passport.use("local",
   )
 );
 
-passport.use("local-google",
+passport.use(
+  "local-google",
   new LocalStrategy(
-    { usernameField: "email" },
-    async (email, password, done) => {
-      console.log(email);
+    {
+      usernameField: "email",
+      passwordField: "password",
+      passReqToCallback: true,
+    },
+    async (req, email, password, done) => {
+      const realEmail = jwt.decode(req.body.JWT).email
       try {
-        const user = await User.findOne({ email });
-        if (user && password == "created with google") {
+        const user = await User.findOne({ email:realEmail });
+        if (user && password === "created with google") {
           return done(null, user);
         }
         const newUser = new User({
-          email: email,
+          email: realEmail,
           password: "created with google",
         });
         await newUser.save();

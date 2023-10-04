@@ -1,6 +1,5 @@
 const crypto = require("crypto");
 const User = require("../models/userSchema");
-const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const nodemailer = require("nodemailer");
 
@@ -60,8 +59,7 @@ exports.register = async (req, res) => {
 };
 
 exports.googleReg = (req, res, next) => {
-  passport.authenticate("local-google", (err, user, info) => {
-    console.log(req.body);
+  passport.authenticate("local-google", (err, user) => {
     if (err) {
       return next(err);
     }
