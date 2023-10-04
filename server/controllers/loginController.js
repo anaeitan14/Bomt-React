@@ -60,7 +60,8 @@ exports.register = async (req, res) => {
 };
 
 exports.googleReg = (req, res, next) => {
-  passport.authenticate("google", (err, user) => {
+  passport.authenticate("local-google", (err, user, info) => {
+    console.log(req.body);
     if (err) {
       return next(err);
     }

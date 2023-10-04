@@ -2,6 +2,7 @@ import instance from "./axios-instance";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../index.css";
+import jwt from "jwt-decode";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -38,7 +39,9 @@ const Login = () => {
     const URL = "/google-register";
 
     try {
-      const response = await instance.post(URL, { JWT: userObject });
+      const email = jwt(userObject).email;
+      console.log(email);
+      const response = await instance.post(URL, { email: email, password:"created with google"});
       console.log(response.status);
       if (response.status === 200) {
         localStorage.setItem("email", userObject.email);

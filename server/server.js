@@ -48,7 +48,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-passport.use(
+passport.use("local",
   new LocalStrategy(
     { usernameField: "email" },
     async (email, password, done) => {
@@ -73,27 +73,18 @@ passport.use(
   )
 );
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.clientID,
-      clientSecret: process.env.clientSECRET,
-      callbackURL: "http://localhost:3000/table-select",
-      passReqToCallback: true,
-      scope: ["email", "profile"], // Include the desired scopes here
-    },
-    async (req, accessToken, refreshToken, profile, done) => {
+passport.use("local-google",
+  new LocalStrategy(
+    { usernameField: "email" },
+    async (email, password, done) => {
+      console.log(email);
       try {
-        const { JWT } = req.body;
-        console.log(JWT);
-        const data = jwt.decode(JWT); //decoding the jwt from the front, receiving the data.
-        console.log(data);
-        const user = await User.findOne({ email: data.email });
-        if (user) {
+        const user = await User.findOne({ email });
+        if (user && password == "created with google") {
           return done(null, user);
         }
         const newUser = new User({
-          email: data.email,
+          email: email,
           password: "created with google",
         });
         await newUser.save();
