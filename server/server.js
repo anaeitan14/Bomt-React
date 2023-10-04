@@ -85,7 +85,7 @@ passport.use(
       const realEmail = jwt.decode(req.body.JWT).email
       try {
         const user = await User.findOne({ email:realEmail });
-        if (user && password === "created with google") {
+        if (user) {
           return done(null, user);
         }
         const newUser = new User({
