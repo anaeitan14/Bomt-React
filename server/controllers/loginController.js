@@ -2,6 +2,7 @@ const crypto = require("crypto");
 const User = require("../models/userSchema");
 const passport = require("passport");
 const nodemailer = require("nodemailer");
+const randomstring = require("randomstring");
 
 function passwordCheck(password) {
   if (!/[A-Z]/.test(password)) {
@@ -178,23 +179,25 @@ exports.forgot = async (req, res) => {
       pass: process.env.PASSWORD,
     },
   });
-  const user = await User.findOne({ email: req.session.user.email });
+  // const user = await User.findOne({ email: req.session.user.email }); session doesn't exist in this case? not sure but doesn't work
+  const user = await User.findOne({ email: req.body.email });
   if (!user) {
     return res.status(404).json({ message: "Email not found" });
   }
   const newPassword = randomstring.generate(16);
-  const hash = crypto // crypting the password using sha512 and irritiating it with a salting word so it won't be easily cracked.
-    .pbkdf2Sync(newPassword, user.salting_word, 950, 64, "sha512")
+  const salting_word = crypto.randomBytes(32).toString("base64");
+  const hash = crypto 
+    .pbkdf2Sync(newPassword, salting_word, 950, 64, "sha512")
     .toString("hex");
 
   const mailOptions = {
     from: process.env.EMAIL,
-    to: req.session.user.email,
+    to: req.body.email,
     subject: "Password reset",
     text: `Your new password is ${newPassword},\nPlease change it ASAP as it is not a secure password.`,
   };
 
-  transporter.sendEmail(mailOptions, (error, info) => {
+  transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.error(error);
       return res.status(500).json({ message: "Internal server error" });

@@ -1,20 +1,37 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import instance from "./axios-instance";
 import "../index.css";
 
 const ForgotPassword = () => {
   const [email, setForgotEmail] = useState("");
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    setTimeout(() => {
+      if (message) {
+        setMessage("");
+      }
+    }, 2500);
+  });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const data = {
       email: email,
     };
 
-    const URL = "";
+    const URL = "/forgot-password";
 
-    axios.post(URL, data);
+    try {
+      const response = await instance.post(URL, data);
+      if (response.status === 200) {
+        setMessage("Reset password email sent!");
+        console.log(message);
+      }
+    } catch (err) {
+      setMessage("Email doesn't exist");
+    }
   };
 
   return (
@@ -41,6 +58,7 @@ const ForgotPassword = () => {
           Back to login
         </a>
       </form>
+      {message && <div id="error-message">{message}</div>}
     </div>
   );
 };

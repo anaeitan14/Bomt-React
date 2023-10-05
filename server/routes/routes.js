@@ -9,6 +9,7 @@ const middlewares = require("../middlewares/middlewares");
 
 router.post("/register", loginController.register);
 router.post("/login", loginController.login);
+router.post("/forgot-password", loginController.forgot); // added by me :)
 router.post("/google-register", loginController.googleReg);
 router.post("/logout", middlewares.sessionCheck, loginController.logout);
 router.post("/pickTable", middlewares.sessionCheck, tableController.pickTable);
