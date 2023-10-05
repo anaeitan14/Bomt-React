@@ -31,14 +31,22 @@ exports.createTable = async (req, res) => {
 
 exports.tables = async (req, res) => {
   //a get method, to show a user all of his tables.
-  const tables = req.session.user.tables;
-  console.log(tables);
-  const tableNames = [];
-  for (let i = 0; i < tables.length; i++) {
-    const Name = await Table.findById(tables[i]);
-    tableNames[i] = Name.name;
+  //a try catch, to prevent the whole server from crashing when the user 
+  //does not have any tables :) :) 
+  try {
+    const tables = req.session.user.tables;
+    console.log(tables);
+    const tableNames = [];
+    for (let i = 0; i < tables.length; i++) {
+      const Name = await Table.findById(tables[i]);
+      tableNames[i] = Name.name;
+    }
+    return res.status(200).json({ tableNames });
+  } catch (e) {
+    return res
+      .status(400)
+      .json({ message: "User does not have any tables yet" });
   }
-  return res.status(200).json({ tableNames });
 };
 
 exports.pickTable = async (req, res) => {
