@@ -4,7 +4,8 @@ exports.sessionCheck = (req, res, next) => {
   const sessionExpires = new Date(req.session.cookie._expires);
   if (req.session && req.session.cookie && req.session.cookie._expires) {
     const now = new Date();
-    if (now > req.session.cookie._expires) { //checking dates
+    if (now > req.session.cookie._expires) {
+      //checking dates
       req.logout();
       req.session.destroy(); //destroying the session, making sure we lose all the information we gathered about them.
       return res
