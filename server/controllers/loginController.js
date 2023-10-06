@@ -77,7 +77,10 @@ exports.googleReg = (req, res, next) => {
 
       return res
         .status(200)
-        .json({ message: "Google authentication successful " + req.session.user.email});
+        .json({
+          message: "Google authentication successful ",
+          email: req.session.user.email,
+        });
     });
   })(req, res, next);
 };
