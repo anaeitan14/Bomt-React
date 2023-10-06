@@ -22,7 +22,7 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
-        <a className="navbar-brand" href="/profile">
+        <a className="navbar-brand text-decoration-underline text-info" href="/profile">
           Signed in as {localStorage.getItem("email")}
         </a>
         <button
