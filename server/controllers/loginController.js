@@ -222,7 +222,7 @@ exports.changePassword = async (req, res) => {
       .toString("hex");
     if (hash === user.password) {
       const newHash = crypto
-        .pbkdf2Sync(oldPassword, user.salting_word, 950, 64, "sha512")
+        .pbkdf2Sync(newPassword, user.salting_word, 950, 64, "sha512")
         .toString("hex");
       user.password = newHash;
       await user.save();
