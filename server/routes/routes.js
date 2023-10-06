@@ -25,7 +25,12 @@ router.post(
   middlewares.checkAdminManager,
   itemController.addChild
 );
-router.post("/removeItem", middlewares.sessionCheck, itemController.removeItem);
+router.post(
+  "/removeItem",
+  middlewares.sessionCheck,
+  middlewares.checkAdminManager,
+  itemController.removeItem
+);
 router.post("/searchItem", middlewares.sessionCheck, itemController.searchItem);
 router.get("/getTables", middlewares.sessionCheck, tableController.tables);
 router.post("/addTable", middlewares.sessionCheck, tableController.createTable);

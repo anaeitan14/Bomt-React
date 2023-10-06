@@ -6,7 +6,6 @@ exports.createTable = async (req, res) => {
   try {
     const user = req.session.user;
     const realUser = await User.findById(user._id);
-    console.log(realUser);
     const name = req.body.name;
 
     const table = new Table({
@@ -15,13 +14,12 @@ exports.createTable = async (req, res) => {
       managers: [],
       products: [],
     });
-    req.session.table = table;
+    req.session.table = name;
     req.session.save();
     await table.save();
     realUser.tables.push(table); //user has the tables he's part of.
     await realUser.save();
     req.session.user = realUser;
-    console.log(realUser);
     return res.status(200).json({ message: "Table created successfully" });
   } catch (error) {
     console.error(error);
@@ -35,7 +33,6 @@ exports.tables = async (req, res) => {
   //does not have any tables :) :) 
   try {
     const tables = req.session.user.tables;
-    console.log(tables);
     const tableNames = [];
     for (let i = 0; i < tables.length; i++) {
       const Name = await Table.findById(tables[i]);
@@ -55,15 +52,11 @@ exports.pickTable = async (req, res) => {
     const email = req.session.user.email;
     const user = await User.findOne({ email: email });
     const { tableName } = req.body;
-    console.log(tableName);
     const table = await Table.findOne({ name: tableName });
-    console.log(table._id);
     for (let i = 0; i < user.tables.length; i++) {
-      console.log(user.tables[i]._id);
       if (user.tables[i].toString() === table._id.toString()) {
         req.session.table = tableName; //setting the table name inside the session, to follow.
         req.session.save();
-        console.log(req.session);
         return res.status(200).json({ message: "picked the table" });
       }
     }

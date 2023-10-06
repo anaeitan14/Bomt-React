@@ -20,9 +20,10 @@ function passwordCheck(password) {
   if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(password)) {
     return false;
   }
-  if (password.length() < 10) {
+  if (password.length < 10) {
     return false;
   }
+  console.log("hey");
   return true;
 }
 
@@ -36,7 +37,7 @@ exports.register = async (req, res) => {
     }
     const valid = passwordCheck(password);
 
-    if (valid) {
+    if (!valid) {
       return res
         .status(404)
         .json({ message: "password is too weak, please pick another one" });
@@ -179,14 +180,13 @@ exports.forgot = async (req, res) => {
       pass: process.env.PASSWORD,
     },
   });
-  // const user = await User.findOne({ email: req.session.user.email }); session doesn't exist in this case? not sure but doesn't work
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
     return res.status(404).json({ message: "Email not found" });
   }
   const newPassword = randomstring.generate(16);
   const salting_word = crypto.randomBytes(32).toString("base64");
-  const hash = crypto 
+  const hash = crypto
     .pbkdf2Sync(newPassword, salting_word, 950, 64, "sha512")
     .toString("hex");
 
@@ -197,6 +197,9 @@ exports.forgot = async (req, res) => {
     text: `Your new password is ${newPassword},\nPlease change it ASAP as it is not a secure password.`,
   };
 
+  user.password = hash;
+  user.salting_word = salting_word;
+  await user.save();
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.error(error);

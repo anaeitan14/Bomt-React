@@ -3,11 +3,12 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-      "server": "cd server && nodemon start",
-      "client": "cd client && npm start",
-      "dev": "concurrently \"npm run server\" \"npm run client\""
+        "server": "cd server && nodemon start",
+        "client": "cd client && npm start",
+        "dev": "concurrently \"npm run server\" \"npm run client\""
     },
     "dependencies": {
-        "concurrently": "^8.0.1"
+        "concurrently": "^8.0.1",
+        "nodemon": "^3.0.1"
     }
 }

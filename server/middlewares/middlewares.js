@@ -21,6 +21,7 @@ exports.sessionCheck = (req, res, next) => {
 exports.checkAdminManager = async (req, res, next) => {
   try {
     const user = req.session.user;
+    console.log(user);
     const tableName = req.session.table;
 
     const table = await Table.findOne({ name: tableName })

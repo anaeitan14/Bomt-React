@@ -41,18 +41,18 @@ exports.addItem = async (req, res) => {
 
 exports.addChild = async (req, res) => {
   try {
-    console.log(req.body);
     const tableName = req.session.table;
-    const {pid} = req.body; //pid of the father
-    const Father = await Item.findOne({ ProductID: pid }); 
+    const { pid } = req.body; //pid of the father
+    const Father = await Item.findOne({ ProductID: pid });
     const table = await Table.findOne({ name: tableName });
     if (!Father) {
       return res.status(404).json({
         message: "Item not found, please add an item that has the pid",
       });
     }
-    const {pids} = req.body; // the children pids
-    for (let i = 0; i < pids.length; i++) { // irritating over the children, connecting them towards the father
+    const { pids } = req.body; // the children pids
+    for (let i = 0; i < pids.length; i++) {
+      // irritating over the children, connecting them towards the father
       const potentialChild = await Item.findOne({ ProductID: pids[i] });
       if (!potentialChild) {
         return res.status(404).json({
@@ -85,14 +85,18 @@ exports.addChild = async (req, res) => {
 
 exports.removeItem = async (req, res) => {
   try {
+    console.log(req.session);
     const { pid } = req.body;
     const tableName = req.session.table;
+    console.log(tableName);
     const table = await Table.findOne({ name: tableName }).populate("products"); //making sure array products has something in it, code would break without it.
-    const existingItem = await Item.findOneAndDelete({ ProductID: pid });
-    if (!existingItem) {
-      return res
-        .status(400)
-        .json({ message: "Item not found in the database" });
+    if (table) {
+      const existingItem = await Item.findOneAndDelete({ ProductID: pid });
+      if (!existingItem) {
+        return res
+          .status(400)
+          .json({ message: "Item not found in the database" });
+      }
     }
     const logData = new Log({
       UID: req.session.user,
@@ -103,7 +107,6 @@ exports.removeItem = async (req, res) => {
         req.session.user.email,
     });
     await logData.save();
-    console.log(table.products);
     table.products.filter((id) => !id.equals(pid)); // deleting the item from the table array
     table.logs.push(logData);
     await table.save();
