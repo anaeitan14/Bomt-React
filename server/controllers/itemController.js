@@ -85,18 +85,16 @@ exports.addChild = async (req, res) => {
 
 exports.removeItem = async (req, res) => {
   try {
-    console.log(req.session);
     const { pid } = req.body;
+    console.log(pid);
     const tableName = req.session.table;
-    console.log(tableName);
     const table = await Table.findOne({ name: tableName }).populate("products"); //making sure array products has something in it, code would break without it.
-    if (table) {
-      const existingItem = await Item.findOneAndDelete({ ProductID: pid });
-      if (!existingItem) {
-        return res
-          .status(400)
-          .json({ message: "Item not found in the database" });
-      }
+    console.log("table exists");
+    const existingItem = await Item.findOneAndDelete({ ProductID: pid });
+    if (!existingItem) {
+      return res
+        .status(400)
+        .json({ message: "Item not found in the database" });
     }
     const logData = new Log({
       UID: req.session.user,

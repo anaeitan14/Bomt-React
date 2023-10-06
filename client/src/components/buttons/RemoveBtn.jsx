@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import axios from "axios";
+import instance from "../../pages/axios-instance";
 import "./Button.css";
 
 const RemoveBtn = () => {
@@ -16,19 +16,20 @@ const RemoveBtn = () => {
     setShow(false);
   };
 
-  const removeItem = () => {
-    const URL = "http://localhost:5000/api/removeItem";
+  const removeItem = async () => {
+    const URL = "/removeItem";
 
     const item = {
       pid: PNID,
       email: localStorage.getItem("email"),
     };
 
-    axios
-      .post(URL, item)
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-
+    try {
+      const response = await instance.post(URL, item);
+      console.log("Item removed succesfully");
+    } catch (e) {
+      console.log("Item removal failed, maybe it does not exist");
+    }
     setPNID("");
     handleClose();
   };
