@@ -50,8 +50,9 @@ export const TableSelection = () => {
 
   return (
     <div className="table-selection-container">
+      {data.length !== 0 ?
       <div>
-        <h2 className="table-selection-heading">Choose your desired table</h2>
+         <h2 className="table-selection-heading">Choose your desired table</h2>
         <ul className="table-list">
           {data.map((table) => {
             return (
@@ -68,7 +69,7 @@ export const TableSelection = () => {
             );
           })}
         </ul>
-      </div>
+      </div> : null}
       <div className="create-table-form">
         <form onSubmit={handleSubmit}>
           <h2 className="create-table-heading">Create a new table</h2>

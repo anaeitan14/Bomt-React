@@ -79,7 +79,7 @@ export const Home = () => {
         <RemoveBtn />
         <ChildBtn data={searchQuery} />
       </div>
-      <Table data={data} />
+      {data.length !== 0 ? <Table data={data} /> : <div>No Results</div>}
     </div>
   );
 };
