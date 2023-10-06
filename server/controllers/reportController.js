@@ -57,7 +57,6 @@ exports.exportToCSV = async (req, res) => {
         console.error(err);
         return res.status(500).json({ message: "Failed to export to CSV" });
       }
-      console.log("CSV file created successfully");
       // Hi eran :) idk what res.download() does but it works so now i can download the file from the browser.
       return res.download("products.csv");
       //return res.status(200).json({ message: "Data exported to CSV file" }); // idk if this needed anymore
@@ -80,7 +79,6 @@ async function writeHierarchyToFile(
   currentDepth,
   maxDepth
 ) {
-  console.log(item.ProductName);
   const line = `${item.ProductName};${item.Description};${item.Manufacturer}`;
   if (item) {
     writeLineToFile(fileStream, line, indentationLevel);
@@ -105,15 +103,8 @@ async function writeHierarchyToFile(
 
 exports.createCSV = async (req, res) => {
   try {
-    console.log(req.body);
     const pid = req.body.pid;
-    console.log(pid);
     const rootItem = await Item.findOne({ ProductID: pid });
-
-    console.log(
-      "this is the root item----------------------------------------------"
-    );
-    console.log(rootItem.ProductName);
 
     if (!rootItem) {
       return res.status(404).json({ message: "Root item not found" });

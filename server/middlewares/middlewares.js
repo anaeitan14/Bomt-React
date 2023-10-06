@@ -2,12 +2,10 @@ const Table = require("../models/tableSchema");
 
 exports.sessionCheck = (req, res, next) => {
   const sessionExpires = new Date(req.session.cookie._expires);
-  console.log(req.session);
   if (req.session && req.session.cookie && req.session.cookie._expires) {
     const now = new Date();
-    console.log(now);
-    console.log(sessionExpires);
-    if (now > req.session.cookie._expires) { //checking dates
+    if (now > req.session.cookie._expires) {
+      //checking dates
       req.logout();
       req.session.destroy(); //destroying the session, making sure we lose all the information we gathered about them.
       return res
@@ -21,7 +19,6 @@ exports.sessionCheck = (req, res, next) => {
 exports.checkAdminManager = async (req, res, next) => {
   try {
     const user = req.session.user;
-    console.log(user);
     const tableName = req.session.table;
 
     const table = await Table.findOne({ name: tableName })
