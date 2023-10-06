@@ -27,8 +27,7 @@ const Login = () => {
         navigate("/table-select"); // Navigate to the '/table-select' page
       }
     } catch (err) {
-      console.log(err);
-      setErrorMessage("Incorrect information");
+      setErrorMessage(err.response.data.message);
     }
   };
 
@@ -49,8 +48,7 @@ const Login = () => {
         navigate("/table-select");
       }
     } catch (err) {
-      console.log(err);
-      setErrorMessage("Incorrect information");
+      setErrorMessage(err.response.data.message);
     }
   }
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import instance from "./axios-instance";
 import { useNavigate } from "react-router-dom";
 import "../index.css";
@@ -19,18 +19,26 @@ const Signup = () => {
     }
 
     const info = { email: email, password: password };
+    let response;
 
     const URL = "/register";
     try {
-      const response = await instance.post(URL, info);
+      response = await instance.post(URL, info);
       if (response.status === 200) {
         navigate("/login"); // Navigate to the '/login' page
       }
     } catch (err) {
-      console.log(err);
-      setErrorMessage("Incorrect information");
+      setErrorMessage(err.response.data.message);
     }
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (errorMessage) {
+        setErrorMessage("");
+      }
+    }, 2500);
+  });
 
   return (
     <div className="signup-container">

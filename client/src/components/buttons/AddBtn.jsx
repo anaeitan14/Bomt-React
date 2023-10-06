@@ -3,7 +3,6 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import instance from "../../pages/axios-instance";
-import "./Button.css";
 
 const AddBtn = () => {
   const [productID, setProductID] = useState("");
@@ -259,10 +258,10 @@ const AddBtn = () => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <button className="custom-button" onClick={handleClose}>
+          <button className="btn btn-primary" onClick={handleClose}>
             Close
           </button>
-          <button className="custom-button" onClick={handleAdd}>
+          <button className="btn btn-primary" onClick={handleAdd}>
             Add
           </button>
         </Modal.Footer>

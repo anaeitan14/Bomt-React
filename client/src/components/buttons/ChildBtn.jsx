@@ -69,10 +69,10 @@ const ChildBtn = ({ data }) => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <button className="custom-button" vonClick={handleClose}>
+          <button className="btn btn-primary" vonClick={handleClose}>
             Close
           </button>
-          <button className="custom-button" onClick={handleAdd}>
+          <button className="btn btn-primary" onClick={handleAdd}>
             Add
           </button>
         </Modal.Footer>

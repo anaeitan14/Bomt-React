@@ -1,16 +1,26 @@
+/* Styles for the custom button */
 .custom-button {
-  background-color: #3498db; /* Blue background color */
-  color: #ffffff; /* White text color */
-  padding: 12px 24px;
+  font-family: Tahoma, Geneva, Verdana, sans-serif; /* Change to a nicer font */
+  padding: 10px 15px; /* Slightly increased padding */
+  margin: 0 15px; /* Increased margin for better visibility */
+  background: none;
   border: none;
-  border-radius: 8px;
+  color: #3498db; /* Text color */
+  font-size: 20px; /* Increased font size */
   cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.3s ease, transform 0.4s ease;
-  margin: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: color 0.3s ease; /* Smooth transition */
+  text-decoration: none; /* Remove underline */
 }
 
 .custom-button:hover {
-  background-color: #2980b9; /* Darker blue background color on hover */
+  color: #2980b9; /* Text color on hover */
+}
+
+.custom-button:focus {
+  outline: none; /* Remove the outline on focus */
+}
+
+/* Optional: Add a margin to the button */
+.custom-button-container {
+  margin: 20px;
 }

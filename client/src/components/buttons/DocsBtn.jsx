@@ -37,7 +37,7 @@ const DocsBtn = ({ data }) => {
             })}
         </Modal.Body>
         <Modal.Footer>
-          <button className="custom-button" onClick={handleClose}>
+          <button className="btn btn-primary" onClick={handleClose}>
             Close
           </button>
         </Modal.Footer>

@@ -61,25 +61,30 @@ export const Home = () => {
   };
 
   return (
-    <div className="home-container">
+    <>
       <Navbar />
-      <div className="container-fluid p-3 d-flex justify-content-around">
-        <form className="home-form" onSubmit={handleSubmit}>
-          <input
-            className="home-input"
-            type="search"
-            placeholder="Item"
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <button type="submit" className="search-button">
-            Search
-          </button>
-        </form>
-        <AddBtn />
-        <RemoveBtn />
-        <ChildBtn data={searchQuery} />
+      <div className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="mx-auto">
+          <form onSubmit={handleSubmit}>
+            <div class="input-group mb-3">
+              s
+              <input
+                type="search"
+                className="form-control"
+                placeholder="Product name"
+                onChange={(e) => setQuery(e.target.value)}
+              />
+              <button type="submit" className="btn btn-primary">
+                Search
+              </button>
+            </div>
+          </form>
+          <AddBtn />
+          <RemoveBtn />
+          <ChildBtn data={searchQuery} />
+          {data.length !== 0 ? <Table data={data} /> : <div>No Results</div>}
+        </div>
       </div>
-      {data.length !== 0 ? <Table data={data} /> : <div>No Results</div>}
-    </div>
+    </>
   );
 };

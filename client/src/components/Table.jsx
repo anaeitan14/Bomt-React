@@ -1,9 +1,10 @@
 import Item from "./Item";
+import "./Table.css";
 
 const Table = ({ data }) => {
   return (
     <div id="table-wrapper">
-      <table className="table table-striped table-hover table-bordered">
+      <table className="">
         <thead>
           <tr id="row-header">
             <th>PN</th>

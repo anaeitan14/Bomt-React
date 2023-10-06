@@ -1,0 +1,33 @@
+/* Apply styles to the table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: none; /* Remove the actual border for the table */
+  color: #333;
+}
+
+/* Apply styles to table cells */
+td,
+th {
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Slight border with transparency */
+  padding: 10px;
+  text-align: left;
+}
+
+/* Apply a background color to alternate rows for better readability */
+tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.05); /* Subtle gray background */
+}
+
+/* Apply styles to the header row */
+th {
+  background-color: rgba(0, 0, 0, 0.1); /* Slight gray header background */
+  color: #333;
+  font-weight: bold;
+}
+
+/* Apply styles to the cells with content */
+td {
+  background-color: white; /* White cell background */
+}
+

@@ -9,9 +9,7 @@ import { Home } from "./pages/Home";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 import Queries from "./pages/Queries";
-import Reports from "./pages/Reports";
 import Logs from "./pages/Logs";
-import Users from "./pages/Users";
 import "./index.css";
 import Profile from "./pages/Profile";
 import "bootstrap/dist/js/bootstrap.bundle";
@@ -29,8 +27,6 @@ root.render(
         <Route path="table-select" element={<TableSelection />} />
         <Route path="queries" element={<Queries />} />
         <Route path="logs" element={<Logs />} />
-        <Route path="reports" element={<Reports />} />
-        <Route path="users" element={<Users />} />
         <Route path="profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
