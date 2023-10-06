@@ -5,24 +5,29 @@ import InputGroup from "react-bootstrap/InputGroup";
 import instance from "./axios-instance";
 import Navbar from "../components/Navbar";
 import "./Users.css";
-import "../components/buttons/Button.css"
+import "../components/buttons/Button.css";
 
 const Users = () => {
   const [user, setUser] = useState("");
   const [manager, setManager] = useState("");
-  const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true);
+  const [showUser, setShowUser] = useState(false);
+  const [showManager, setShowManager] = useState(false);
+
+
+  const handleShow = () => {
+    
+  };
 
   const handleClose = () => {
     setUser("");
-    setShow(false);
+    setManager("");
   };
 
   const handleAddUser = async () => {
     const URL = "/addUser";
 
     try {
-      const response = await instance.post(URL);
+      const response = await instance.post(URL, user);
       console.log(response);
     } catch (err) {
       console.log(err);
@@ -45,8 +50,10 @@ const Users = () => {
   return (
     <>
       <Navbar />
-      <button className="custom-button" onClick={handleShow}>Add user</button>
-      <Modal show={show} onHide={handleClose}>
+      <button className="custom-button" onClick={showUser}>
+        Add user
+      </button>
+      <Modal show={showUser} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add user</Modal.Title>
         </Modal.Header>
@@ -57,7 +64,7 @@ const Users = () => {
                 onChange={(e) => {
                   setUser(e.target.value);
                 }}
-                placeholder="Product ID"
+                placeholder="User email"
               />
             </InputGroup>
           </Form.Group>
@@ -67,8 +74,10 @@ const Users = () => {
           <button onClick={handleAddUser}>Add</button>
         </Modal.Footer>
       </Modal>
-      <button className="custom-button" onClick={handleShow}>Add manager</button>
-      <Modal show={show} onHide={handleClose}>
+      <button className="custom-button" onClick={showManager}>
+        Add manager
+      </button>
+      <Modal show={showManager} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add manager</Modal.Title>
         </Modal.Header>
@@ -79,14 +88,18 @@ const Users = () => {
                 onChange={(e) => {
                   setManager(e.target.value);
                 }}
-                placeholder="Product ID"
+                placeholder="Manager email"
               />
             </InputGroup>
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <button className="custom-button" onClick={handleClose}>Close</button>
-          <button className="custom-button" onClick={handleAddManager}>Add</button>
+          <button className="custom-button" onClick={handleClose}>
+            Close
+          </button>
+          <button className="custom-button" onClick={handleAddManager}>
+            Add
+          </button>
         </Modal.Footer>
       </Modal>
     </>
