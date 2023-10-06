@@ -9,7 +9,15 @@ import "../components/buttons/Button.css";
 
 function CustomNavbar() {
   const navigate = useNavigate();
+  const [pid, setPid] = useState("");
+  const [user, setUser] = useState("");
+  const [manager, setManager] = useState("");
+  const [depth, setDepth] = useState(0);
+  const [showReportTwo, setShowReportTwo] = useState(false);
+  const [showUser, setShowUser] = useState(false);
+  const [showManager, setShowManager] = useState(false);
 
+  /* Logout function */
   const handleLogout = async () => {
     const URL = "/logout";
     const data = {
@@ -23,17 +31,10 @@ function CustomNavbar() {
       navigate("/login");
     }
   };
-  const [pid, setPid] = useState("");
-  const [show, setShow] = useState(false);
-  const [depth, setDepth] = useState(0);
-  const handleShow2 = () => setShow(true);
+  /* ----------------------------------------- */
 
-  const handleCloseUser = () => {
-    setPid("");
-    setShow(false);
-  };
-
-  const handleClick = async () => {
+  /* Report One */
+  const handleClickReportOne = async () => {
     try {
       const report = await instance.get("/getReportOne", {
         responseType: "blob",
@@ -52,8 +53,17 @@ function CustomNavbar() {
       console.log("Error generating the report: ", err);
     }
   };
+  /* ----------------------------------------- */
 
-  const handleClick2 = async () => {
+  /* Report Two */
+  const handleShowReportTwo = () => setShowReportTwo(true);
+
+  const handleCloseReportTwo = () => {
+    setPid("");
+    setShowReportTwo(false);
+  };
+
+  const handleClickReportTwo = async () => {
     const pidObj = { pid: pid, depth: depth };
 
     try {
@@ -74,17 +84,12 @@ function CustomNavbar() {
       console.log("Error generating the report: ", err);
     }
   };
+  /* ----------------------------------------- */
 
-  const [user, setUser] = useState("");
-  const [manager, setManager] = useState("");
-  const [showUser, setShowUser] = useState(false);
-  const [showManager, setShowManager] = useState(false);
-
-  const handleShow = () => {};
-
-  const handleClose = () => {
-    setUser("");
-    setManager("");
+  /* Add user */
+  const handleCloseUser = () => {
+    setPid("");
+    setShowUser(false);
   };
 
   const handleAddUser = async () => {
@@ -96,7 +101,15 @@ function CustomNavbar() {
     } catch (err) {
       console.log(err);
     }
-    handleClose();
+    handleCloseUser();
+  };
+
+  /* ----------------------------------------- */
+
+  /* Add manager */
+  const handleCloseManager = () => {
+    setManager("");
+    setShowManager(false);
   };
 
   const handleAddManager = async () => {
@@ -108,8 +121,10 @@ function CustomNavbar() {
     } catch (err) {
       console.log(err);
     }
-    handleClose();
+    handleCloseManager();
   };
+
+  /* ----------------------------------------- */
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
@@ -125,11 +140,11 @@ function CustomNavbar() {
           <NavDropdown title="Reports" id="basic-nav-dropdown">
             <NavDropdown.Item>
               {" "}
-              <a onClick={handleClick}>Generate Basic Report</a>
+              <a onClick={handleClickReportOne}>Generate Basic Report</a>
             </NavDropdown.Item>
             <NavDropdown.Item>
-              <a onClick={handleShow}>Generate Hierarchical Report</a>
-              <Modal show={show} onHide={handleClose}>
+              <a onClick={handleShowReportTwo}>Generate Hierarchical Report</a>
+              <Modal show={showReportTwo} onHide={handleCloseReportTwo}>
                 <Modal.Header closeButton>
                   <Modal.Title>Generate hierarchical report</Modal.Title>
                 </Modal.Header>
@@ -153,11 +168,17 @@ function CustomNavbar() {
                   </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
-                  <button className="custom-button" onClick={handleClose}>
+                  <button
+                    className="custom-button"
+                    onClick={handleCloseReportTwo}
+                  >
                     Close
                   </button>
-                  <button className="custom-button" onClick={handleClick2}>
-                    Add
+                  <button
+                    className="custom-button"
+                    onClick={handleClickReportTwo}
+                  >
+                    Generate
                   </button>
                 </Modal.Footer>
               </Modal>
@@ -166,7 +187,7 @@ function CustomNavbar() {
           <NavDropdown title="Users" id="basic-nav-dropdown">
             <NavDropdown.Item>
               <a onClick={showUser}>Add user</a>
-              <Modal show={showUser} onHide={handleClose}>
+              <Modal show={showUser}>
                 <Modal.Header closeButton>
                   <Modal.Title>Add user</Modal.Title>
                 </Modal.Header>
@@ -183,14 +204,14 @@ function CustomNavbar() {
                   </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
-                  <button onClick={handleClose}>Close</button>
+                  <button>Close</button>
                   <button onClick={handleAddUser}>Add</button>
                 </Modal.Footer>
               </Modal>
             </NavDropdown.Item>
             <NavDropdown.Item>
               <a onClick={showManager}>Add manager</a>
-              <Modal show={showManager} onHide={handleClose}>
+              <Modal show={showManager}>
                 <Modal.Header closeButton>
                   <Modal.Title>Add manager</Modal.Title>
                 </Modal.Header>
@@ -207,7 +228,7 @@ function CustomNavbar() {
                   </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
-                  <button className="custom-button" onClick={handleClose}>
+                  <button className="custom-button" onClick={handleCloseManager}>
                     Close
                   </button>
                   <button className="custom-button" onClick={handleAddManager}>

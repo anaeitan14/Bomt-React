@@ -13,6 +13,8 @@ export const TableSelection = () => {
     fetchTables();
   }, [data.length]);
 
+  console.log(data);
+
   const fetchTables = async () => {
     try {
       const response = await instance.get("/getTables");
