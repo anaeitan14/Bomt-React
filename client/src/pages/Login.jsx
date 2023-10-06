@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../index.css";
 
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,10 +38,13 @@ const Login = () => {
     const URL = "/google-register";
 
     try {
-      const response = await instance.post(URL, { email:"dummy-google", password:"dummy-google", JWT: userObject});
-      console.log(response.status);
+      const response = await instance.post(URL, {
+        email: "dummy-google",
+        password: "dummy-google",
+        JWT: userObject,
+      });
       if (response.status === 200) {
-        localStorage.setItem("email", userObject.email);
+        localStorage.setItem("email", response.data.email);
         localStorage.setItem("Queries", "");
         navigate("/table-select");
       }
