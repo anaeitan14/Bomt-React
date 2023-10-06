@@ -1,7 +1,7 @@
 /* Table Selection styles */
 .table-selection-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   height: 100vh;
   background-color: #333; /* Dark background color for the table selection */
@@ -49,8 +49,8 @@
   font-size: 24px;
   color: #fff;
   margin-top: 20px; /* Add space between heading and form */
+  text-align: center;
 }
-
 
 .create-table-input {
   width: 100%;
@@ -66,4 +66,10 @@
   border-color: #007bff; /* Change border color on input focus */
   outline: none; /* Remove default outline */
   box-shadow: 0 0 6px rgba(0, 123, 255, 0.5); /* Add box shadow on input focus */
+}
+
+.create-table-form form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
