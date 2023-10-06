@@ -7,7 +7,9 @@ const Profile = () => {
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordRepeat, setNewPasswordRepeat] = useState("");
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
       if (newPassword !== newPasswordRepeat) {
         alert("New passwords do not match!");
@@ -17,7 +19,8 @@ const Profile = () => {
       const userInfo = { oldPassword: oldPassword, newPassword: newPassword };
       const URL = "/change-password";
 
-      const response = instance.post(URL, userInfo);
+      const response = await instance.post(URL, userInfo);
+      console.log(response);
       if (response.status === 200) {
         alert("Password changes succesfullly");
       }
@@ -30,39 +33,39 @@ const Profile = () => {
     <>
       <Navbar />
       <div className="d-flex flex-column align-items-center w-50">
-        <div className="form-group">
-          <label htmlFor="oldPassword">Old password</label>
-          <input
-            type="password"
-            className="login-input"
-            value={oldPassword}
-            onChange={(e) => setOldPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">New password</label>
-          <input
-            type="password"
-            className="login-input"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Confirm new password</label>
-          <input
-            type="password"
-            className="login-input"
-            value={newPasswordRepeat}
-            onChange={(e) => setNewPasswordRepeat(e.target.value)}
-            required
-          />
-        </div>
-        <button className="login-button" onSubmit={handleSubmit}>
-          Change password
-        </button>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="oldPassword">Old password</label>
+            <input
+              type="password"
+              className="login-input"
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">New password</label>
+            <input
+              type="password"
+              className="login-input"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Confirm new password</label>
+            <input
+              type="password"
+              className="login-input"
+              value={newPasswordRepeat}
+              onChange={(e) => setNewPasswordRepeat(e.target.value)}
+              required
+            />
+          </div>
+          <button className="login-button">Change password</button>
+        </form>
       </div>
     </>
   );
