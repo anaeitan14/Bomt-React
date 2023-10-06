@@ -85,10 +85,8 @@ exports.addChild = async (req, res) => {
 
 exports.removeItem = async (req, res) => {
   try {
-    console.log(req.session);
     const { pid } = req.body;
     const tableName = req.session.table;
-    console.log(tableName);
     const table = await Table.findOne({ name: tableName }).populate("products"); //making sure array products has something in it, code would break without it.
     if (table) {
       const existingItem = await Item.findOneAndDelete({ ProductID: pid });

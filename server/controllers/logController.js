@@ -3,9 +3,7 @@ const Table = require("../models/tableSchema");
 
 exports.logs = async (req, res) => {
   try {
-    console.log("in logs method");
     const tableName = req.session.table;
-    console.log(req.session.table);
     const table = await Table.findOne({ name: tableName }); //.populate("logs").exec();
     if (!table) {
       return res.status(400).json({ message: "logs not found" });

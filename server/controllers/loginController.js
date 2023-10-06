@@ -23,7 +23,6 @@ function passwordCheck(password) {
   if (password.length < 10) {
     return false;
   }
-  console.log("hey");
   return true;
 }
 
