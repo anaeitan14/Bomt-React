@@ -217,6 +217,11 @@ exports.changePassword = async (req, res) => {
     const oldPassword = req.body.oldPassword;
     const newPassword = req.body.newPassword;
 
+    const valid = passwordCheck(newPassword);
+    if (!valid) {
+      return res.status(401).json({ message: "password is too weak" });
+    }
+
     const hash = crypto
       .pbkdf2Sync(oldPassword, user.salting_word, 950, 64, "sha512")
       .toString("hex");
