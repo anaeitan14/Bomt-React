@@ -75,12 +75,10 @@ exports.googleReg = (req, res, next) => {
       req.session.user = user;
       req.session.save();
 
-      return res
-        .status(200)
-        .json({
-          message: "Google authentication successful ",
-          email: req.session.user.email,
-        });
+      return res.status(200).json({
+        message: "Google authentication successful ",
+        email: req.session.user.email,
+      });
     });
   })(req, res, next);
 };
@@ -211,4 +209,30 @@ exports.forgot = async (req, res) => {
       return res.status(200).json({ message: "New password send succesfully" });
     }
   });
+};
+
+exports.changePassword = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.session.user.email });
+    const oldPassword = req.body.oldPassword;
+    const newPassword = req.body.newPassword;
+
+    const hash = crypto
+      .pbkdf2Sync(oldPassword, user.salting_word, 950, 64, "sha512")
+      .toString("hex");
+    if (hash === user.password) {
+      const newHash = crypto
+        .pbkdf2Sync(oldPassword, user.salting_word, 950, 64, "sha512")
+        .toString("hex");
+      user.password = newHash;
+      await user.save();
+      return res
+        .status(200)
+        .json({ message: "Password has changed succesfully" });
+    } else {
+      return res.status(401).json({ mesage: "unauthorized access" });
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };
