@@ -2,25 +2,21 @@
 .custom-button {
   font-family: Tahoma, Geneva, Verdana, sans-serif; /* Change to a nicer font */
   padding: 10px 15px; /* Slightly increased padding */
-  margin: 0 15px; /* Increased margin for better visibility */
-  background: none;
   border: none;
-  color: #3498db; /* Text color */
-  font-size: 20px; /* Increased font size */
+  font-size: 18px; /* Increased font size */
   cursor: pointer;
   transition: color 0.3s ease; /* Smooth transition */
   text-decoration: none; /* Remove underline */
+  border-radius: 8px;
+  background-color: #3498db; /* Blue background color */
+  color: #ffffff; /* White text color */
+  padding: 12px 24px;
+  transition: background-color 0.3s ease, transform 0.4s ease;
+  margin: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .custom-button:hover {
-  color: #2980b9; /* Text color on hover */
-}
-
-.custom-button:focus {
-  outline: none; /* Remove the outline on focus */
-}
-
-/* Optional: Add a margin to the button */
-.custom-button-container {
-  margin: 20px;
+  background-color: #2980b9;
+  color: #ffffff; /* Text color on hover */
 }

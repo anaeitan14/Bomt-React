@@ -258,10 +258,10 @@ const AddBtn = () => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn btn-primary" onClick={handleClose}>
+          <button className="custom-button" onClick={handleClose}>
             Close
           </button>
-          <button className="btn btn-primary" onClick={handleAdd}>
+          <button className="custom-button" onClick={handleAdd}>
             Add
           </button>
         </Modal.Footer>

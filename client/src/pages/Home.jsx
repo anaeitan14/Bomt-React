@@ -82,7 +82,7 @@ export const Home = () => {
           <AddBtn />
           <RemoveBtn />
           <ChildBtn data={searchQuery} />
-          {data.length !== 0 ? <Table data={data} /> : <div>No Results</div>}
+          {data.length !== 0 ? <Table data={data} /> : <div style={{color:"black"}}>No Results</div>}
         </div>
       </div>
     </>

@@ -87,8 +87,12 @@ function CustomNavbar() {
   /* ----------------------------------------- */
 
   /* Add user */
+  const handleShowUser = () => {
+    setShowUser(true);
+  };
+
   const handleCloseUser = () => {
-    setPid("");
+    setUser("");
     setShowUser(false);
   };
 
@@ -107,6 +111,10 @@ function CustomNavbar() {
   /* ----------------------------------------- */
 
   /* Add manager */
+  const HandleShowManager = () => {
+    setShowManager(true);
+  };
+
   const handleCloseManager = () => {
     setManager("");
     setShowManager(false);
@@ -128,7 +136,10 @@ function CustomNavbar() {
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
-      <Navbar.Brand href="/profile">
+      <Navbar.Brand
+        href="/profile"
+        className="m-3 text-decoration-underline text-info"
+      >
         Signed in as {localStorage.getItem("email")}
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="navbar-nav" />
@@ -186,8 +197,8 @@ function CustomNavbar() {
           </NavDropdown>
           <NavDropdown title="Users" id="basic-nav-dropdown">
             <NavDropdown.Item>
-              <a onClick={showUser}>Add user</a>
-              <Modal show={showUser}>
+              <a onClick={handleShowUser}>Add user</a>
+              <Modal show={showUser} onHide={handleCloseUser}>
                 <Modal.Header closeButton>
                   <Modal.Title>Add user</Modal.Title>
                 </Modal.Header>
@@ -204,14 +215,18 @@ function CustomNavbar() {
                   </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
-                  <button>Close</button>
-                  <button onClick={handleAddUser}>Add</button>
+                  <button className="custom-button" onClick={handleCloseUser}>
+                    Close
+                  </button>
+                  <button className="custom-button" onClick={handleAddUser}>
+                    Add
+                  </button>
                 </Modal.Footer>
               </Modal>
             </NavDropdown.Item>
             <NavDropdown.Item>
-              <a onClick={showManager}>Add manager</a>
-              <Modal show={showManager}>
+              <a onClick={HandleShowManager}>Add manager</a>
+              <Modal show={showManager} onHide={handleCloseManager}>
                 <Modal.Header closeButton>
                   <Modal.Title>Add manager</Modal.Title>
                 </Modal.Header>
@@ -228,7 +243,10 @@ function CustomNavbar() {
                   </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
-                  <button className="custom-button" onClick={handleCloseManager}>
+                  <button
+                    className="custom-button"
+                    onClick={handleCloseManager}
+                  >
                     Close
                   </button>
                   <button className="custom-button" onClick={handleAddManager}>

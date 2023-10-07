@@ -55,10 +55,10 @@ const RemoveBtn = () => {
           </InputGroup>
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn btn-primary" onClick={handleClose}>
+          <button className="custom-button" onClick={handleClose}>
             Close
           </button>
-          <button className="btn btn-primary" onClick={removeItem}>
+          <button className="custom-button" onClick={removeItem}>
             Remove
           </button>
         </Modal.Footer>
