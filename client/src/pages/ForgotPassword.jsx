@@ -57,8 +57,8 @@ const ForgotPassword = () => {
         <a href="/login" className="forgot-password-link">
           Back to login
         </a>
+        {message && <div id="error-message">{message}</div>}
       </form>
-      {message && <div id="error-message">{message}</div>}
     </div>
   );
 };
