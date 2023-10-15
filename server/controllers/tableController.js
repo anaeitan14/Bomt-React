@@ -70,7 +70,7 @@ exports.pickTable = async (req, res) => {
 exports.addManager = async (req, res) => {
   //only an admin can add a manager
   try {
-    const requestedEmail = req.body.requestedEmail;
+    const {requestedEmail} = req.body;
     const tableName = req.session.table;
     const user = req.session.user;
     const addingTable = await Table.findOne({ name: tableName });
@@ -124,7 +124,9 @@ exports.addManager = async (req, res) => {
 
 exports.addNormalUser = async (req, res) => {
   try {
+    console.log(req.body);
     const requestedEmail = req.body.requestedEmail;
+    console.log(requestedEmail);
     const tableName = req.session.table;
     const table = await Table.findOne({ name: tableName });
     const requestedUser = await User.findOne({ email: requestedEmail });
