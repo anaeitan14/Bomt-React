@@ -42,7 +42,7 @@ exports.register = async (req, res) => {
         .json({ message: "password is too weak, please pick another one" });
     }
     const salting_word = crypto.randomBytes(32).toString("base64");
-    const hash = crypto // crypting the password using sha512 and irritiating it with a salting word so it won't be easily cracked.
+    const hash = crypto // crypting the password using sha512 and a salt.
       .pbkdf2Sync(password, salting_word, 950, 64, "sha512")
       .toString("hex");
     const newUser = new User({
