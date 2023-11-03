@@ -13,7 +13,20 @@ const Logs = () => {
   const loadLogs = async () => {
     try {
       const response = await instance.get("/getLogs");
-      setLogs(response.data);
+
+      const sortedArray = response.data.sort((b, a) => {
+        return new Date(a.timestamp) - new Date(b.timestamp);
+      });
+
+      const formattedAndSortedArray = sortedArray.map((item) => {
+        const formattedDate = new Date(item.timestamp).toLocaleString("en-GB");
+        return {
+          ...item,
+          timestamp: formattedDate,
+        };
+      });
+
+      setLogs(formattedAndSortedArray);
     } catch (error) {
       console.error("Error loading logs:", error);
     }

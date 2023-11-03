@@ -98,9 +98,12 @@ function CustomNavbar() {
 
   const handleAddUser = async () => {
     const URL = "/addUser";
+    const addUser = {
+      requestedEmail: user,
+    };
 
     try {
-      const response = await instance.post(URL, user);
+      const response = await instance.post(URL, addUser);
       console.log(response);
     } catch (err) {
       console.log(err);
@@ -122,9 +125,12 @@ function CustomNavbar() {
 
   const handleAddManager = async () => {
     const URL = "/addManager";
+    const addManager = {
+      requestedEmail: manager,
+    };
 
     try {
-      const response = await instance.post(URL);
+      const response = await instance.post(URL, addManager);
       console.log(response);
     } catch (err) {
       console.log(err);
