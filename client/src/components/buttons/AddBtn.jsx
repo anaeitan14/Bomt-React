@@ -149,10 +149,10 @@ const AddBtn = () => {
     instance
       .post(URL, { item })
       .then((response) => {
-        console.log(response);
+        alert(response.data.message);
       })
       .catch((error) => {
-        console.log(error);
+        alert(error);
       });
     handleClose();
   };

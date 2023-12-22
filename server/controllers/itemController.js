@@ -32,7 +32,7 @@ exports.addItem = async (req, res) => {
     await table.save();
     await logData.save();
     await newItem.save();
-    return res.status(200).json({ message: "Item added succsfully" });
+    return res.status(200).json({ message: "Item added succesfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });

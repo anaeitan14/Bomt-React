@@ -49,7 +49,7 @@ export const Home = () => {
               setData(data.concat(childResponse.data));
             }
           } catch (e) {
-            console.log("no childs");
+            alert("no childs");
           }
         }
       }

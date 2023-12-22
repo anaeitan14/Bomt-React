@@ -50,7 +50,7 @@ function CustomNavbar() {
       a.click();
       URL.revokeObjectURL(url);
     } catch (err) {
-      console.log("Error generating the report: ", err);
+      alert("Error generating the report: ", err);
     }
   };
   /* ----------------------------------------- */
@@ -81,7 +81,7 @@ function CustomNavbar() {
       a.click();
       URL.revokeObjectURL(url);
     } catch (err) {
-      console.log("Error generating the report: ", err);
+      alert("Error generating the report: ", err);
     }
   };
   /* ----------------------------------------- */
@@ -104,9 +104,9 @@ function CustomNavbar() {
 
     try {
       const response = await instance.post(URL, addUser);
-      console.log(response);
+      alert(response.data.message);
     } catch (err) {
-      console.log(err);
+      alert(err);
     }
     handleCloseUser();
   };
@@ -131,9 +131,9 @@ function CustomNavbar() {
 
     try {
       const response = await instance.post(URL, addManager);
-      console.log(response);
+      alert(response.data.message);
     } catch (err) {
-      console.log(err);
+      alert(err);
     }
     handleCloseManager();
   };
@@ -183,6 +183,7 @@ function CustomNavbar() {
                       />
                     </InputGroup>
                   </Form.Group>
+                  <div style={{color:"red", textAlign:"center"}}>Enter for -1 for max depth</div>
                 </Modal.Body>
                 <Modal.Footer>
                   <button

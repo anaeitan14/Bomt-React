@@ -40,9 +40,9 @@ const ChildBtn = ({ data }) => {
 
     try {
       const response = await instance.post(URL, item);
-      console.log(response);
+      alert(response.data.message);
     } catch (err) {
-      console.log(err);
+      alert(err);
     }
     handleClose();
   };

@@ -20,7 +20,7 @@ export const TableSelection = () => {
       const response = await instance.get("/getTables");
       setData(response.data.tableNames);
     } catch (error) {
-      console.error("Error fetching tables data:", error);
+      alert("Error fetching tables data:", error);
     }
   };
 

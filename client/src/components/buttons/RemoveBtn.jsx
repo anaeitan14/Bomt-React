@@ -26,9 +26,9 @@ const RemoveBtn = () => {
 
     try {
       const response = await instance.post(URL, item);
-      console.log("Item removed succesfully");
+      alert("Item removed succesfully");
     } catch (e) {
-      console.log("Item removal failed, maybe it does not exist");
+      alert("Item removal failed, maybe it does not exist");
     }
     setPNID("");
     handleClose();
