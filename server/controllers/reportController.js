@@ -57,7 +57,6 @@ exports.exportToCSV = async (req, res) => {
         console.error(err);
         return res.status(500).json({ message: "Failed to export to CSV" });
       }
-      // Hi eran :) idk what res.download() does but it works so now i can download the file from the browser.
       return res.download("products.csv");
       //return res.status(200).json({ message: "Data exported to CSV file" }); // idk if this needed anymore
     });
@@ -77,9 +76,15 @@ async function writeHierarchyToFile(
   item,
   indentationLevel,
   currentDepth,
-  maxDepth
+  maxDepth,
+  firstTime = true
 ) {
-  const line = `${item.ProductName};${item.Description};${item.Manufacturer}`;
+  const line = `${item.ProductID};${item.ProductName};${item.Description};${item.Manufacturer};${item.ManufacturerID}`;
+  const headers =
+    "ProductID;ProductName;Description;Manufacturer;ManufacturerID";
+  if (firstTime) {
+    writeLineToFile(fileStream, headers, indentationLevel);
+  }
   if (item) {
     writeLineToFile(fileStream, line, indentationLevel);
   }
@@ -95,7 +100,8 @@ async function writeHierarchyToFile(
         son,
         indentationLevel + 1,
         currentDepth + 1,
-        maxDepth
+        maxDepth,
+        false
       );
     }
   }

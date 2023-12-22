@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const logSchema = new mongoose.Schema({
   UID: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "Uesr",
     required: true,
   },
   action: {
