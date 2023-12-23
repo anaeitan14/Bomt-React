@@ -76,7 +76,7 @@ exports.addChild = async (req, res) => {
     }
     Father.TreeAvailable = true; // if the father wasn't a father until now, he's now.
     await Father.save();
-    return res.status(200).json({ message: "Chidlren added succesfully" });
+    return res.status(200).json({ message: "Children added succesfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });

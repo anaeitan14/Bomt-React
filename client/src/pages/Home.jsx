@@ -10,12 +10,19 @@ import "./Home.css"; // Import the Home component-specific styles
 export const Home = () => {
   useEffect(() => {
     setEmail(localStorage.getItem("email"));
+
+    setTimeout(() => {
+      if (errorMessage) {
+        setErrorMessage("");
+      }
+    }, 2500);
   });
 
   const [searchQuery, setQuery] = useState("");
   const [data, setData] = useState([]);
   const [email, setEmail] = useState("");
   const [sons, setSons] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,7 +32,7 @@ export const Home = () => {
       pid: searchQuery,
     };
 
-    const URL = "/searchItem";
+    let URL = "/searchItem";
     let response;
 
     try {
@@ -42,20 +49,20 @@ export const Home = () => {
         for (let i = 0; i < sons.length; i++) {
           try {
             query.pid = sons[i];
-            console.log(query);
+            URL = "/searchChild";
             let childResponse = await instance.post(URL, query);
-            console.log(childResponse);
             if (childResponse) {
-              setData(data.concat(childResponse.data));
+              setData(...data, childResponse.data);
             }
           } catch (e) {
-            alert("no childs");
+            console.log(e);
           }
         }
       }
     } catch (err) {
       if (err.response.status === 400) {
-        alert(err.response.data.message);
+        setData([]);
+        setErrorMessage(err.response.data.message);
       }
     }
   };
@@ -82,7 +89,11 @@ export const Home = () => {
           <AddBtn />
           <RemoveBtn />
           <ChildBtn data={searchQuery} />
-          {data.length !== 0 ? <Table data={data} /> : <div style={{color:"black"}}>No Results</div>}
+          {data.ProductID ? (
+            <Table data={data} />
+          ) : (
+            <div style={{ color: "red" }}>{errorMessage}</div>
+          )}
         </div>
       </div>
     </>
